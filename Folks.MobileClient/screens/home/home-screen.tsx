@@ -1,7 +1,7 @@
 import HomeAppbar from '../../components/home/appbar/home-appbar';
 import HomeNavigator from '../../navigation/home-navigator/home-navigator';
 
-const HomeContainer = (): JSX.Element => {
+const HomeScreen = (): JSX.Element => {
   return (
     <>
       <HomeAppbar />
@@ -10,4 +10,4 @@ const HomeContainer = (): JSX.Element => {
   );
 };
 
-export default HomeContainer;
+export default HomeScreen;
