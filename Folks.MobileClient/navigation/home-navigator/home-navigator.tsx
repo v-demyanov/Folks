@@ -2,9 +2,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import { useTheme } from 'react-native-paper';
 
-import UsersScreen from '../../screens/home/chats-screen/chats-screen';
 import SettingsScreen from '../../screens/home/settings-screen/settings-screen';
 import { TAB_BAR_ICON_SIZE } from '../../common/constants/icons.constants';
+import ChatsListScreen from '../../screens/home/chats-list-screen/chats-list-screen';
 
 export type TabParamList = {
   Chats: undefined;
@@ -20,7 +20,7 @@ const HomeNavigator = (): JSX.Element => {
     <Tab.Navigator activeColor={theme.colors.primary}>
       <Tab.Screen
         name="Chats"
-        component={UsersScreen}
+        component={ChatsListScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
