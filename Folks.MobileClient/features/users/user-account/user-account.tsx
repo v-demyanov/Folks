@@ -3,7 +3,7 @@ import { Text } from 'react-native-paper';
 import { Avatar } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 
-import { USER_ACCOUNT_ICON_SIZE } from '../../../common/constants/icons.constants';
+import { USER_ACCOUNT_IMAGE_SIZE } from '../../../common/constants/icons.constants';
 
 const styles = StyleSheet.create({
   view: {
@@ -21,7 +21,7 @@ const UserAccount = (): JSX.Element => {
     <View style={[styles.view]}>
       <Avatar.Icon
         style={[styles.avatarIcon]}
-        size={USER_ACCOUNT_ICON_SIZE}
+        size={USER_ACCOUNT_IMAGE_SIZE}
         icon="account"
       />
       <Text>Vladislav Demyanov</Text>
