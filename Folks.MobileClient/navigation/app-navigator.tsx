@@ -4,9 +4,11 @@ import { NavigationProp } from '@react-navigation/native';
 import HomeContainer from '../containers/home/home-container';
 import SigninScreen from '../screens/access/signin-screen/signin-screen';
 import SignupScreen from '../screens/access/signup-screen/signup-screen';
+import ChatScreen from '../screens/chat-screen/chat-screen';
 
 export type RootStackParamList = {
   Home: undefined;
+  Chat: undefined;
   Signin: undefined;
   Signup: undefined;
 };
@@ -22,6 +24,7 @@ const AppNavigator = (): JSX.Element => {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Home" component={HomeContainer} />
+      <Stack.Screen name="Chat" component={ChatScreen} />
       <Stack.Screen name="Signin" component={SigninScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>
