@@ -1,5 +1,6 @@
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,5 +20,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+await app.UseOcelot();
 
 app.Run();
