@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  folks.apigateway:
+    container_name: folks.apigateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8000:80"
+
+  folks.chatservice.api:
+    container_name: folks.chatservice.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - folks.apigateway
+    ports:
+      - "8001:80"

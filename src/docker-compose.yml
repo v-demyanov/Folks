@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  folks.apigateway:
+    image: ${DOCKER_REGISTRY-}folksapigateway
+    build:
+      context: .
+      dockerfile: ApiGateways/Folks.ApiGateway/Dockerfile
+
+  folks.chatservice.api:
+    image: ${DOCKER_REGISTRY-}folkschatserviceapi
+    build:
+      context: .
+      dockerfile: Services/Chat/Folks.ChatService.Api/Dockerfile
+
