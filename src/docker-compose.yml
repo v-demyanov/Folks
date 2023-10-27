@@ -1,6 +1,12 @@
 version: '3.4'
 
 services:
+  identitydb:
+    image: postgres
+
+  pgadmin:
+    image: dpage/pgadmin4 
+
   folks.apigateway:
     image: ${DOCKER_REGISTRY-}folksapigateway
     build:
@@ -13,3 +19,12 @@ services:
       context: .
       dockerfile: Services/Chat/Folks.ChatService.Api/Dockerfile
 
+  folks.identityservice.api:
+    image: ${DOCKER_REGISTRY-}folksidentityserviceapi
+    build:
+      context: .
+      dockerfile: Services/Identity/Folks.IdentityService.Api/Dockerfile
+
+volumes:
+  postgres_data:
+  pgadmin_data:
