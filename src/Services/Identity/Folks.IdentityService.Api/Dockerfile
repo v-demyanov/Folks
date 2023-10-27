@@ -7,6 +7,8 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Services/Identity/Folks.IdentityService.Api/Folks.IdentityService.Api.csproj", "Services/Identity/Folks.IdentityService.Api/"]
+COPY ["Services/Identity/Folks.IdentityService.Database.Migrations/Folks.IdentityService.Database.Migrations.csproj", "Services/Identity/Folks.IdentityService.Database.Migrations/"]
+COPY ["Services/Identity/Folks.IdentityService.Infrastructure/Folks.IdentityService.Infrastructure.csproj", "Services/Identity/Folks.IdentityService.Infrastructure/"]
 RUN dotnet restore "Services/Identity/Folks.IdentityService.Api/Folks.IdentityService.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Identity/Folks.IdentityService.Api"
