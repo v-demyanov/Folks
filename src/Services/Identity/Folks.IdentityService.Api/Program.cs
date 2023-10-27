@@ -1,13 +1,40 @@
-var builder = WebApplication.CreateBuilder(args);
+using Serilog;
 
-// Add services to the container.
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+using Folks.IdentityService.Api.Extensions;
 
-var app = builder.Build();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
+Log.Information("Starting up");
 
-app.Run();
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
+
+    // Add services to the container.
+    builder.ConfigureServices();
+
+    // Build the WebApplication
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    app.ConfigurePipeline();
+
+    app.Run();
+}
+catch (Exception exception) when (
+    // https://github.com/dotnet/runtime/issues/60600
+    exception.GetType().Name is not "StopTheHostException"
+    // HostAbortedException was added in .NET 7, but since we target .NET 6 we
+    // need to do it this way until we target .NET 8
+    && exception.GetType().Name is not "HostAbortedException")
+{
+    Log.Fatal(exception, "Unhandled exception");
+}
+finally
+{
+    Log.Information("Shut down complete");
+    Log.CloseAndFlush();
+}
+
