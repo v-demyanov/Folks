@@ -27,7 +27,11 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Api", "Services\Identity\Folks.IdentityService.Api\Folks.IdentityService.Api.csproj", "{7C535098-5D0A-442B-A68C-67FFB12F17E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.IdentityService.Api", "Services\Identity\Folks.IdentityService.Api\Folks.IdentityService.Api.csproj", "{7C535098-5D0A-442B-A68C-67FFB12F17E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Database.Migrations", "Services\Identity\Folks.IdentityService.Database.Migrations\Folks.IdentityService.Database.Migrations.csproj", "{CF421DBA-0BE5-4C92-A3EB-16FD157877E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Infrastructure", "Services\Identity\Folks.IdentityService.Infrastructure\Folks.IdentityService.Infrastructure.csproj", "{AFD36927-7E94-43B0-B0BB-ED6A39217B28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,14 @@ Global
 		{7C535098-5D0A-442B-A68C-67FFB12F17E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C535098-5D0A-442B-A68C-67FFB12F17E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C535098-5D0A-442B-A68C-67FFB12F17E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF421DBA-0BE5-4C92-A3EB-16FD157877E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF421DBA-0BE5-4C92-A3EB-16FD157877E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF421DBA-0BE5-4C92-A3EB-16FD157877E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF421DBA-0BE5-4C92-A3EB-16FD157877E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFD36927-7E94-43B0-B0BB-ED6A39217B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD36927-7E94-43B0-B0BB-ED6A39217B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD36927-7E94-43B0-B0BB-ED6A39217B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD36927-7E94-43B0-B0BB-ED6A39217B28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +80,8 @@ Global
 		{9E38D175-7CAC-4878-8AE3-C37ED92F3010} = {37A0D9FF-222E-4CAD-B2A1-9B3ADCDAEB64}
 		{8B2C5063-AF11-42E5-B1C7-20ADB6AB5469} = {7226EDBE-FC1D-4C22-B3F4-DF897EB302C0}
 		{7C535098-5D0A-442B-A68C-67FFB12F17E8} = {8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}
+		{CF421DBA-0BE5-4C92-A3EB-16FD157877E5} = {8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}
+		{AFD36927-7E94-43B0-B0BB-ED6A39217B28} = {8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3505674B-EFAB-48B2-BC36-7E190A9095D4}
