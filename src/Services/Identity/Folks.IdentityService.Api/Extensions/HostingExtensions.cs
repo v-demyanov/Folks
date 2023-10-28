@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
-using Folks.IdentityService.Api.Constants;
 using Folks.IdentityService.Infrastructure;
+using Folks.IdentityService.Infrastructure.Constants;
+using Folks.IdentityService.Domain.Entities;
+using Folks.IdentityService.Infrastructure.Persistence;
 
 namespace Folks.IdentityService.Api.Extensions;
 
@@ -12,15 +15,23 @@ public static class HostingExtensions
         builder.Services
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
-            .AddLocalApiAuthentication();
+            .AddLocalApiAuthentication()
+            .AddInfrastructureServices(builder.Configuration);
 
-        var connectionString = builder.Configuration.GetConnectionString("IdentityConnectionString");
+        builder.Services
+            .AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<IdentityServiceDbContext>()
+            .AddDefaultTokenProviders();
 
-        builder.Services.AddIdentityServer()
+        var connectionString = builder.Configuration
+            .GetConnectionString(EnvironmentSettings.ConnectionStringName);
+
+        builder.Services
+            .AddIdentityServer()
             .AddConfigurationStore(options =>
             {
                 options.ConfigureDbContext = builder =>
-                    builder.UseNpgsql(connectionString, builder => 
+                    builder.UseNpgsql(connectionString, builder =>
                         builder.MigrationsAssembly(EnvironmentSettings.MigrationsAssembly));
             })
             .AddOperationalStore(options =>
@@ -28,7 +39,8 @@ public static class HostingExtensions
                 options.ConfigureDbContext = builder =>
                     builder.UseNpgsql(connectionString, builder =>
                         builder.MigrationsAssembly(EnvironmentSettings.MigrationsAssembly));
-            });
+            })
+            .AddAspNetIdentity<User>();
 
         return builder;
     }
