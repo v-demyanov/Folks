@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
+using Folks.IdentityService.Infrastructure.Persistence;
+
 namespace Folks.IdentityService.Infrastructure;
 
 public static class DatabaseInitializer
@@ -21,6 +23,7 @@ public static class DatabaseInitializer
     {
         services.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
         services.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+        services.GetRequiredService<IdentityServiceDbContext>().Database.Migrate();
     }
 
     private static void SeedIdentityConfigurationEntities(IServiceProvider services)
