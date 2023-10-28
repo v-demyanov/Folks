@@ -44,7 +44,7 @@ services:
     container_name: folks.identityservice.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__IdentityConnectionString=Server=identitydb;Port=5432;Database=IdentityDb;User Id=admin;Password=admin1234;"
+      - "ConnectionStrings__PostgreSqlConnectionString=Server=identitydb;Port=5432;Database=IdentityDb;User Id=admin;Password=admin1234;"
     depends_on:
       - folks.apigateway
       - identitydb

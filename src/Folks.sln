@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Datab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Infrastructure", "Services\Identity\Folks.IdentityService.Infrastructure\Folks.IdentityService.Infrastructure.csproj", "{AFD36927-7E94-43B0-B0BB-ED6A39217B28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Domain", "Services\Identity\Folks.IdentityService.Domain\Folks.IdentityService.Domain.csproj", "{06C0650E-796B-4513-864B-23D7A7E5D9B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{AFD36927-7E94-43B0-B0BB-ED6A39217B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFD36927-7E94-43B0-B0BB-ED6A39217B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFD36927-7E94-43B0-B0BB-ED6A39217B28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06C0650E-796B-4513-864B-23D7A7E5D9B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06C0650E-796B-4513-864B-23D7A7E5D9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06C0650E-796B-4513-864B-23D7A7E5D9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06C0650E-796B-4513-864B-23D7A7E5D9B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{7C535098-5D0A-442B-A68C-67FFB12F17E8} = {8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}
 		{CF421DBA-0BE5-4C92-A3EB-16FD157877E5} = {8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}
 		{AFD36927-7E94-43B0-B0BB-ED6A39217B28} = {8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}
+		{06C0650E-796B-4513-864B-23D7A7E5D9B6} = {8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3505674B-EFAB-48B2-BC36-7E190A9095D4}
