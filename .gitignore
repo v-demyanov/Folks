@@ -363,3 +363,5 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 /src/launchSettings.json
+
+wwwroot/lib/
