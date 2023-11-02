@@ -364,4 +364,4 @@ yarn-error.*
 *.tsbuildinfo
 /src/launchSettings.json
 
-wwwroot/lib/
+**/wwwroot/lib
