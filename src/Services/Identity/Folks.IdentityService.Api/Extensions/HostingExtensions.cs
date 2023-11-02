@@ -16,7 +16,8 @@ public static class HostingExtensions
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .AddLocalApiAuthentication()
-            .AddInfrastructureServices(builder.Configuration);
+            .AddInfrastructureServices(builder.Configuration)
+            .AddRazorPages();
 
         builder.Services
             .AddIdentity<User, IdentityRole>()
@@ -54,10 +55,17 @@ public static class HostingExtensions
 
         DatabaseInitializer.Initialize(app);
 
+        app.UseStaticFiles();
+        app.UseRouting();
+
         app.UseSwagger();
         app.UseSwaggerUI();
 
         app.UseIdentityServer();
+        app.UseAuthorization();
+
+        app.MapRazorPages()
+           .RequireAuthorization();
 
         return app;
     }

@@ -30,14 +30,33 @@ public static class DatabaseInitializer
     {
         var context = services.GetRequiredService<ConfigurationDbContext>();
 
+        ResetIdentityConfigurationEntities(context);
+
         if (!context.ApiScopes.Any())
         {
-            foreach (var resource in Config.ApiScopes)
+            foreach (var apiScope in Config.ApiScopes)
             {
-                context.ApiScopes.Add(resource.ToEntity());
+                context.ApiScopes.Add(apiScope.ToEntity());
             }
 
             context.SaveChanges();
         }
+
+        if (!context.Clients.Any())
+        {
+            foreach (var client in Config.Clients)
+            {
+                context.Clients.Add(client.ToEntity());
+            }
+
+            context.SaveChanges();
+        }
+    }
+
+    private static void ResetIdentityConfigurationEntities(ConfigurationDbContext context)
+    {
+        context.ApiScopes.RemoveRange(context.ApiScopes);
+        context.Clients.RemoveRange(context.Clients);
+        context.SaveChanges();
     }
 }

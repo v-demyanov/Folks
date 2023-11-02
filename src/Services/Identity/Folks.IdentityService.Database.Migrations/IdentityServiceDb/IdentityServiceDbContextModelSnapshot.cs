@@ -90,13 +90,16 @@ namespace Folks.IdentityService.Database.Migrations.IdentityServiceDb
                         {
                             Id = "a6beb063-dfc9-4cfd-82d2-97dc027fe34d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2576aad2-7dd2-4d39-b3fd-b366d674ee81",
+                            ConcurrencyStamp = "91af011d-7d03-41b2-ae12-d620e59ba868",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPpaE8R8ov3c3xPZYbKElSFUr+Z3NNzJPRzW6qehyC3KQk9QzLO9FB67GxwVz9olrA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0bb012fc-c453-42ae-83f7-31652a9f83b7",
+                            SecurityStamp = "384875d1-14ba-40bb-b426-c572e7b36a86",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

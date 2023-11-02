@@ -14,13 +14,17 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
         {
             Id = "a6beb063-dfc9-4cfd-82d2-97dc027fe34d",
             UserName = "Admin",
+            NormalizedUserName = "ADMIN",
             Email = "admin@gmail.com",
+            NormalizedEmail = "ADMIN@GMAIL.COM",
             LockoutEnabled = false,
-            PhoneNumber = "1234567890"
+            PhoneNumber = "1234567890",
         };
 
         var passwordHasher = new PasswordHasher<User>();
-        passwordHasher.HashPassword(user, "admin123456");
+        var hash = passwordHasher.HashPassword(user, "admin123456");
+
+        user.PasswordHash = hash;
 
         builder.HasData(user);
     }

@@ -29,11 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{8B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.IdentityService.Api", "Services\Identity\Folks.IdentityService.Api\Folks.IdentityService.Api.csproj", "{7C535098-5D0A-442B-A68C-67FFB12F17E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Database.Migrations", "Services\Identity\Folks.IdentityService.Database.Migrations\Folks.IdentityService.Database.Migrations.csproj", "{CF421DBA-0BE5-4C92-A3EB-16FD157877E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.IdentityService.Database.Migrations", "Services\Identity\Folks.IdentityService.Database.Migrations\Folks.IdentityService.Database.Migrations.csproj", "{CF421DBA-0BE5-4C92-A3EB-16FD157877E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Infrastructure", "Services\Identity\Folks.IdentityService.Infrastructure\Folks.IdentityService.Infrastructure.csproj", "{AFD36927-7E94-43B0-B0BB-ED6A39217B28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.IdentityService.Infrastructure", "Services\Identity\Folks.IdentityService.Infrastructure\Folks.IdentityService.Infrastructure.csproj", "{AFD36927-7E94-43B0-B0BB-ED6A39217B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.IdentityService.Domain", "Services\Identity\Folks.IdentityService.Domain\Folks.IdentityService.Domain.csproj", "{06C0650E-796B-4513-864B-23D7A7E5D9B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.IdentityService.Domain", "Services\Identity\Folks.IdentityService.Domain\Folks.IdentityService.Domain.csproj", "{06C0650E-796B-4513-864B-23D7A7E5D9B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

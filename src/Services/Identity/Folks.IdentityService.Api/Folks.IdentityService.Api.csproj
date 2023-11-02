@@ -7,6 +7,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>07370935-d262-4359-abf3-e31a3a5f54ed</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Folks.IdentityService.Domain\Folks.IdentityService.Domain.csproj" />
   </ItemGroup>
 

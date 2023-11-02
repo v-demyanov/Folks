@@ -1,0 +1,12 @@
+﻿@page
+@model Folks.IdentityService.Api.Pages.Redirect.IndexModel
+
+<div>
+    <div>
+        <h1>You are now being returned to the application</h1>
+        <p>Once complete, you may close this tab.</p>
+    </div>
+</div>
+
+<meta http-equiv="refresh" content="0;url=@Model.RedirectUri" data-url="@Model.RedirectUri">
+<script type="module" src="~/pages/Redirect/Index.cshtml.js"></script>

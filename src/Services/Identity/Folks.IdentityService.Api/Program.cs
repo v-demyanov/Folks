@@ -11,16 +11,13 @@ Log.Information("Starting up");
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-
-    // Add services to the container.
     builder.ConfigureServices();
 
-    // Build the WebApplication
+    // Required to fix the problem with css isolation in Razor runtime compilation
+    builder.WebHost.UseStaticWebAssets();
+
     var app = builder.Build();
-
-    // Configure the HTTP request pipeline.
     app.ConfigurePipeline();
-
     app.Run();
 }
 catch (Exception exception) when (
