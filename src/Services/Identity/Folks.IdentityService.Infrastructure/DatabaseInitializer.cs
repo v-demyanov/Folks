@@ -1,11 +1,14 @@
 ﻿using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
+using Duende.IdentityServer.Models;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 using Folks.IdentityService.Infrastructure.Persistence;
+using Folks.IdentityService.Infrastructure.Models;
 
 namespace Folks.IdentityService.Infrastructure;
 
@@ -13,7 +16,9 @@ public static class DatabaseInitializer
 {
     public static void Initialize(IApplicationBuilder app)
     {
-        using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+        using var serviceScope = app.ApplicationServices
+            .GetRequiredService<IServiceScopeFactory>()
+            .CreateScope();
 
         PerformMigrations(serviceScope.ServiceProvider);
         SeedIdentityConfigurationEntities(serviceScope.ServiceProvider);
@@ -32,31 +37,46 @@ public static class DatabaseInitializer
 
         ResetIdentityConfigurationEntities(context);
 
-        if (!context.ApiScopes.Any())
-        {
-            foreach (var apiScope in Config.ApiScopes)
-            {
-                context.ApiScopes.Add(apiScope.ToEntity());
-            }
+        var identityConfig = services.GetRequiredService<IOptions<IdentityServerConfig>>().Value;
 
-            context.SaveChanges();
-        }
-
-        if (!context.Clients.Any())
-        {
-            foreach (var client in Config.Clients)
-            {
-                context.Clients.Add(client.ToEntity());
-            }
-
-            context.SaveChanges();
-        }
+        SeedApiScopes(context, identityConfig.ApiScopes);
+        SeedIdentityResources(context, identityConfig.IdentityResources);
+        SeedClients(context, identityConfig.Clients);
     }
 
     private static void ResetIdentityConfigurationEntities(ConfigurationDbContext context)
     {
         context.ApiScopes.RemoveRange(context.ApiScopes);
+        context.IdentityResources.RemoveRange(context.IdentityResources);
         context.Clients.RemoveRange(context.Clients);
+
+        context.SaveChanges();
+    }
+
+    private static void SeedApiScopes(ConfigurationDbContext context, IEnumerable<ApiScope> apiScopes)
+    {
+        foreach (var apiScope in apiScopes)
+        {
+            context.ApiScopes.Add(apiScope.ToEntity());
+        }
+        context.SaveChanges();
+    }
+
+    private static void SeedIdentityResources(ConfigurationDbContext context, IEnumerable<IdentityResource> identityResources)
+    {
+        foreach (var identityResource in identityResources)
+        {
+            context.IdentityResources.Add(identityResource.ToEntity());
+        }
+        context.SaveChanges();
+    }
+
+    private static void SeedClients(ConfigurationDbContext context, IEnumerable<Client> clients)
+    {
+        foreach (var client in clients)
+        {
+            context.Clients.Add(client.ToEntity());
+        }
         context.SaveChanges();
     }
 }
