@@ -1,11 +1,15 @@
-import { View, Image } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { useTheme, Text, Button, MD3Theme } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import * as WebBrowser from 'expo-web-browser';
 
 import Logo from '../../../components/logo/logo';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation/app-navigator';
+import {
+  exchangeCodeAsync,
+  makeRedirectUri,
+  useAuthRequest,
+  useAutoDiscovery,
+} from 'expo-auth-session';
 
 const buildStyles = (theme: MD3Theme) =>
   StyleSheet.create({
@@ -47,12 +51,41 @@ const buildStyles = (theme: MD3Theme) =>
     },
   });
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
+WebBrowser.maybeCompleteAuthSession();
+const redirectUri = makeRedirectUri();
 
-const WelcomeScreen = ({ navigation }: Props): JSX.Element => {
+const WelcomeScreen = (): JSX.Element => {
   const theme = useTheme();
-
   const styles = useMemo(() => buildStyles(theme), [theme]);
+
+  const discovery = useAutoDiscovery('http://192.168.0.104:8002');
+
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: 'native.code',
+      redirectUri,
+      scopes: ['openid', 'profile'],
+    },
+    discovery
+  );
+
+  useEffect(() => {
+    if (!response || !discovery || response.type !== 'success') {
+      return;
+    }
+
+    exchangeCodeAsync(
+      {
+        clientId: 'native.code',
+        code: response.params.code,
+        redirectUri: redirectUri,
+        extraParams: {
+          code_verifier: request?.codeVerifier || '',
+        },
+      },
+      discovery
+    ).then((tokenResponse) => console.log(tokenResponse));
+  }, [response]);
 
   return (
     <View style={[styles.wrappper]}>
@@ -77,12 +110,14 @@ const WelcomeScreen = ({ navigation }: Props): JSX.Element => {
       </View>
 
       <View style={[styles.actionsWrapper]}>
-        <Button mode="contained" onPress={() => navigation.navigate('Signin')}>
+        <Button
+          mode="contained"
+          disabled={!request}
+          onPress={() => promptAsync()}
+        >
           Sign In
         </Button>
-        <Button mode="elevated" onPress={() => navigation.navigate('Signup')}>
-          Sign Up
-        </Button>
+        <Button mode="elevated">Sign Up</Button>
       </View>
     </View>
   );

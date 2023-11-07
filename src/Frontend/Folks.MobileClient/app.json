@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "com.vdemyanov.folks",
     "name": "Folks.MobileClient",
     "slug": "folks",
     "version": "1.0.0",
@@ -21,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.vdemyanov.folks"
     },
     "web": {
       "favicon": "./assets/favicon.png"
