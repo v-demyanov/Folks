@@ -50,4 +50,3 @@ services:
       - identitydb
     ports:
       - "8002:80"
-
