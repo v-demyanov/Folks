@@ -32,4 +32,13 @@
     <ProjectReference Include="..\Folks.IdentityService.Infrastructure\Folks.IdentityService.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Pages\Account\Login\Index.cshtml.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\Redirect\Index.cshtml.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
