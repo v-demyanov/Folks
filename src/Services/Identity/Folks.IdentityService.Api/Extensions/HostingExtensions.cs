@@ -55,6 +55,7 @@ public static class HostingExtensions
 
         DatabaseInitializer.Initialize(app);
 
+        app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
 
