@@ -1,12 +1,19 @@
 ﻿@page
 @model Folks.IdentityService.Api.Pages.Redirect.IndexModel
 
-<div>
-    <div>
-        <h1>You are now being returned to the application</h1>
-        <p>Once complete, you may close this tab.</p>
+<link rel="stylesheet" href="~/@(Assembly.GetEntryAssembly()?.GetName().Name).styles.css" />
+
+<div class="row vh-100 d-flex justify-content-center align-items-center">
+    <div class="card col-lg-4 col-sm-12">
+        <div class="card-body">
+            <h3>You are now being returned to the application</h3>
+            <h6>Once complete, you may close this tab.</h6>
+        </div>
     </div>
 </div>
 
 <meta http-equiv="refresh" content="0;url=@Model.RedirectUri" data-url="@Model.RedirectUri">
-<script type="module" src="~/pages/Redirect/Index.cshtml.js"></script>
+
+@section Scripts {
+    <script src="~/Pages/Redirect/Index.cshtml.js"></script>
+}

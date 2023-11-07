@@ -1,0 +1,6 @@
+﻿@media (max-width: 574px) {
+    .card {
+        height: 100vh;
+        border-radius: 0;
+    }
+}
