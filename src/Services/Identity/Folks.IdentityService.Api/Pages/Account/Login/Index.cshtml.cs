@@ -10,27 +10,26 @@ using Duende.IdentityServer;
 
 using Folks.IdentityService.Domain.Entities;
 using Folks.IdentityService.Api.Extensions;
+using Folks.IdentityService.Api.Filters;
 
 namespace Folks.IdentityService.Api.Pages.Account.Login;
 
 [AllowAnonymous]
+[SecurityHeaders]
 public class IndexModel : PageModel
 {
     private readonly SignInManager<User> _signInManager;
-    private readonly UserManager<User> _userManager;
-    private readonly IIdentityServerInteractionService _identityServerInteractionService;
-    private readonly IEventService _identityServerEventService;
+    private readonly IIdentityServerInteractionService _identityInteractionService;
+    private readonly IEventService _identityEventService;
 
     public IndexModel(
         SignInManager<User> signInManager,
-        IIdentityServerInteractionService identityServerInteractionService,
-        IEventService identityServerEventService,
-        UserManager<User> userManager)
+        IIdentityServerInteractionService identityInteractionService,
+        IEventService identityEventService)
     {
         this._signInManager = signInManager;
-        this._identityServerInteractionService = identityServerInteractionService;
-        this._identityServerEventService = identityServerEventService;
-        this._userManager = userManager;
+        this._identityInteractionService = identityInteractionService;
+        this._identityEventService = identityEventService;
     }
 
     [BindProperty]
@@ -48,51 +47,72 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        var context = await _identityServerInteractionService.GetAuthorizationContextAsync(ReturnUrl);
-
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            var signInResult = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, false);
-            var user = await _userManager.FindByNameAsync(Input.UserName);
-
-            if (signInResult.Succeeded && user != null)
-            {
-                await _identityServerEventService.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
-
-                var identityServerUser = new IdentityServerUser(user.Id)
-                {
-                    DisplayName = user.UserName
-                };
-
-                await HttpContext.SignInAsync(identityServerUser);
-
-                if (context != null && ReturnUrl != null)
-                {
-                    if (context.IsNativeClient())
-                    {
-                        return this.LoadingPage(ReturnUrl);
-                    }
-
-                    return Redirect(ReturnUrl);
-                }
-
-                if (Url.IsLocalUrl(ReturnUrl))
-                {
-                    return Redirect(ReturnUrl);
-                }
-                else if (string.IsNullOrEmpty(ReturnUrl))
-                {
-                    return Redirect("~/");
-                }
-                else
-                {
-                    throw new Exception("invalid return URL");
-                }
-            }
-
-            await _identityServerEventService.RaiseAsync(new UserLoginFailureEvent(Input.UserName, "invalid credentials", clientId: context?.Client.ClientId));
+            return Page();
         }
 
+        var signInResult = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, false);
+        var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
+
+        if (!signInResult.Succeeded || user is null)
+        {
+            return await HandleLoginFailure();
+        }
+
+        return await HandleLoginSuccess(user);
+    }
+
+    private async Task<IActionResult> HandleLoginFailure()
+    {
+        var authorizationContext = await _identityInteractionService.GetAuthorizationContextAsync(ReturnUrl);
+        await _identityEventService.RaiseAsync(new UserLoginFailureEvent(Input.UserName, "invalid credentials")
+        {
+            ClientId = authorizationContext?.Client.ClientId
+        });
+
+        ModelState.AddModelError(string.Empty, "Invalid username or password");
+
         return Page();
+    }
+
+    private async Task<IActionResult> HandleLoginSuccess(User user)
+    {
+        var authorizationContext = await _identityInteractionService.GetAuthorizationContextAsync(ReturnUrl);
+        if (authorizationContext is null || ReturnUrl is null)
+        {
+            return HandleLoginBoundaryCases();
+        }
+
+        await _identityEventService.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName)
+        {
+            ClientId = authorizationContext.Client.ClientId
+        });
+
+        await HttpContext.SignInAsync(new IdentityServerUser(user.Id)
+        {
+            DisplayName = user.UserName
+        });
+
+        if (authorizationContext.IsNativeClient())
+        {
+            return this.LoadingPage(ReturnUrl);
+        }
+
+        return Redirect(ReturnUrl);
+    }
+
+    private IActionResult HandleLoginBoundaryCases()
+    {
+        if (Url.IsLocalUrl(ReturnUrl))
+        {
+            return Redirect(ReturnUrl);
+        }
+        else if (string.IsNullOrEmpty(ReturnUrl))
+        {
+            return Redirect("~/");
+        }
+
+        throw new Exception("invalid return URL");
     }
 }
