@@ -8,8 +8,6 @@ services:
       - POSTGRES_PASSWORD=admin1234
       - POSTGRES_DB=IdentityDb
     restart: always
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
@@ -37,8 +35,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       - folks.apigateway
-    ports:
-      - "8001:80"
 
   folks.identityservice.api:
     container_name: folks.identityservice.api
@@ -49,4 +45,4 @@ services:
       - folks.apigateway
       - identitydb
     ports:
-      - "8002:80"
+      - "8001:80"
