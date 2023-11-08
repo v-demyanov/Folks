@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/weatherforecast",
+      "DownstreamPathTemplate": "/{path}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,8 +9,28 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/weatherforecast",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamPathTemplate": "/chatservice/{path}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/{path}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "folks.identityservice.api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/identityservice/{path}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
     }
   ],
   "GlobalConfiguration": {
