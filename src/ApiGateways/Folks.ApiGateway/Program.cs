@@ -1,26 +1,14 @@
-using Ocelot.Cache.CacheManager;
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
+using Folks.ApiGateway.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", true, true);
+builder.Configuration
+    .AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", true, true);
 
-// Add services to the container.
-builder.Services
-    .AddEndpointsApiExplorer()
-    .AddSwaggerGen()
-    .AddOcelot()
-    .AddCacheManager(settings => settings.WithDictionaryHandle());
+builder.ConfigureServices();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.UseHttpsRedirection();
-
-await app.UseOcelot();
+await app.ConfigurePipelineAsync();
 
 app.Run();

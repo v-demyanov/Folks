@@ -14,7 +14,13 @@
         "GET",
         "POST",
         "PUT"
-      ]
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityServerApiKey",
+        "AllowedScopes": [
+          "chatServiceApi"
+        ]
+      }
     },
     {
       "DownstreamPathTemplate": "/{path}",
