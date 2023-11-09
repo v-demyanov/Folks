@@ -26,6 +26,7 @@ services:
     container_name: folks.apigateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "AuthenticationOptions__Authority=http://192.168.0.104:8001"
     ports:
       - "8000:80"
 
@@ -33,6 +34,7 @@ services:
     container_name: folks.chatservice.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "AuthenticationOptions__Authority=http://192.168.0.104:8001"
     depends_on:
       - folks.apigateway
 
