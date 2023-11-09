@@ -1,25 +1,13 @@
-using Microsoft.OpenApi.Models;
+using Folks.ChatService.Api.Constants;
+using Folks.ChatService.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen((options) =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo 
-    { 
-        Title = "Folks.ChatService.Api",
-        Version = "v1" 
-    });
-});
+builder.ConfigureServices();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Folks.ChatService.Api v1"));
-    
-app.UseHttpsRedirection();
+app.ConfigurePipeline();
 
 var summaries = new[]
 {
@@ -39,7 +27,8 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast")
-.WithOpenApi();
+.WithOpenApi()
+.RequireAuthorization(AuthorizationPolicies.ApiScope);
 
 app.Run();
 
