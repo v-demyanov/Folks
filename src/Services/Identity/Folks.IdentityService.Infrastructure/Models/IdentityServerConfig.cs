@@ -11,6 +11,7 @@ public record class IdentityServerConfig
         new List<ApiScope>
         {
             new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
+            new ApiScope("chatServiceApi", "Chat Service API")
         };
 
     public IEnumerable<IdentityResource> IdentityResources =>
