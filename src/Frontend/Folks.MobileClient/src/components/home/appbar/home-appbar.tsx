@@ -12,7 +12,7 @@ const HomeAppbar = (): JSX.Element => {
       <Appbar.Content title={<UserAccount />} />
       <Appbar.Action
         icon="logout"
-        onPress={() => navigation.navigate('Signin')}
+        onPress={() => navigation.navigate('Welcome')}
       />
     </Appbar.Header>
   );

@@ -1,5 +1,4 @@
-import { View } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import ChatInput from './chat-input/chat-input';
 import MessageSendButton from './message-send-button/message-send-button';

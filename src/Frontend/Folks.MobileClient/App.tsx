@@ -3,8 +3,8 @@ import { PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { useColorScheme } from 'react-native';
 
-import AppNavigator from './navigation/app-navigator';
-import { darkTheme, lightTheme } from './common/themes/themes';
+import { darkTheme, lightTheme } from './src/common/themes/themes';
+import AppNavigator from './src/navigation/app-navigator';
 
 export default function App() {
   const colorScheme = useColorScheme();

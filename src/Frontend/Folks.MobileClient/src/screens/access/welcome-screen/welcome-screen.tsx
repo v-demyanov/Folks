@@ -2,14 +2,16 @@ import { View, Image, StyleSheet } from 'react-native';
 import { useTheme, Text, Button, MD3Theme } from 'react-native-paper';
 import { useEffect, useMemo } from 'react';
 import * as WebBrowser from 'expo-web-browser';
-
-import Logo from '../../../components/logo/logo';
 import {
   exchangeCodeAsync,
   makeRedirectUri,
   useAuthRequest,
   useAutoDiscovery,
 } from 'expo-auth-session';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+import Logo from '../../../components/logo/logo';
+import { RootStackParamList } from '../../../navigation/app-navigator';
 
 const buildStyles = (theme: MD3Theme) =>
   StyleSheet.create({
@@ -54,7 +56,9 @@ const buildStyles = (theme: MD3Theme) =>
 WebBrowser.maybeCompleteAuthSession();
 const redirectUri = makeRedirectUri();
 
-const WelcomeScreen = (): JSX.Element => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
+
+const WelcomeScreen = ({ navigation }: Props): JSX.Element => {
   const theme = useTheme();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
@@ -103,7 +107,7 @@ const WelcomeScreen = (): JSX.Element => {
         style={[styles.logo]}
       />
       <Image
-        source={require('./.../../../../../assets/welcome.png')}
+        source={require('./../../../../assets/welcome.png')} // ./../../../../../../assets/welcome.png
         style={[styles.image]}
       />
       <View style={[styles.welcomeMessagesWrapper]}>
@@ -124,7 +128,9 @@ const WelcomeScreen = (): JSX.Element => {
         >
           Sign In
         </Button>
-        <Button mode="elevated">Sign Up</Button>
+        <Button mode="elevated" onPress={() => navigation.navigate('Home')}>
+          Sign Up
+        </Button>
       </View>
     </View>
   );

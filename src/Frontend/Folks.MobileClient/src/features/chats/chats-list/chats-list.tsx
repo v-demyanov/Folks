@@ -1,8 +1,8 @@
 import { FlatList } from 'react-native';
+import { useCallback } from 'react';
 
 import IChat from '../../models/chat';
 import ChatsListItem from './chats-list-item/chats-list-item';
-import { useCallback } from 'react';
 
 const chats: IChat[] = Array.from(Array(10).keys())
   .map((id) => ({
