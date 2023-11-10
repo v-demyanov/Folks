@@ -58,13 +58,13 @@ const WelcomeScreen = (): JSX.Element => {
   const theme = useTheme();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
-  const discovery = useAutoDiscovery('http://192.168.0.104:8002');
+  const discovery = useAutoDiscovery('http://192.168.0.104:8001');
 
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: 'native.code',
       redirectUri,
-      scopes: ['openid', 'profile'],
+      scopes: ['openid', 'profile', 'chatServiceApi'],
     },
     discovery
   );
@@ -84,7 +84,14 @@ const WelcomeScreen = (): JSX.Element => {
         },
       },
       discovery
-    ).then((tokenResponse) => console.log(tokenResponse));
+    ).then(async (tokenResponse) => {
+      console.log(tokenResponse.accessToken);
+      fetch('http://192.168.0.104:8000/chatservice/weatherforecast', {
+        headers: { Authorization: `Bearer ${tokenResponse.accessToken}` },
+      })
+        .then((resp) => resp.json())
+        .then((json) => console.log(json));
+    });
   }, [response]);
 
   return (
