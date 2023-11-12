@@ -1,60 +1,42 @@
-import { View, Image, StyleSheet } from 'react-native';
-import { useTheme, Text, Button, MD3Theme } from 'react-native-paper';
-import { useEffect, useMemo } from 'react';
-import * as WebBrowser from 'expo-web-browser';
-import {
-  exchangeCodeAsync,
-  makeRedirectUri,
-  useAuthRequest,
-  useAutoDiscovery,
-} from 'expo-auth-session';
+import { View, Image } from 'react-native';
+import { useTheme, Text, Button } from 'react-native-paper';
+import { useMemo, useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ActivityIndicator } from 'react-native-paper';
 
 import Logo from '../../../components/logo/logo';
 import { RootStackParamList } from '../../../navigation/app-navigator';
+import useAuth from '../../../features/auth/hooks/use-auth';
+import SignInResult from '../../../features/auth/models/auth-result-type';
 import buildStyles from './welcome-screen-styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
 
 const WelcomeScreen = ({ navigation }: Props): JSX.Element => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const theme = useTheme();
   const styles = useMemo(() => buildStyles(theme), [theme]);
+  const { signInAsync, authRequest } = useAuth();
 
-  const discovery = useAutoDiscovery('http://192.168.0.104:8001');
+  const handleSignInButtonPressAsync = async (): Promise<void> => {
+    setIsLoading(true);
+    const signInResult = await signInAsync();
+    setIsLoading(false);
 
-  const [request, response, promptAsync] = useAuthRequest(
-    {
-      clientId: 'native.code',
-      redirectUri,
-      scopes: ['openid', 'profile', 'chatServiceApi'],
-    },
-    discovery
-  );
-
-  useEffect(() => {
-    if (!response || !discovery || response.type !== 'success') {
-      return;
+    if (signInResult === SignInResult.Success) {
+      navigation.navigate('Home');
     }
+  };
 
-    exchangeCodeAsync(
-      {
-        clientId: 'native.code',
-        code: response.params.code,
-        redirectUri: redirectUri,
-        extraParams: {
-          code_verifier: request?.codeVerifier || '',
-        },
-      },
-      discovery
-    ).then(async (tokenResponse) => {
-      console.log(tokenResponse.accessToken);
-      fetch('http://192.168.0.104:8000/chatservice/weatherforecast', {
-        headers: { Authorization: `Bearer ${tokenResponse.accessToken}` },
-      })
-        .then((resp) => resp.json())
-        .then((json) => console.log(json));
-    });
-  }, [response]);
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        animating={true}
+        size="large"
+        style={{ width: '100%', height: '100%' }}
+      />
+    );
+  }
 
   return (
     <View style={[styles.wrappper]}>
@@ -65,7 +47,7 @@ const WelcomeScreen = ({ navigation }: Props): JSX.Element => {
         style={[styles.logo]}
       />
       <Image
-        source={require('./../../../../assets/welcome.png')} // ./../../../../../../assets/welcome.png
+        source={require('./../../../../assets/welcome.png')}
         style={[styles.image]}
       />
       <View style={[styles.welcomeMessagesWrapper]}>
@@ -81,14 +63,12 @@ const WelcomeScreen = ({ navigation }: Props): JSX.Element => {
       <View style={[styles.actionsWrapper]}>
         <Button
           mode="contained"
-          disabled={!request}
-          onPress={() => promptAsync()}
+          disabled={!authRequest}
+          onPress={handleSignInButtonPressAsync}
         >
           Sign In
         </Button>
-        <Button mode="elevated" onPress={() => navigation.navigate('Home')}>
-          Sign Up
-        </Button>
+        <Button mode="elevated">Sign Up</Button>
       </View>
     </View>
   );
