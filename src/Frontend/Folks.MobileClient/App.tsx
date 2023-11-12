@@ -5,6 +5,7 @@ import { useColorScheme } from 'react-native';
 
 import { darkTheme, lightTheme } from './src/common/themes/themes';
 import AppNavigator from './src/navigation/app-navigator';
+import { AuthProvider } from './src/features/auth/hooks/use-auth';
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -14,8 +15,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <PaperProvider theme={theme}>
-        <AppNavigator />
-        <StatusBar style="auto" />
+        <AuthProvider>
+          <AppNavigator />
+          <StatusBar style="auto" />
+        </AuthProvider>
       </PaperProvider>
     </NavigationContainer>
   );
