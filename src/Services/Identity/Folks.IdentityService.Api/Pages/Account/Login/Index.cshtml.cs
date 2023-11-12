@@ -27,9 +27,9 @@ public class IndexModel : PageModel
         IIdentityServerInteractionService identityInteractionService,
         IEventService identityEventService)
     {
-        this._signInManager = signInManager;
-        this._identityInteractionService = identityInteractionService;
-        this._identityEventService = identityEventService;
+        _signInManager = signInManager;
+        _identityInteractionService = identityInteractionService;
+        _identityEventService = identityEventService;
     }
 
     [BindProperty]
