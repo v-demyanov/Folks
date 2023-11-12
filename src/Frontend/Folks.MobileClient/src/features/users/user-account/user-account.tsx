@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import { Text, Avatar } from 'react-native-paper';
 
 import { USER_ACCOUNT_IMAGE_SIZE } from '../../../common/constants/icons.constants';
+import useAuth from '../../auth/hooks/use-auth';
 
 const styles = StyleSheet.create({
   view: {
@@ -15,6 +16,8 @@ const styles = StyleSheet.create({
 });
 
 const UserAccount = (): JSX.Element => {
+  const { currentUser } = useAuth();
+
   return (
     <View style={[styles.view]}>
       <Avatar.Icon
@@ -22,7 +25,7 @@ const UserAccount = (): JSX.Element => {
         size={USER_ACCOUNT_IMAGE_SIZE}
         icon="account"
       />
-      <Text>Vladislav Demyanov</Text>
+      <Text>{currentUser?.name}</Text>
     </View>
   );
 };
