@@ -11,6 +11,7 @@ using Duende.IdentityServer;
 using Folks.IdentityService.Domain.Entities;
 using Folks.IdentityService.Api.Extensions;
 using Folks.IdentityService.Api.Filters;
+using Folks.IdentityService.Api.Constants;
 
 namespace Folks.IdentityService.Api.Pages.Account.Login;
 
@@ -66,12 +67,12 @@ public class IndexModel : PageModel
     private async Task<IActionResult> HandleLoginFailure()
     {
         var authorizationContext = await _identityInteractionService.GetAuthorizationContextAsync(ReturnUrl);
-        await _identityEventService.RaiseAsync(new UserLoginFailureEvent(Input.UserName, "invalid credentials")
+        await _identityEventService.RaiseAsync(new UserLoginFailureEvent(Input.UserName, LoginErrorMessages.InvalidCredentialsErrorMessage)
         {
             ClientId = authorizationContext?.Client.ClientId
         });
 
-        ModelState.AddModelError(string.Empty, "Invalid username or password");
+        ModelState.AddModelError(string.Empty, LoginErrorMessages.InvalidCredentialsErrorMessage);
 
         return Page();
     }
@@ -113,6 +114,6 @@ public class IndexModel : PageModel
             return Redirect("~/");
         }
 
-        throw new Exception("invalid return URL");
+        throw new Exception(LoginErrorMessages.InvalidReturnUrl);
     }
 }
