@@ -11,12 +11,12 @@ namespace Folks.IdentityService.Api.Pages.Error
     [SecurityHeaders]
     public class IndexModel : PageModel
     {
-        private readonly IIdentityServerInteractionService _interaction;
+        private readonly IIdentityServerInteractionService _identityInteractionService;
         private readonly IWebHostEnvironment _environment;
 
-        public IndexModel(IIdentityServerInteractionService interaction, IWebHostEnvironment environment)
+        public IndexModel(IIdentityServerInteractionService identityInteractionService, IWebHostEnvironment environment)
         {
-            _interaction = interaction;
+            _identityInteractionService = identityInteractionService;
             _environment = environment;
         }
 
@@ -26,7 +26,7 @@ namespace Folks.IdentityService.Api.Pages.Error
         {
             View = new ViewModel();
 
-            var message = await _interaction.GetErrorContextAsync(errorId);
+            var message = await _identityInteractionService.GetErrorContextAsync(errorId);
             if (message is null)
             {
                 return;
