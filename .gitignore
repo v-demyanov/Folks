@@ -365,3 +365,6 @@ yarn-error.*
 /src/launchSettings.json
 
 **/wwwroot/lib
+
+# ignores all .env files
+.env*
