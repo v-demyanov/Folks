@@ -56,12 +56,12 @@ public class IndexModel : PageModel
         var signInResult = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, false);
         var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
 
-        if (!signInResult.Succeeded || user is null)
+        if (signInResult.Succeeded && user is not null)
         {
-            return await HandleLoginFailure();
+            return await HandleLoginSuccess(user);
         }
 
-        return await HandleLoginSuccess(user);
+        return await HandleLoginFailure();
     }
 
     private async Task<IActionResult> HandleLoginFailure()
