@@ -5,7 +5,7 @@ import { useColorScheme } from 'react-native';
 
 import { darkTheme, lightTheme } from './src/common/themes/themes';
 import AppNavigator from './src/navigation/app-navigator';
-import { AuthProvider } from './src/features/auth/hooks/use-auth';
+import { AuthProvider } from './src/features/auth/context/auth-provider';
 
 export default function App() {
   const colorScheme = useColorScheme();
