@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import {
   AccessTokenRequestConfig,
@@ -17,15 +17,9 @@ import IAuthProviderProps from '../models/auth-provider-props';
 import AuthContextValue from '../models/auth-context-value';
 import ICurrentUser from '../models/current-user';
 import SignInResult from '../models/auth-result-type';
+import AuthContext from '../context/auth-context';
 
 WebBrowser.maybeCompleteAuthSession();
-
-const AuthContext = createContext<AuthContextValue>({
-  signInAsync: async (): Promise<SignInResult> => SignInResult.Error,
-  signOutAsync: async (): Promise<void> => {},
-  authRequest: null,
-  currentUser: null,
-});
 
 const redirectUri = makeRedirectUri();
 const authRequestConfig: AuthRequestConfig = {
