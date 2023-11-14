@@ -1,0 +1,34 @@
+﻿@page
+@model Folks.IdentityService.Api.Pages.Account.Logout.LoggedOutModel
+
+<link rel="stylesheet" href="~/@(Assembly.GetEntryAssembly()?.GetName().Name).styles.css" />
+
+<div class="row vh-100 d-flex justify-content-center align-items-center">
+    <div class="card col-lg-4 col-sm-12">
+        <div class="card-body">
+            <h3>Logout</h3>
+            <h6>You are now logged out</h6>
+
+            @if (Model.View.PostLogoutRedirectUri != null)
+            {
+                <div>
+                    Click <a class="PostLogoutRedirectUri" href="@Model.View.PostLogoutRedirectUri">here</a> to return to the
+                    <span>@Model.View.ClientName</span> application.
+                </div>
+            }
+
+            @if (Model.View.SignOutIframeUrl != null)
+            {
+                <iframe width="0" height="0" class="signout" src="@Model.View.SignOutIframeUrl"></iframe>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @if (Model.View.AutomaticRedirectAfterSignOut)
+    {
+        <script src="~/Pages/Account/Logout/LoggedOut.cshtml.js"></script>
+    }
+}

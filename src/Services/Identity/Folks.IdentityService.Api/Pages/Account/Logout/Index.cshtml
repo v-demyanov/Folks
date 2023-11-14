@@ -1,0 +1,20 @@
+﻿@page
+@model Folks.IdentityService.Api.Pages.Account.Logout.IndexModel
+
+<link rel="stylesheet" href="~/@(Assembly.GetEntryAssembly()?.GetName().Name).styles.css" />
+
+<div class="row vh-100 d-flex justify-content-center align-items-center">
+    <div class="card col-lg-4 col-sm-12">
+        <div class="card-body">
+            <h3>Logout</h3>
+            <p>Would you like to logout of IdentityServer?</p>
+            <form asp-page="/Account/Logout/Index">
+                <input type="hidden" name="logoutId" value="@Model.LogoutId" />
+
+                <div class="form-group">
+                    <button class="btn btn-primary">Yes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
