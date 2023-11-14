@@ -4,6 +4,7 @@ import {
   AccessTokenRequestConfig,
   AuthRequestConfig,
   AuthSessionResult,
+  TokenTypeHint,
   exchangeCodeAsync,
   fetchUserInfoAsync,
   makeRedirectUri,
@@ -14,7 +15,6 @@ import * as SecureStore from 'expo-secure-store';
 
 import IAuthProviderProps from '../models/auth-provider-props';
 import AuthContextValue from '../models/auth-context-value';
-import { ACCESS_TOKEN_KEY } from '../../../common/constants/secure-storage-keys.constants';
 import ICurrentUser from '../models/current-user';
 import SignInResult from '../models/auth-result-type';
 
@@ -22,6 +22,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 const AuthContext = createContext<AuthContextValue>({
   signInAsync: async (): Promise<SignInResult> => SignInResult.Error,
+  signOutAsync: async (): Promise<void> => {},
   authRequest: null,
   currentUser: null,
 });
@@ -31,15 +32,19 @@ const authRequestConfig: AuthRequestConfig = {
   clientId: 'native.code',
   redirectUri,
   scopes: ['openid', 'profile', 'chatServiceApi', 'email', 'phone'],
+  responseType: 'code id_token',
+  extraParams: {
+    nonce: 'nonce',
+  },
 };
 
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<ICurrentUser | null>(null);
 
-  const discovery = useAutoDiscovery('http://192.168.0.104:8001');
-  const [authRequest, , promptAsync] = useAuthRequest(
+  const discoveryDocument = useAutoDiscovery('http://192.168.0.104:8001');
+  const [authRequest, authResult, promptAsync] = useAuthRequest(
     authRequestConfig,
-    discovery
+    discoveryDocument
   );
 
   const signInAsync = async (): Promise<SignInResult> => {
@@ -57,7 +62,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   const handleSuccessAuthAsync = async (
     authSessionResult: AuthSessionResult
   ): Promise<void> => {
-    if (!discovery || authSessionResult.type !== SignInResult.Success) {
+    if (!discoveryDocument || authSessionResult.type !== SignInResult.Success) {
       return;
     }
 
@@ -72,19 +77,37 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
     const tokenResponse = await exchangeCodeAsync(
       accessTokenRequestConfig,
-      discovery
+      discoveryDocument
     );
-    await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, tokenResponse.accessToken);
+    await SecureStore.setItemAsync(
+      TokenTypeHint.AccessToken,
+      tokenResponse.accessToken
+    );
 
     const currentUser = (await fetchUserInfoAsync(
       tokenResponse,
-      discovery
+      discoveryDocument
     )) as ICurrentUser;
     setCurrentUser(currentUser);
   };
 
+  const signOutAsync = async (): Promise<void> => {
+    if (!discoveryDocument || authResult?.type !== SignInResult.Success) {
+      return;
+    }
+
+    await SecureStore.deleteItemAsync(TokenTypeHint.AccessToken);
+    setCurrentUser(null);
+
+    const urlParams = `id_token_hint=${authResult.params.id_token}&post_logout_redirect_uri=${redirectUri}`;
+    const url = `${discoveryDocument.endSessionEndpoint}?${urlParams}`;
+    authRequest?.promptAsync(discoveryDocument, { url });
+  };
+
   return (
-    <AuthContext.Provider value={{ signInAsync, authRequest, currentUser }}>
+    <AuthContext.Provider
+      value={{ signInAsync, signOutAsync, authRequest, currentUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
