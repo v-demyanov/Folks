@@ -1,18 +1,12 @@
 import { View, Image } from 'react-native';
-import { useTheme, Text, Button } from 'react-native-paper';
+import { useTheme, Text, Button, ActivityIndicator } from 'react-native-paper';
 import { useMemo, useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ActivityIndicator } from 'react-native-paper';
 
 import Logo from '../../../components/logo/logo';
-import { RootStackParamList } from '../../../navigation/app-navigator';
 import useAuth from '../../../features/auth/hooks/use-auth';
-import SignInResult from '../../../features/auth/models/auth-result-type';
 import buildStyles from './welcome-screen-styles';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
-
-const WelcomeScreen = ({ navigation }: Props): JSX.Element => {
+const WelcomeScreen = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const theme = useTheme();
   const styles = useMemo(() => buildStyles(theme), [theme]);
@@ -20,12 +14,7 @@ const WelcomeScreen = ({ navigation }: Props): JSX.Element => {
 
   const handleSignInButtonPressAsync = async (): Promise<void> => {
     setIsLoading(true);
-    const signInResult = await signInAsync();
-    setIsLoading(false);
-
-    if (signInResult === SignInResult.Success) {
-      navigation.navigate('Home');
-    }
+    signInAsync().finally(() => setIsLoading(false));
   };
 
   if (isLoading) {
