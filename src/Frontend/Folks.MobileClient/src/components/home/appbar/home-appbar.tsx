@@ -1,17 +1,14 @@
 import { Appbar } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { memo } from 'react';
 
-import { StackNavigation } from '../../../navigation/app-navigator';
 import UserAccount from '../../../features/users/user-account/user-account';
 import useAuth from '../../../features/auth/hooks/use-auth';
 
 const HomeAppbar = (): JSX.Element => {
-  const navigation = useNavigation<StackNavigation>();
   const { signOutAsync } = useAuth();
 
   const handleLogoutButtonPress = async (): Promise<void> => {
     await signOutAsync();
-    navigation.navigate('Welcome');
   };
 
   return (
@@ -25,4 +22,4 @@ const HomeAppbar = (): JSX.Element => {
   );
 };
 
-export default HomeAppbar;
+export default memo(HomeAppbar);
