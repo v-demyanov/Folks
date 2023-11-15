@@ -8,6 +8,7 @@ const defaultValue = {
   signOutAsync: async (): Promise<void> => {},
   authRequest: null,
   currentUser: null,
+  isAuthenticated: (): boolean => false,
 } as AuthContextValue;
 
 const AuthContext = createContext<AuthContextValue>(defaultValue);

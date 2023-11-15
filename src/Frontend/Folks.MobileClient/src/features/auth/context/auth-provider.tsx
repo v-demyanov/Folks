@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
 
@@ -9,6 +9,7 @@ import AuthContext from './auth-context';
 import useSecureStore from '../../../common/hooks/use-secure-store';
 import { TOKEN_RESPONSE_KEY } from '../../../common/constants/secure-store-keys.constants';
 import authConfig from '../configs/auth-config';
+import AuthContextValue from '../models/auth-context-value';
 
 WebBrowser.maybeCompleteAuthSession();
 const redirectUri = AuthSession.makeRedirectUri();
@@ -89,13 +90,20 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     }
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ signInAsync, signOutAsync, authRequest, currentUser }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const isAuthenticated = (): boolean => currentUser !== null;
+
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      signInAsync,
+      signOutAsync,
+      authRequest,
+      currentUser,
+      isAuthenticated,
+    }),
+    [currentUser, authRequest]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export { AuthProvider };
