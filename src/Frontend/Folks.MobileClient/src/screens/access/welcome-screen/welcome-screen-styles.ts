@@ -39,6 +39,10 @@ const buildStyles = (theme: MD3Theme) =>
       paddingTop: 40,
       columnGap: 10,
     },
+    activityIndicator: {
+      width: '100%',
+      height: '100%',
+    },
   });
 
 export default buildStyles;

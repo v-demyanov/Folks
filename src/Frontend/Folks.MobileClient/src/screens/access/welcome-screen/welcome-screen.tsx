@@ -22,7 +22,7 @@ const WelcomeScreen = (): JSX.Element => {
       <ActivityIndicator
         animating={true}
         size="large"
-        style={{ width: '100%', height: '100%' }}
+        style={[styles.activityIndicator]}
       />
     );
   }
