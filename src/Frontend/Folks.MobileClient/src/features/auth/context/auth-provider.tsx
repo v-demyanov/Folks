@@ -15,12 +15,15 @@ const redirectUri = AuthSession.makeRedirectUri();
 
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<ICurrentUser | null>(null);
+
   const [tokenResponse, setTokenResponse, clearTokenResponse] = useSecureStore<
     AuthSession.TokenResponse | undefined
   >(TOKEN_RESPONSE_KEY);
+
   const discoveryDocument = AuthSession.useAutoDiscovery(
     authConfig.identityServerUrl
   );
+
   const [authRequest, authResult, promptAsync] = AuthSession.useAuthRequest(
     {
       ...authConfig.authRequestConfig,
