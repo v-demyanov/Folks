@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 using Folks.IdentityService.Domain.Entities;
 
-namespace Folks.IdentityService.Infrastructure.EntityConfigurations;
+namespace Folks.IdentityService.Infrastructure.Persistence.EntityConfigurations;
 
 public class UserEntityConfiguration : IEntityTypeConfiguration<User>
 {
