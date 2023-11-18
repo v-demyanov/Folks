@@ -12,7 +12,6 @@ import authConfig from '../configs/auth-config';
 import AuthContextValue from '../models/auth-context-value';
 
 WebBrowser.maybeCompleteAuthSession();
-const redirectUri = AuthSession.makeRedirectUri();
 
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<ICurrentUser | null>(null);
@@ -26,10 +25,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   );
 
   const [authRequest, authResult, promptAsync] = AuthSession.useAuthRequest(
-    {
-      ...authConfig.authRequestConfig,
-      redirectUri,
-    },
+    authConfig.authRequestConfig,
     discoveryDocument
   );
 
@@ -65,7 +61,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       const accessTokenRequestConfig = {
         clientId: authConfig.authRequestConfig.clientId,
         code: authSessionResult.params.code,
-        redirectUri: redirectUri,
+        redirectUri: authConfig.authRequestConfig.redirectUri,
         extraParams: {
           code_verifier: authRequest?.codeVerifier || '',
         },
@@ -83,7 +79,9 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     if (discoveryDocument && authResult?.type === SignInResult.Success) {
       clearTokenResponse();
 
-      const urlParams = `id_token_hint=${authResult.params.id_token}&post_logout_redirect_uri=${redirectUri}`;
+      const idTokenHintParam = `id_token_hint=${authResult.params.id_token}`;
+      const postLogoutRedirectUriParam = `post_logout_redirect_uri=${authConfig.authRequestConfig.redirectUri}`;
+      const urlParams = `${idTokenHintParam}&${postLogoutRedirectUriParam}`;
       const url = `${discoveryDocument.endSessionEndpoint}?${urlParams}`;
 
       authRequest?.promptAsync(discoveryDocument, { url });

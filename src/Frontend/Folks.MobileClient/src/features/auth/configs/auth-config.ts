@@ -1,4 +1,8 @@
+import * as AuthSession from 'expo-auth-session';
+
 import AuthConfig from '../models/auth-config';
+
+const redirectUri = AuthSession.makeRedirectUri();
 
 const authConfig: AuthConfig = {
   authRequestConfig: {
@@ -8,7 +12,7 @@ const authConfig: AuthConfig = {
     extraParams: {
       nonce: 'nonce',
     },
-    redirectUri: '',
+    redirectUri,
   },
   identityServerUrl: process.env.EXPO_PUBLIC_IDENTITY_SERVER_URL ?? '',
 };
