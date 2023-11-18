@@ -7,7 +7,7 @@ namespace Folks.IdentityService.Infrastructure.Persistence;
 
 public class IdentityServiceDbContext : IdentityDbContext<User>
 {
-    public IdentityServiceDbContext(DbContextOptions<IdentityServiceDbContext> options) 
+    public IdentityServiceDbContext(DbContextOptions<IdentityServiceDbContext> options)
         : base(options)
     {
     }

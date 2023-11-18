@@ -1,4 +1,4 @@
-version: '3.4'
+﻿version: '3.4'
 
 services:
   identitydb:
@@ -10,6 +10,14 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+
+  chatdb:
+    container_name: chatdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
 
   pgadmin:
     container_name: pgadmin
@@ -27,6 +35,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "AuthenticationOptions__Authority=http://192.168.0.104:8001"
+    depends_on:
+      - folks.identityservice.api
+      - folks.chatservice.api
     ports:
       - "8000:80"
 
@@ -35,8 +46,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "AuthenticationOptions__Authority=http://192.168.0.104:8001"
+      - "MongoDbConfig__ConnectionString=mongodb://chatdb:27017"
+      - "MongoDbConfig__DatabaseName=ChatDb"
     depends_on:
-      - folks.apigateway
+      - chatdb
 
   folks.identityservice.api:
     container_name: folks.identityservice.api
@@ -44,7 +57,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__PostgreSqlConnectionString=Server=identitydb;Port=5432;Database=IdentityDb;User Id=admin;Password=admin1234;"
     depends_on:
-      - folks.apigateway
       - identitydb
     ports:
       - "8001:80"
