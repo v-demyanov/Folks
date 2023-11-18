@@ -7,10 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-using Folks.IdentityService.Infrastructure.Persistence;
 using Folks.IdentityService.Infrastructure.Models;
 
-namespace Folks.IdentityService.Infrastructure;
+namespace Folks.IdentityService.Infrastructure.Persistence;
 
 public static class DatabaseInitializer
 {
