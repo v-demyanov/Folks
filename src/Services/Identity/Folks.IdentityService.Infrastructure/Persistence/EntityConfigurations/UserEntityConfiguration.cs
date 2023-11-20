@@ -18,7 +18,6 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
             Email = "admin@gmail.com",
             NormalizedEmail = "ADMIN@GMAIL.COM",
             LockoutEnabled = false,
-            PhoneNumber = "1234567890",
         };
 
         var passwordHasher = new PasswordHasher<User>();
