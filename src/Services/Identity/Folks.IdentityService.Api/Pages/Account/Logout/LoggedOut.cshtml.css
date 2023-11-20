@@ -1,6 +1,7 @@
 @media (max-width: 574px) {
   .card {
-    height: 100vh;
+    height: 100%;
+    overflow: scroll;
     border-radius: 0;
   }
 }

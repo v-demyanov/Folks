@@ -1,10 +1,11 @@
 @media (max-width: 574px) {
-    .card {
-        height: 100vh;
-        border-radius: 0;
-    }
+  .card {
+    height: 100%;
+    overflow: scroll;
+    border-radius: 0;
+  }
 }
 
 .input-custom-mb {
-    margin-bottom: 30px !important;
+  margin-bottom: 30px !important;
 }
