@@ -57,7 +57,6 @@ const WelcomeScreen = (): JSX.Element => {
         >
           Sign In
         </Button>
-        <Button mode="elevated">Sign Up</Button>
       </View>
     </View>
   );
