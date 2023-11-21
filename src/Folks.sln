@@ -38,7 +38,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.IdentityService.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.ChatService.Domain", "Services\Chat\Folks.ChatService.Domain\Folks.ChatService.Domain.csproj", "{3C59B606-456C-45FC-95F2-1086F03719D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.ChatService.Infrastructure", "Services\Chat\Folks.ChatService.Infrastructure\Folks.ChatService.Infrastructure.csproj", "{8E58A990-577C-4EF2-96DF-38A271133DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.ChatService.Infrastructure", "Services\Chat\Folks.ChatService.Infrastructure\Folks.ChatService.Infrastructure.csproj", "{8E58A990-577C-4EF2-96DF-38A271133DD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.ChatService.Application", "Services\Chat\Folks.ChatService.Application\Folks.ChatService.Application.csproj", "{B6B140ED-AF70-43A6-9814-696ADFA9536F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{EDCFCF25-B6FA-48EC-B90E-B9B488BA64E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.EventBus.Messages", "Common\Folks.EventBus.Messages\Folks.EventBus.Messages.csproj", "{55D4DC32-D739-4D9D-A0BA-BFA7CCE73951}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,6 +94,14 @@ Global
 		{8E58A990-577C-4EF2-96DF-38A271133DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E58A990-577C-4EF2-96DF-38A271133DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E58A990-577C-4EF2-96DF-38A271133DD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B140ED-AF70-43A6-9814-696ADFA9536F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B140ED-AF70-43A6-9814-696ADFA9536F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B140ED-AF70-43A6-9814-696ADFA9536F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B140ED-AF70-43A6-9814-696ADFA9536F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55D4DC32-D739-4D9D-A0BA-BFA7CCE73951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55D4DC32-D739-4D9D-A0BA-BFA7CCE73951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55D4DC32-D739-4D9D-A0BA-BFA7CCE73951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55D4DC32-D739-4D9D-A0BA-BFA7CCE73951}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +118,8 @@ Global
 		{06C0650E-796B-4513-864B-23D7A7E5D9B6} = {8B2C5063-AF11-42E5-B1C7-20ADB6AB5469}
 		{3C59B606-456C-45FC-95F2-1086F03719D1} = {0BF85D02-C12F-4E4A-B2CE-FAA506C8B532}
 		{8E58A990-577C-4EF2-96DF-38A271133DD8} = {0BF85D02-C12F-4E4A-B2CE-FAA506C8B532}
+		{B6B140ED-AF70-43A6-9814-696ADFA9536F} = {0BF85D02-C12F-4E4A-B2CE-FAA506C8B532}
+		{55D4DC32-D739-4D9D-A0BA-BFA7CCE73951} = {EDCFCF25-B6FA-48EC-B90E-B9B488BA64E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3505674B-EFAB-48B2-BC36-7E190A9095D4}

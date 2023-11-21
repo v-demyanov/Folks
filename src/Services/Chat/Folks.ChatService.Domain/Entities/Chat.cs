@@ -6,5 +6,5 @@ namespace Folks.ChatService.Domain.Entities;
 
 public class Chat : BaseEntity
 {
-    public ICollection<string> UserIds { get; set; } = new HashSet<string>();
+    public ICollection<ObjectId> UserIds { get; set; } = new List<ObjectId>();
 }

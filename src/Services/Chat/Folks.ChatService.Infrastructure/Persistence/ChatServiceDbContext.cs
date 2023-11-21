@@ -18,6 +18,8 @@ public class ChatServiceDbContext : DbContext
 
     public DbSet<Message> Messages => Set<Message>();
 
+    public DbSet<User> Users => Set<User>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -25,5 +27,6 @@ public class ChatServiceDbContext : DbContext
         modelBuilder.Entity<Chat>().ToCollection("chats");
         modelBuilder.Entity<Group>().ToCollection("groups");
         modelBuilder.Entity<Message>().ToCollection("messages");
+        modelBuilder.Entity<User>().ToCollection("users");
     }
 }
