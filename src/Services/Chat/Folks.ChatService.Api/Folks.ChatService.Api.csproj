@@ -11,10 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.1.2" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Folks.EventBus.Messages\Folks.EventBus.Messages.csproj" />
+    <ProjectReference Include="..\Folks.ChatService.Application\Folks.ChatService.Application.csproj" />
+    <ProjectReference Include="..\Folks.ChatService.Infrastructure\Folks.ChatService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
