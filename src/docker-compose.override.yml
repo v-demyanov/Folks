@@ -64,6 +64,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__PostgreSqlConnectionString=Server=identitydb;Port=5432;Database=IdentityDb;User Id=admin;Password=admin1234;"
+      - "EventBusConfig__HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - identitydb
       - rabbitmq
