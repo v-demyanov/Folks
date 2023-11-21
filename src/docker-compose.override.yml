@@ -55,6 +55,7 @@ services:
       - "AuthenticationOptions__Authority=http://192.168.0.104:8001"
       - "MongoDbConfig__ConnectionString=mongodb://chatdb:27017"
       - "MongoDbConfig__DatabaseName=ChatDb"
+      - "EventBusConfig__HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - chatdb
       - rabbitmq
