@@ -11,9 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Duende.IdentityServer" Version="6.3.5" />
     <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.5" />
     <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.5" />
+    <PackageReference Include="MassTransit" Version="8.1.2" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
       <PrivateAssets>all</PrivateAssets>
@@ -28,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Folks.EventBus.Messages\Folks.EventBus.Messages.csproj" />
     <ProjectReference Include="..\Folks.IdentityService.Database.Migrations\Folks.IdentityService.Database.Migrations.csproj" />
     <ProjectReference Include="..\Folks.IdentityService.Infrastructure\Folks.IdentityService.Infrastructure.csproj" />
   </ItemGroup>

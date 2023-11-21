@@ -3,7 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using AutoMapper;
+
+using MassTransit;
+
 using Folks.IdentityService.Domain.Entities;
+using Folks.EventBus.Messages.IdentityService;
 
 namespace Folks.IdentityService.Api.Pages.Account.Register;
 
@@ -11,10 +16,14 @@ namespace Folks.IdentityService.Api.Pages.Account.Register;
 public class IndexModel : PageModel
 {
     private readonly UserManager<User> _userManager;
+    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IMapper _mapper;
 
-    public IndexModel(UserManager<User> userManager)
+    public IndexModel(UserManager<User> userManager, IPublishEndpoint publishEndpoint, IMapper mapper)
     {
-        _userManager = userManager;
+        _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+        _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     [BindProperty]
@@ -46,14 +55,17 @@ public class IndexModel : PageModel
 
         if (identityResult.Succeeded)
         {
-            return HandleRegisterSuccess();
+            return await HandleRegisterSuccessAsync(user);
         }
 
         return HandleRegisterFailury(identityResult);
     }
 
-    private IActionResult HandleRegisterSuccess()
+    private async Task<IActionResult> HandleRegisterSuccessAsync(User user)
     {
+        var userRegisteredMessage = _mapper.Map<UserRegistered>(user);
+        await _publishEndpoint.Publish(userRegisteredMessage);
+
         return RedirectToPage("/Account/Login/Index", new
         {
             returnUrl = ReturnUrl

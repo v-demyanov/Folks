@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
+using System.Reflection;
+
+using MassTransit;
+
 using Folks.IdentityService.Infrastructure;
 using Folks.IdentityService.Infrastructure.Constants;
 using Folks.IdentityService.Domain.Entities;
@@ -24,6 +28,8 @@ public static class HostingExtensions
             .AddEntityFrameworkStores<IdentityServiceDbContext>()
             .AddDefaultTokenProviders();
 
+        builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
         var connectionString = builder.Configuration
             .GetConnectionString(EnvironmentSettings.ConnectionStringName);
 
@@ -42,6 +48,15 @@ public static class HostingExtensions
                         builder.MigrationsAssembly(EnvironmentSettings.MigrationsAssembly));
             })
             .AddAspNetIdentity<User>();
+
+        builder.Services.AddMassTransit(config =>
+        {
+            config.UsingRabbitMq((context, config) =>
+            {
+                var hostAddress = builder.Configuration.GetValue<string>("EventBusConfig:HostAddress");
+                config.Host(hostAddress);
+            });
+        });
 
         return builder;
     }
