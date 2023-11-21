@@ -4,11 +4,14 @@ services:
   identitydb:
     image: postgres
 
+  pgadmin:
+    image: dpage/pgadmin4
+
   chatdb:
     image: mongo
 
-  pgadmin:
-    image: dpage/pgadmin4 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
 
   folks.apigateway:
     image: ${DOCKER_REGISTRY-}folksapigateway

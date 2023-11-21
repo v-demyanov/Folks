@@ -11,14 +11,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
-  chatdb:
-    container_name: chatdb
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-
   pgadmin:
     container_name: pgadmin
     environment:
@@ -29,6 +21,21 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data:/root/.pgadmin
+
+  chatdb:
+    container_name: chatdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   folks.apigateway:
     container_name: folks.apigateway
@@ -50,6 +57,7 @@ services:
       - "MongoDbConfig__DatabaseName=ChatDb"
     depends_on:
       - chatdb
+      - rabbitmq
 
   folks.identityservice.api:
     container_name: folks.identityservice.api
@@ -58,5 +66,6 @@ services:
       - "ConnectionStrings__PostgreSqlConnectionString=Server=identitydb;Port=5432;Database=IdentityDb;User Id=admin;Password=admin1234;"
     depends_on:
       - identitydb
+      - rabbitmq
     ports:
       - "8001:80"
