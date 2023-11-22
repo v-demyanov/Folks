@@ -9,7 +9,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<User, UserRegistered>()
+        CreateMap<User, UserRegisteredEvent>()
             .ForMember(destination => destination.UserId, options => options.MapFrom(source => source.Id))
             .ReverseMap();
     }

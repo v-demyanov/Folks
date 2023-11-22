@@ -1,6 +1,6 @@
 ﻿namespace Folks.EventBus.Messages.IdentityService;
 
-public record UserRegistered
+public record UserRegisteredEvent
 {
     public required string UserId { get; init; }
 

@@ -9,7 +9,7 @@ using Folks.ChatService.Application.Features.Users.Commands;
 
 namespace Folks.ChatService.Api.Consumers;
 
-public class UserRegisteredConsumer : IConsumer<UserRegistered>
+public class UserRegisteredConsumer : IConsumer<UserRegisteredEvent>
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ public class UserRegisteredConsumer : IConsumer<UserRegistered>
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task Consume(ConsumeContext<UserRegistered> context)
+    public async Task Consume(ConsumeContext<UserRegisteredEvent> context)
     {
         var addUserCommand = _mapper.Map<AddUserCommand>(context.Message);
         await _mediator.Send(addUserCommand);

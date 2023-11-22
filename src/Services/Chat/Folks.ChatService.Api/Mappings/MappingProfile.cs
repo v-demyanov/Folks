@@ -9,6 +9,6 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<AddUserCommand, UserRegistered>().ReverseMap();
+        CreateMap<AddUserCommand, UserRegisteredEvent>().ReverseMap();
     }
 }

@@ -63,7 +63,7 @@ public class IndexModel : PageModel
 
     private async Task<IActionResult> HandleRegisterSuccessAsync(User user)
     {
-        var userRegisteredMessage = _mapper.Map<UserRegistered>(user);
+        var userRegisteredMessage = _mapper.Map<UserRegisteredEvent>(user);
         await _publishEndpoint.Publish(userRegisteredMessage);
 
         return RedirectToPage("/Account/Login/Index", new
