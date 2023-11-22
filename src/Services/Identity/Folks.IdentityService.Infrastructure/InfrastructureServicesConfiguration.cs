@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Folks.IdentityService.Infrastructure.Persistence;
 using Folks.IdentityService.Infrastructure.Constants;
-using Folks.IdentityService.Infrastructure.Models;
 
 namespace Folks.IdentityService.Infrastructure;
 

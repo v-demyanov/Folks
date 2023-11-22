@@ -1,7 +1,7 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 
-namespace Folks.IdentityService.Infrastructure.Models;
+namespace Folks.IdentityService.Infrastructure;
 
 public record class IdentityServerConfig
 {
