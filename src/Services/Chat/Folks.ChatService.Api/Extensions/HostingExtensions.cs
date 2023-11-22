@@ -41,7 +41,7 @@ public static class HostingExtensions
                 var hostAddress = builder.Configuration.GetValue<string>("EventBusConfig:HostAddress");
                 config.Host(hostAddress);
 
-                config.ReceiveEndpoint("userregistered-queue", config =>
+                config.ReceiveEndpoint(config =>
                 {
                     config.ConfigureConsumer<UserRegisteredConsumer>(context);
                 });
@@ -80,6 +80,8 @@ public static class HostingExtensions
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.MapControllers();
 
         return app;
     }
