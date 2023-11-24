@@ -1,4 +1,3 @@
-import HomeSearchbar from '../../../components/home/searchbar/home-searchbar';
 import ChannelCreateButton from '../../../features/channels/channel-create-button/channel-create-button';
 import ChannelsList from '../../../features/channels/channels-list/channels-list';
 
