@@ -1,17 +1,29 @@
-import { IconButton } from 'react-native-paper';
-
-import { CHANNEL_CREATE_BUTTON_ICON_SIZE } from '../../../common/constants/icons.constants';
-import buildStyles from './channel-create-button.styles';
+import { FAB } from 'react-native-paper';
+import { useState } from 'react';
 
 const ChannelCreateButton = (): JSX.Element => {
-  const styles = buildStyles();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const onStateChange = ({ open }: { open: boolean }) => setIsOpen(open);
 
   return (
-    <IconButton
-      style={[styles.button]}
-      icon="chat-plus-outline"
-      size={CHANNEL_CREATE_BUTTON_ICON_SIZE}
-      mode="contained"
+    <FAB.Group
+      open={isOpen}
+      visible
+      icon={isOpen ? 'close' : 'chat-plus-outline'}
+      actions={[
+        {
+          icon: 'chat-outline',
+          label: 'Chat',
+          onPress: () => {},
+        },
+        {
+          icon: 'account-group-outline',
+          label: 'Group',
+          onPress: () => {},
+        },
+      ]}
+      onStateChange={onStateChange}
     />
   );
 };
