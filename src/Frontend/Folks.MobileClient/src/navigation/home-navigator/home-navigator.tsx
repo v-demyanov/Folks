@@ -4,10 +4,10 @@ import { useTheme } from 'react-native-paper';
 
 import SettingsScreen from '../../screens/home/settings-screen/settings-screen';
 import { TAB_BAR_ICON_SIZE } from '../../common/constants/icons.constants';
-import ChatsListScreen from '../../screens/home/chats-list-screen/chats-list-screen';
+import ChannelsScreen from '../../screens/home/channels-screen/channels-screen';
 
 export type TabParamList = {
-  Chats: undefined;
+  Channels: undefined;
   Settings: undefined;
 };
 
@@ -19,8 +19,8 @@ const HomeNavigator = (): JSX.Element => {
   return (
     <Tab.Navigator activeColor={theme.colors.primary}>
       <Tab.Screen
-        name="Chats"
-        component={ChatsListScreen}
+        name="Channels"
+        component={ChannelsScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
