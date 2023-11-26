@@ -1,10 +1,5 @@
-﻿using MongoDB.Bson;
+﻿namespace Folks.ChatService.Domain.Entities;
 
-using Folks.ChatService.Domain.Common;
-
-namespace Folks.ChatService.Domain.Entities;
-
-public class Chat : BaseEntity
+public class Chat : Channel
 {
-    public ICollection<ObjectId> UserIds { get; set; } = new List<ObjectId>();
 }
