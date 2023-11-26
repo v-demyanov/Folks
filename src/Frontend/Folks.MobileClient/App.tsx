@@ -4,10 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useColorScheme } from 'react-native';
 import { Provider } from 'react-redux';
 
-import { darkTheme, lightTheme } from './src/common/themes/themes';
+import { darkTheme, lightTheme } from './src/themes/themes';
 import AppNavigator from './src/navigation/app-navigator';
 import { AuthProvider } from './src/features/auth/context/auth-provider';
-import { store } from './src/common/store/store';
+import { store } from './src/store/store';
 
 export default function App() {
   const colorScheme = useColorScheme();

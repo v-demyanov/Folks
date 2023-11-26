@@ -1,4 +1,4 @@
-import { api } from '../../../common/api/api';
+import { api } from '../../../api/api';
 import IChannel from '../models/channel';
 
 const channelsApi = api.injectEndpoints({
