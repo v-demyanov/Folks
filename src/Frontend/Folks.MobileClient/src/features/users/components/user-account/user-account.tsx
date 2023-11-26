@@ -1,8 +1,8 @@
 import { View, StyleSheet } from 'react-native';
 import { Text, Avatar } from 'react-native-paper';
 
-import { USER_ACCOUNT_IMAGE_SIZE } from '../../../common/constants/icons.constants';
-import useAuth from '../../auth/hooks/use-auth';
+import { USER_ACCOUNT_IMAGE_SIZE } from '../../../../common/constants/icons.constants';
+import useAuth from '../../../auth/hooks/use-auth';
 
 const styles = StyleSheet.create({
   view: {

@@ -1,7 +1,7 @@
 import { Appbar } from 'react-native-paper';
 import { memo } from 'react';
 
-import UserAccount from '../../../features/users/user-account/user-account';
+import UserAccount from '../../../features/users/components/user-account/user-account';
 import useAuth from '../../../features/auth/hooks/use-auth';
 
 const HomeAppbar = (): JSX.Element => {
