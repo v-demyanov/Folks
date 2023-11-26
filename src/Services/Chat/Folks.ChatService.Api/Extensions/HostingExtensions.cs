@@ -79,6 +79,24 @@ public static class HostingExtensions
         app.UseSwagger();
         app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Folks.ChatService.Api v1"));
 
+        app.UseExceptionHandler(app => app.Run(async context =>
+        {
+            var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+            context.Response.StatusCode = exception switch
+            {
+                EntityNotFoundException => (int)HttpStatusCode.NotFound,
+                AuthenticationFailedException => (int)HttpStatusCode.Unauthorized,
+                _ => (int)HttpStatusCode.InternalServerError,
+            };
+
+            await context.Response.WriteAsJsonAsync(new
+            {
+                context.Response.StatusCode,
+                ErrorMessage = exception?.Message ?? string.Empty,
+            });
+        }));
+
         app.UseHttpsRedirection();
 
         app.UseRouting();
