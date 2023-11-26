@@ -7,7 +7,8 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_IDENTITY_SERVER_URL": "http://192.168.0.104:8001"
+        "EXPO_PUBLIC_IDENTITY_SERVER_URL": "http://192.168.0.104:8001",
+        "EXPO_PUBLIC_API_GTW_URL": "http://192.168.0.104:8000"
       }
     },
     "preview": {
