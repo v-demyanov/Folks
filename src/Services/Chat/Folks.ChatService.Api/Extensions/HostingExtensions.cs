@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 
 using System.Reflection;
+using System.Net;
 
 using MassTransit;
 
@@ -9,6 +11,8 @@ using Folks.ChatService.Api.Constants;
 using Folks.ChatService.Infrastructure;
 using Folks.ChatService.Application;
 using Folks.ChatService.Api.Consumers;
+using Folks.ChatService.Application.Exceptions;
+using Folks.ChatService.Api.Hubs;
 
 namespace Folks.ChatService.Api.Extensions;
 
@@ -17,6 +21,7 @@ public static class HostingExtensions
     public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
+        builder.Services.AddSignalR();
         builder.Services.AddEndpointsApiExplorer();
 
         builder.Services.AddSwaggerGen((options) =>
@@ -81,6 +86,7 @@ public static class HostingExtensions
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.MapHub<ChannelsHub>(ApiRoutePatterns.ChannelsHub);
         app.MapControllers();
 
         return app;
