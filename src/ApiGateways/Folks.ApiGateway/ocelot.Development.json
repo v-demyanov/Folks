@@ -1,7 +1,7 @@
-{
+﻿{
   "Routes": [
     {
-      "DownstreamPathTemplate": "/{path}",
+      "DownstreamPathTemplate": "/api/v1/{path}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
