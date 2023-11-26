@@ -1,5 +1,5 @@
-import ChannelCreateButton from '../../../features/channels/channel-create-button/channel-create-button';
-import ChannelsList from '../../../features/channels/channels-list/channels-list';
+import ChannelCreateButton from '../../../features/channels/components/channel-create-button/channel-create-button';
+import ChannelsList from '../../../features/channels/components/channels-list/channels-list';
 
 const ChannelsScreen = (): JSX.Element => {
   return (
