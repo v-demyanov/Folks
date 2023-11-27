@@ -5,6 +5,14 @@ const buildStyles = () =>
     listItem: {
       paddingLeft: 10,
     },
+    view: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+    },
+    title: {
+      fontWeight: 'bold',
+    },
   });
 
 export default buildStyles;

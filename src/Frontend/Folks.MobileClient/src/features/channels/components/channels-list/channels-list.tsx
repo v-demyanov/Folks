@@ -1,19 +1,24 @@
-import { FlatList } from 'react-native';
-import { Text } from 'react-native-paper';
+import { FlatList, View } from 'react-native';
+import { Text, useTheme } from 'react-native-paper';
+import { useMemo } from 'react';
 
 import ChannelsListItem from './channels-list-item/channels-list-item';
 import IChannel from '../../models/channel';
 import { useGetOwnChannelsQuery } from '../../api/channels.api';
+import buildStyles from './channels-list.styles';
 
 const ChannelsList = (): JSX.Element => {
-  const { data: channels, error, isLoading } = useGetOwnChannelsQuery(null);
+  const theme = useTheme();
+  const { data: channels, error } = useGetOwnChannelsQuery(null);
+
+  const styles = useMemo(() => buildStyles(theme), [theme]);
 
   if (error) {
-    return <Text>Error while channels loading!</Text>
-  }
-
-  if (isLoading) {
-    return <Text>Channels are loading...</Text>
+    return (
+      <View style={[styles.centeredView]}>
+        <Text variant="labelMedium">Oops! Something went wrong...</Text>
+      </View>
+    );
   }
 
   const renderChannelsListItem = ({ item }: { item: IChannel }) => {
@@ -21,11 +26,20 @@ const ChannelsList = (): JSX.Element => {
   };
 
   return (
-    <FlatList
-      data={channels ?? []}
-      renderItem={renderChannelsListItem}
-      keyExtractor={(item) => item.id}
-    />
+    <>
+      {channels?.length ? (
+        <FlatList
+          data={channels}
+          renderItem={renderChannelsListItem}
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={[styles.itemSeparator]} />}
+        />
+      ) : (
+        <View style={[styles.centeredView]}>
+          <Text variant="labelMedium">Create your first group or chat!</Text>
+        </View>
+      )}
+    </>
   );
 };
 
