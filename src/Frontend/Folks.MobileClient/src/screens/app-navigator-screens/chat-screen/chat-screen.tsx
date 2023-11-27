@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native';
 
-import ChatFooter from '../../features/chats/chat-footer/chat-footer';
-import ChatHeader from '../../features/chats/chat-header/chat-header';
-import ChatMessageList from '../../features/chats/chat-message-list/chat-message-list';
+import ChatFooter from '../../../features/chats/chat-footer/chat-footer';
+import ChatHeader from '../../../features/chats/chat-header/chat-header';
+import ChatMessageList from '../../../features/chats/chat-message-list/chat-message-list';
 
 const styles = StyleSheet.create({
   view: {

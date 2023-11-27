@@ -2,9 +2,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import { useTheme } from 'react-native-paper';
 
-import SettingsScreen from '../../screens/home/settings-screen/settings-screen';
+import SettingsScreen from '../../screens/home-navigator-screens/settings-screen/settings-screen';
 import { TAB_BAR_ICON_SIZE } from '../../common/constants/icons.constants';
-import ChannelsScreen from '../../screens/home/channels-screen/channels-screen';
+import ChannelsScreen from '../../screens/home-navigator-screens/channels-screen/channels-screen';
 
 export type TabParamList = {
   Channels: undefined;
