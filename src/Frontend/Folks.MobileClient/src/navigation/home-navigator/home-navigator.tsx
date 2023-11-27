@@ -29,6 +29,7 @@ const HomeNavigator = (): JSX.Element => {
               size={TAB_BAR_ICON_SIZE}
             />
           ),
+          tabBarBadge: 6
         }}
       />
       <Tab.Screen
