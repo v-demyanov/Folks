@@ -84,7 +84,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       const urlParams = `${idTokenHintParam}&${postLogoutRedirectUriParam}`;
       const url = `${discoveryDocument.endSessionEndpoint}?${urlParams}`;
 
-      authRequest?.promptAsync(discoveryDocument, { url });
+      await authRequest?.promptAsync(discoveryDocument, { url });
     }
   };
 
