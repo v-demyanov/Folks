@@ -38,6 +38,15 @@ public class GetOwnChannelsQueryHandler : IRequestHandler<GetOwnChannelsQuery, I
             .Where(group => group.UserIds.Any(userId => userId == currentUser.Id))
             .ToListAsync();
 
+        foreach (var chat in chats)
+        {
+            var users = await _dbContext.Users
+                .Where(user => user.ChatIds.Any(chatId => chatId == chat.Id))
+                .ToListAsync();
+
+            chat.Users = users;
+        }
+
         var mappedChats = _mapper.Map<List<ChannelDto>>(chats);
         var mappedGroups = _mapper.Map<List<ChannelDto>>(groups);
         var channels = mappedChats.Union(mappedGroups);

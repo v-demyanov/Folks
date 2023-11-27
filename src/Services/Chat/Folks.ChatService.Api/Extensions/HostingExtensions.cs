@@ -34,6 +34,7 @@ public static class HostingExtensions
         });
 
         builder.Services
+            .AddHttpContextAccessor()
             .AddInfrastructureServices(builder.Configuration)
             .AddApplicationServices();
 
