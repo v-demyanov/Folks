@@ -25,7 +25,7 @@ const UserAccount = (): JSX.Element => {
         size={USER_ACCOUNT_IMAGE_SIZE}
         icon="account"
       />
-      <Text>{currentUser?.name}</Text>
+      <Text variant="titleMedium">{currentUser?.name}</Text>
     </View>
   );
 };
