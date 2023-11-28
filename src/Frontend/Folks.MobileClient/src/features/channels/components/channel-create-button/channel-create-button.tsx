@@ -1,7 +1,11 @@
 import { FAB } from 'react-native-paper';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
+import { StackNavigation } from '../../../../navigation/app-navigator';
 
 const ChannelCreateButton = (): JSX.Element => {
+  const navigation = useNavigation<StackNavigation>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onStateChange = ({ open }: { open: boolean }) => setIsOpen(open);
@@ -20,7 +24,7 @@ const ChannelCreateButton = (): JSX.Element => {
         {
           icon: 'account-group-outline',
           label: 'Group',
-          onPress: () => {},
+          onPress: () => navigation.navigate('NewGroup'),
         },
       ]}
       onStateChange={onStateChange}
