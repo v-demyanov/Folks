@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { MD3Theme } from 'react-native-paper/lib/typescript/types';
+import { Theme } from '../../../../themes/types/theme';
 
-const buildStyles = (theme: MD3Theme) =>
+const buildStyles = (theme: Theme) =>
   StyleSheet.create({
     itemSeparator: {
       backgroundColor: theme.colors.inverseOnSurface,

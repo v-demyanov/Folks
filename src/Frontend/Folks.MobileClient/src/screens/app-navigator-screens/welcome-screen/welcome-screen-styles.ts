@@ -1,7 +1,8 @@
-import { MD3Theme } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 
-const buildStyles = (theme: MD3Theme) =>
+import { Theme } from '../../../themes/types/theme';
+
+const buildStyles = (theme: Theme) =>
   StyleSheet.create({
     wrappper: {
       backgroundColor: theme.colors.background,

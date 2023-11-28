@@ -6,9 +6,10 @@ import ChannelsListItem from './channels-list-item/channels-list-item';
 import IChannel from '../../models/channel';
 import { useGetOwnChannelsQuery } from '../../api/channels.api';
 import buildStyles from './channels-list.styles';
+import { Theme } from '../../../../themes/types/theme';
 
 const ChannelsList = (): JSX.Element => {
-  const theme = useTheme();
+  const theme = useTheme<Theme>();
   const { data: channels, error } = useGetOwnChannelsQuery(null);
 
   const styles = useMemo(() => buildStyles(theme), [theme]);

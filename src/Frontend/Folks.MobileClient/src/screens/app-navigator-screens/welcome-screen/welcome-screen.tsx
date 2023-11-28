@@ -5,10 +5,11 @@ import { useMemo, useState } from 'react';
 import Logo from '../../../common/components/logo/logo';
 import useAuth from '../../../features/auth/hooks/use-auth';
 import buildStyles from './welcome-screen-styles';
+import { Theme } from '../../../themes/types/theme';
 
 const WelcomeScreen = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const theme = useTheme();
+  const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
   const { signInAsync, authRequest } = useAuth();
 

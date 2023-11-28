@@ -5,6 +5,7 @@ import { useTheme } from 'react-native-paper';
 import SettingsScreen from '../../screens/home-navigator-screens/settings-screen/settings-screen';
 import { TAB_BAR_ICON_SIZE } from '../../common/constants/icons.constants';
 import ChannelsScreen from '../../screens/home-navigator-screens/channels-screen/channels-screen';
+import { Theme } from '../../themes/types/theme';
 
 export type TabParamList = {
   Channels: undefined;
@@ -14,7 +15,7 @@ export type TabParamList = {
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
 const HomeNavigator = (): JSX.Element => {
-  const theme = useTheme();
+  const theme = useTheme<Theme>();
 
   return (
     <Tab.Navigator activeColor={theme.colors.primary}>
