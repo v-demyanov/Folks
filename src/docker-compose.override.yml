@@ -41,7 +41,7 @@ services:
     container_name: folks.apigateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "AuthenticationOptions__Authority=http://192.168.0.104:8001"
+      - "AuthenticationOptions__Authority=http://folks.identityservice.api"
     depends_on:
       - folks.identityservice.api
       - folks.chatservice.api
@@ -52,7 +52,7 @@ services:
     container_name: folks.chatservice.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "AuthenticationOptions__Authority=http://192.168.0.104:8001"
+      - "AuthenticationOptions__Authority=http://folks.identityservice.api"
       - "MongoDbConfig__ConnectionString=mongodb://chatdb:27017"
       - "MongoDbConfig__DatabaseName=ChatDb"
       - "EventBusConfig__HostAddress=amqp://guest:guest@rabbitmq:5672"
@@ -66,6 +66,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__PostgreSqlConnectionString=Server=identitydb;Port=5432;Database=IdentityDb;User Id=admin;Password=admin1234;"
       - "EventBusConfig__HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "IdentityServerConfig__IssuerUri=http://folks.identityservice.api"
     depends_on:
       - identitydb
       - rabbitmq
