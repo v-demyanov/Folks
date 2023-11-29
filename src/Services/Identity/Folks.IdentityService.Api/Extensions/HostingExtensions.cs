@@ -9,6 +9,7 @@ using Folks.IdentityService.Infrastructure;
 using Folks.IdentityService.Infrastructure.Constants;
 using Folks.IdentityService.Domain.Entities;
 using Folks.IdentityService.Infrastructure.Persistence;
+using Folks.IdentityService.Application;
 
 namespace Folks.IdentityService.Api.Extensions;
 
@@ -16,12 +17,15 @@ public static class HostingExtensions
 {
     public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddLocalApiAuthentication();
+
         builder.Services
-            .AddEndpointsApiExplorer()
-            .AddSwaggerGen()
-            .AddLocalApiAuthentication()
             .AddInfrastructureServices(builder.Configuration)
-            .AddRazorPages();
+            .AddApplicationServices();
+
+        builder.Services.AddRazorPages();
 
         builder.Services
             .AddIdentity<User, IdentityRole>()
@@ -34,7 +38,13 @@ public static class HostingExtensions
             .GetConnectionString(EnvironmentSettings.ConnectionStringName);
 
         builder.Services
-            .AddIdentityServer()
+            .AddIdentityServer((options) =>
+            {
+                var identityServerConfig = builder.Configuration
+                    .GetSection(nameof(IdentityServerConfig))
+                    .Get<IdentityServerConfig>();
+                options.IssuerUri = identityServerConfig?.IssuerUri;
+            })
             .AddConfigurationStore(options =>
             {
                 options.ConfigureDbContext = builder =>

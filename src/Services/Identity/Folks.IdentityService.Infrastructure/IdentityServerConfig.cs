@@ -5,6 +5,8 @@ namespace Folks.IdentityService.Infrastructure;
 
 public record class IdentityServerConfig
 {
+    public required string IssuerUri { get; init; }
+
     public required IEnumerable<Client> Clients { get; init; }
 
     public IEnumerable<ApiScope> ApiScopes =>
