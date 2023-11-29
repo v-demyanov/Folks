@@ -7,7 +7,14 @@ const redirectUri = AuthSession.makeRedirectUri();
 const authConfig: AuthConfig = {
   authRequestConfig: {
     clientId: 'native.code',
-    scopes: ['openid', 'profile', 'chatServiceApi', 'email', 'phone'],
+    scopes: [
+      'openid',
+      'profile',
+      'chatServiceApi',
+      'IdentityServerApi',
+      'email',
+      'phone',
+    ],
     responseType: 'code id_token',
     extraParams: {
       nonce: 'nonce',
