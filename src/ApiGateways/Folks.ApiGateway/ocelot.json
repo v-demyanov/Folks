@@ -23,7 +23,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/{path}",
+      "DownstreamPathTemplate": "/api/v1/{path}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -36,7 +36,13 @@
         "GET",
         "POST",
         "PUT"
-      ]
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityServerApiKey",
+        "AllowedScopes": [
+          "IdentityServerApi"
+        ]
+      }
     }
   ],
   "GlobalConfiguration": {
