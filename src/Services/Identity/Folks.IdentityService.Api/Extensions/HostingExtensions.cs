@@ -83,6 +83,8 @@ public static class HostingExtensions
         app.MapRazorPages()
            .RequireAuthorization();
 
+        app.MapControllers();
+
         return app;
     }
 }
