@@ -16,13 +16,13 @@ const SelectableUsersListItem = ({
   return (
     <List.Item
       style={[styles.listItem]}
-      title={user.title}
+      title={user.userName}
       titleStyle={[styles.title]}
       description={user.status}
       left={() => (
         <>
           <Avatar.Icon size={LIST_ITEM_IMAGE_SIZE} icon="account"></Avatar.Icon>
-          {user.selected ? <ListCheckBox isOnFocus={isOnFocus} /> : null}
+          {user.isSelected ? <ListCheckBox isOnFocus={isOnFocus} /> : null}
         </>
       )}
       onPress={() => onPress(user)}
