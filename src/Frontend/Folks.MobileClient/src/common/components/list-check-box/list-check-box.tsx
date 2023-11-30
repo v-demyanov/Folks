@@ -8,17 +8,17 @@ const ListCheckBox = ({ isOnFocus }: { isOnFocus: boolean }): JSX.Element => {
 
   return (
     <Icon
-      name="check-circle"
-      color={theme.colors.check}
-      size={21}
+      name="check"
+      color={'white'}
+      size={18}
       style={{
         position: 'absolute',
         bottom: 0,
         left: 35,
-        backgroundColor: isOnFocus
-          ? theme.colors.ripple
-          : theme.colors.background,
+        backgroundColor: theme.colors.check,
         borderRadius: 100,
+        borderWidth: 1.5,
+        borderColor: isOnFocus ? theme.colors.ripple : theme.colors.background,
         textAlign: 'center',
         verticalAlign: 'middle',
       }}
