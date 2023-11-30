@@ -15,7 +15,7 @@ const SelectedUsersChips = ({
 
   const renderChips = (): JSX.Element[] => {
     return users
-      .filter((user) => user.selected)
+      .filter((user) => user.isSelected)
       .map((user) => (
         <Chip
           style={[styles.chip]}
@@ -25,7 +25,7 @@ const SelectedUsersChips = ({
           onClose={() => onChipClose(user)}
           key={user.id}
         >
-          {user.title}
+          {user.userName}
         </Chip>
       ));
   };
@@ -33,7 +33,7 @@ const SelectedUsersChips = ({
   return (
     <View>
       <ScrollView horizontal={true} style={[styles.scrollView]}>
-        {users.filter((user) => user.selected).length ? (
+        {users.filter((user) => user.isSelected).length ? (
           renderChips()
         ) : (
           <Text style={[styles.emptyView]} variant="titleMedium">
