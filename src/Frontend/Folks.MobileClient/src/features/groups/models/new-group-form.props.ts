@@ -1,5 +1,5 @@
-import IUser from '../../users/models/user';
+import ISelectableUser from '../../users/models/selectable-user';
 
 export default interface NewGroupFormProps {
-  users: IUser[];
+  users: ISelectableUser[];
 }
