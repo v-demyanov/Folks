@@ -16,15 +16,15 @@ const ChannelsListItem = ({ channel }: { channel: IChannel }): JSX.Element => {
       titleStyle={[styles.title]}
       description={'Last message...'}
       onPress={() => {}}
-      left={() => (
-        <Avatar.Icon size={LIST_ITEM_IMAGE_SIZE} icon="account" />
-      )}
+      left={() => <Avatar.Icon size={LIST_ITEM_IMAGE_SIZE} icon="account" />}
       right={() => (
         <View style={[styles.view]}>
           <Text variant="bodySmall">
             {getUserFrendlyDateString(new Date())}
           </Text>
-          <Badge>2</Badge>
+          <Badge style={[styles.badge]} size={22}>
+            3
+          </Badge>
         </View>
       )}
     />

@@ -13,6 +13,9 @@ const buildStyles = () =>
     title: {
       fontWeight: 'bold',
     },
+    badge: {
+      fontWeight: 'bold',
+    },
   });
 
 export default buildStyles;
