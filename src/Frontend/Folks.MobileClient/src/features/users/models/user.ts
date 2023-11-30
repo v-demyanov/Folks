@@ -1,6 +1,6 @@
 export default interface IUser {
   id: string;
-  title: string;
-  selected: boolean;
+  userName: string;
+  email: string;
   status: string;
 }

@@ -1,6 +1,6 @@
-import IUser from './user';
+import ISelectableUser from './selectable-user';
 
 export default interface ISelectedUsersChipsProps {
-  users: IUser[];
-  onChipClose: (user: IUser) => void;
+  users: ISelectableUser[];
+  onChipClose: (user: ISelectableUser) => void;
 }

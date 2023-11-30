@@ -1,6 +1,6 @@
-import IUser from './user';
+import ISelectableUser from './selectable-user';
 
 export default interface ISelectableUsersListProps {
-  onListItemPress: (user: IUser) => void;
-  users: IUser[];
+  onListItemPress: (user: ISelectableUser) => void;
+  users: ISelectableUser[];
 }
