@@ -18,11 +18,13 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task Handle(AddUserCommand request, CancellationToken cancellationToken)
+    public Task Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<User>(request);
 
-        await _dbContext.AddAsync(user);
-        await _dbContext.SaveChangesAsync();
+        _dbContext.Add(user);
+        _dbContext.SaveChanges();
+
+        return Task.CompletedTask;
     }
 }
