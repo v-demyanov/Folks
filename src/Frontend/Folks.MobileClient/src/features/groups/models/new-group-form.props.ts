@@ -1,5 +1,7 @@
-import ISelectableUser from '../../users/models/selectable-user';
+import { FormikProps } from 'formik';
+
+import IGroupFormValue from './group-form-value';
 
 export default interface NewGroupFormProps {
-  users: ISelectableUser[];
+  form: FormikProps<IGroupFormValue>;
 }
