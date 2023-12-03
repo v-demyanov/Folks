@@ -14,7 +14,7 @@ public class Message : BaseEntity
 
     public DateTimeOffset? SeenAt { get; set; }
 
-    public required string OwnerId { get; set; }
+    public required ObjectId OwnerId { get; set; }
 
     public ObjectId? GroupId { get; set; }
 

@@ -12,7 +12,7 @@ public class User : BaseEntity
 
     public required string Email { get; set; }
 
-    public required ICollection<ObjectId> ChatIds { get; set; }
+    public required ICollection<ObjectId> ChatIds { get; set; } = new List<ObjectId>();
 
-    public required ICollection<ObjectId> GroupIds { get; set; }
+    public required ICollection<ObjectId> GroupIds { get; set; } = new List<ObjectId>();
 }

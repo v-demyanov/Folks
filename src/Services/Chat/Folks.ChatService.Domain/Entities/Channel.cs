@@ -11,5 +11,5 @@ public abstract class Channel : BaseEntity
     [NotMapped]
     public ICollection<User> Users { get; set; } = new List<User>();
 
-    public required ICollection<ObjectId> UserIds { get; set; }
+    public required ICollection<ObjectId> UserIds { get; set; } = new List<ObjectId>();
 }
