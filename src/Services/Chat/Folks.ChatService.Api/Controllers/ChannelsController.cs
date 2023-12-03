@@ -14,7 +14,7 @@ namespace Folks.ChatService.Api.Controllers;
 
 [Authorize]
 [ApiController]
-[Route($"{ApiRoutePatterns.BaseRoute}[controller]")]
+[Route($"{ApiRoutePatterns.ChannelsController}")]
 public class ChannelsController : ControllerBase
 {
     private readonly IMediator _mediator;
