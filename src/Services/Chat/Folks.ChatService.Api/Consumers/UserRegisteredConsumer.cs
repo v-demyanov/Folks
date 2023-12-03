@@ -5,7 +5,7 @@ using MediatR;
 using AutoMapper;
 
 using Folks.EventBus.Messages.IdentityService;
-using Folks.ChatService.Application.Features.Users.Commands;
+using Folks.ChatService.Application.Features.Users.Commands.AddUserCommand;
 
 namespace Folks.ChatService.Api.Consumers;
 

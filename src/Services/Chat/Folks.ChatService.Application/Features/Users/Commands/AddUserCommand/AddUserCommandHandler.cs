@@ -5,7 +5,7 @@ using MediatR;
 using Folks.ChatService.Infrastructure.Persistence;
 using Folks.ChatService.Domain.Entities;
 
-namespace Folks.ChatService.Application.Features.Users.Commands;
+namespace Folks.ChatService.Application.Features.Users.Commands.AddUserCommand;
 
 public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
 {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Folks.ChatService.Application.Features.Users.Commands;
+namespace Folks.ChatService.Application.Features.Users.Commands.AddUserCommand;
 
 public class AddUserCommand : IRequest
 {
