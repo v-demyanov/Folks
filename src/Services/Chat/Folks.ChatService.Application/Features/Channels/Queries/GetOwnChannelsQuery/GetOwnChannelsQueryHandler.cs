@@ -1,7 +1,5 @@
 ﻿using MediatR;
 
-using Microsoft.EntityFrameworkCore;
-
 using AutoMapper;
 
 using Folks.ChatService.Application.Features.Channels.Dto;
@@ -22,27 +20,28 @@ public class GetOwnChannelsQueryHandler : IRequestHandler<GetOwnChannelsQuery, I
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<IEnumerable<ChannelDto>> Handle(GetOwnChannelsQuery request, CancellationToken cancellationToken)
+    public Task<IEnumerable<ChannelDto>> Handle(GetOwnChannelsQuery request, CancellationToken cancellationToken)
     {
-        var currentUser = await _dbContext.Users.FirstOrDefaultAsync(user => user.SourceId == request.OwnerId);
+        var currentUser = _dbContext.Users.FirstOrDefault(user => user.SourceId == request.OwnerId);
         if (currentUser is null)
         {
             throw new EntityNotFoundException(nameof(User), request.OwnerId);
         }
 
-        var chats = await _dbContext.Chats
-            .Where(chat => chat.UserIds.Any(userId => userId == currentUser.Id))
-            .ToListAsync();
+        var chats = _dbContext.Chats
+            .AsEnumerable()
+            .Where(chat => currentUser.ChatIds.Any(chatId => chatId == chat.Id));
 
-        var groups = await _dbContext.Groups
-            .Where(group => group.UserIds.Any(userId => userId == currentUser.Id))
-            .ToListAsync();
+        var groups = _dbContext.Groups
+            .AsEnumerable()
+            .Where(group => currentUser.GroupIds.Any(groupId => groupId == group.Id));
 
         foreach (var chat in chats)
         {
-            var users = await _dbContext.Users
+            var users = _dbContext.Users
+                .AsEnumerable()
                 .Where(user => user.ChatIds.Any(chatId => chatId == chat.Id))
-                .ToListAsync();
+                .ToList();
 
             chat.Users = users;
         }
@@ -51,6 +50,6 @@ public class GetOwnChannelsQueryHandler : IRequestHandler<GetOwnChannelsQuery, I
         var mappedGroups = _mapper.Map<List<ChannelDto>>(groups);
         var channels = mappedChats.Union(mappedGroups);
 
-        return channels;
+        return Task.FromResult(channels);
     }
 }
