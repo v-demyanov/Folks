@@ -1,6 +1,6 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
-import { useTheme } from 'react-native-paper';
+import { Badge, useTheme } from 'react-native-paper';
 
 import SettingsScreen from '../../screens/home-navigator-screens/settings-screen/settings-screen';
 import { TAB_BAR_ICON_SIZE } from '../../common/constants/icons.constants';
@@ -30,7 +30,7 @@ const HomeNavigator = (): JSX.Element => {
               size={TAB_BAR_ICON_SIZE}
             />
           ),
-          tabBarBadge: 6
+          tabBarBadge: 9,
         }}
       />
       <Tab.Screen
