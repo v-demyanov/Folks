@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
 using System.Security.Claims;
-using System.Net;
 
-using Folks.ChatService.Api.Constants;
 using Folks.ChatService.Application.Features.Channels.Dto;
 using Folks.ChatService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
+using Folks.ChatService.Api.Constants;
+using Folks.ChatService.Api.Models;
 
 namespace Folks.ChatService.Api.Controllers;
 
@@ -25,9 +25,9 @@ public class ChannelsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(IEnumerable<ChannelDto>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(IEnumerable<ChannelDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ChannelDto>>> GetOwnChannels()
     {
         var ownerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
