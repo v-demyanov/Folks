@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { FormikProps, useFormik } from 'formik';
 
 import NewGroupForm from '../../../features/groups/components/new-group/new-group-form/new-group-form';
 import NewGroupHeader from '../../../features/groups/components/new-group/new-group-header/new-group-header';
@@ -8,12 +9,44 @@ import GroupCreateButton from '../../../features/groups/components/new-group/gro
 import { useGetAllUsersQuery } from '../../../features/users/api/users.api';
 import ISelectableUser from '../../../features/users/models/selectable-user';
 import useAuth from '../../../features/auth/hooks/use-auth';
+import IGroupFormValue from '../../../features/groups/models/group-form-value';
+import { useCreateGroupMutation } from '../../../features/groups/api/groups.api';
+import ICreateGroupCommand from '../../../features/groups/models/group-create-command';
 
 const NewGroupScreen = (): JSX.Element => {
   const [selectableUsers, setSelectableUsers] = useState<ISelectableUser[]>([]);
   const { currentUser } = useAuth();
   const { data: users = [], isSuccess: isUsersQuerySuccess } =
     useGetAllUsersQuery(null, { refetchOnMountOrArgChange: true });
+  const [createGroup, { isLoading: isCreatingGroup }] =
+    useCreateGroupMutation();
+
+  const newGroupForm: FormikProps<IGroupFormValue> = useFormik<IGroupFormValue>(
+    {
+      initialValues: {},
+      enableReinitialize: true,
+      onSubmit: (value: IGroupFormValue) => {
+        if (!currentUser) {
+          return;
+        }
+
+        const userIds = selectableUsers
+          .filter((user) => user.isSelected)
+          .map((user) => user.id);
+
+        userIds.push(currentUser.sub);
+
+        createGroup({
+          title: value.title,
+          userIds,
+        } as ICreateGroupCommand)
+          .unwrap()
+          .then((createdGroup) => {
+            console.log('createdGroup: ', createdGroup);
+          });
+      },
+    }
+  );
 
   useEffect(() => {
     const selectableUsers = prepareSelecatableUsers();
@@ -43,7 +76,7 @@ const NewGroupScreen = (): JSX.Element => {
   return (
     <>
       <NewGroupHeader />
-      <NewGroupForm users={selectableUsers} />
+      <NewGroupForm form={newGroupForm} />
       <SelectedUsersChips
         users={selectableUsers}
         onChipClose={handleChipClose}
@@ -52,7 +85,12 @@ const NewGroupScreen = (): JSX.Element => {
         users={selectableUsers}
         onListItemPress={handleListItemPress}
       />
-      <GroupCreateButton />
+      <GroupCreateButton
+        onPress={newGroupForm.handleSubmit}
+        disabled={
+          !newGroupForm.isValid || !newGroupForm.dirty || isCreatingGroup
+        }
+      />
     </>
   );
 };
