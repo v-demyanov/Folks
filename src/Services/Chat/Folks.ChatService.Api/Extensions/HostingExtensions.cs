@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 
 using System.Reflection;
-using System.Net;
 
 using MassTransit;
 
@@ -11,8 +9,8 @@ using Folks.ChatService.Api.Constants;
 using Folks.ChatService.Infrastructure;
 using Folks.ChatService.Application;
 using Folks.ChatService.Api.Consumers;
-using Folks.ChatService.Application.Exceptions;
 using Folks.ChatService.Api.Hubs;
+using Folks.ChatService.Api.Middlewares;
 
 namespace Folks.ChatService.Api.Extensions;
 
@@ -77,26 +75,10 @@ public static class HostingExtensions
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
         app.UseSwagger();
         app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Folks.ChatService.Api v1"));
-
-        app.UseExceptionHandler(app => app.Run(async context =>
-        {
-            var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-
-            context.Response.StatusCode = exception switch
-            {
-                EntityNotFoundException => (int)HttpStatusCode.NotFound,
-                AuthenticationFailedException => (int)HttpStatusCode.Unauthorized,
-                _ => (int)HttpStatusCode.InternalServerError,
-            };
-
-            await context.Response.WriteAsJsonAsync(new
-            {
-                context.Response.StatusCode,
-                ErrorMessage = exception?.Message ?? string.Empty,
-            });
-        }));
 
         app.UseHttpsRedirection();
 
