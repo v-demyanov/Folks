@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using MongoDB.EntityFrameworkCore.Extensions;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson;
 
 using Folks.ChatService.Domain.Entities;
 
@@ -23,6 +25,8 @@ public class ChatServiceDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        BsonClassMap.RegisterClassMap<List<ObjectId>>();
 
         modelBuilder.Entity<Chat>().ToCollection("chats");
         modelBuilder.Entity<Group>().ToCollection("groups");
