@@ -25,7 +25,7 @@ public class ChannelsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(IEnumerable<ChannelDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ChannelDto>>> GetOwnChannels()

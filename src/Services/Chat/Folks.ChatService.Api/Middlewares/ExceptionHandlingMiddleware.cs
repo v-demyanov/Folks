@@ -24,14 +24,14 @@ public class ExceptionHandlingMiddleware
             {
                 EntityNotFoundException => StatusCodes.Status404NotFound,
                 AuthenticationFailedException => StatusCodes.Status401Unauthorized,
-                ValidationException => StatusCodes.Status400BadRequest,
+                ValidationException => StatusCodes.Status422UnprocessableEntity,
                 _ => StatusCodes.Status500InternalServerError,
             };
 
             switch (exception)
             {
-                case ValidationException:
-                    await HandleValidationExceptionAsync(context, exception as ValidationException ?? new ValidationException());
+                case ValidationException validationException:
+                    await HandleValidationExceptionAsync(context, validationException);
                     break;
                 default:
                     await HandleByDefaultAsync(context, exception);
