@@ -2,9 +2,10 @@
 
 using AutoMapper;
 
+using MongoDB.Bson;
+
 using Folks.ChatService.Application.Features.Channels.Dto;
 using Folks.ChatService.Infrastructure.Persistence;
-using Folks.ChatService.Application.Exceptions;
 using Folks.ChatService.Domain.Entities;
 
 namespace Folks.ChatService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
@@ -22,28 +23,14 @@ public class GetOwnChannelsQueryHandler : IRequestHandler<GetOwnChannelsQuery, I
 
     public Task<IEnumerable<ChannelDto>> Handle(GetOwnChannelsQuery request, CancellationToken cancellationToken)
     {
-        var currentUser = _dbContext.Users.FirstOrDefault(user => user.SourceId == request.OwnerId);
-        if (currentUser is null)
-        {
-            throw new EntityNotFoundException(nameof(User), request.OwnerId);
-        }
+        var currentUser = _dbContext.Users.First(user => user.SourceId == request.OwnerId);
 
-        var chats = _dbContext.Chats
-            .AsEnumerable()
-            .Where(chat => currentUser.ChatIds.Any(chatId => chatId == chat.Id));
-
-        var groups = _dbContext.Groups
-            .AsEnumerable()
-            .Where(group => currentUser.GroupIds.Any(groupId => groupId == group.Id));
+        var chats = GetChatsByIds(currentUser.ChatIds);
+        var groups = GetGroupsByIds(currentUser.GroupIds);
 
         foreach (var chat in chats)
         {
-            var users = _dbContext.Users
-                .AsEnumerable()
-                .Where(user => user.ChatIds.Any(chatId => chatId == chat.Id))
-                .ToList();
-
-            chat.Users = users;
+            chat.Users = GetUsersByChatId(chat.Id).ToList();
         }
 
         var mappedChats = _mapper.Map<List<ChannelDto>>(chats);
@@ -52,4 +39,22 @@ public class GetOwnChannelsQueryHandler : IRequestHandler<GetOwnChannelsQuery, I
 
         return Task.FromResult(channels);
     }
+
+    // TODO: Move it in IQueryable extensions after mongo-efcore-provider will be updated
+    private IEnumerable<Chat> GetChatsByIds(IEnumerable<ObjectId> ids) =>
+        _dbContext.Chats
+            .AsEnumerable()
+            .Where(chat => ids.Any(chatId => chatId == chat.Id));
+
+    // TODO: Move it in IQueryable extensions after mongo-efcore-provider will be updated
+    private IEnumerable<Group> GetGroupsByIds(IEnumerable<ObjectId> ids) =>
+        _dbContext.Groups
+            .AsEnumerable()
+            .Where(group => ids.Any(groupId => groupId == group.Id));
+
+    // TODO: Move it in IQueryable extensions after mongo-efcore-provider will be updated
+    private IEnumerable<User> GetUsersByChatId(ObjectId chatId) =>
+        _dbContext.Users
+            .AsEnumerable()
+            .Where(user => user.ChatIds.Any(id => id == chatId));
 }
