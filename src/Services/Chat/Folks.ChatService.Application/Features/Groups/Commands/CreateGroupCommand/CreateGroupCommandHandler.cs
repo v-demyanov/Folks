@@ -2,6 +2,8 @@
 
 using AutoMapper;
 
+using MongoDB.Bson;
+
 using Folks.ChatService.Application.Features.Channels.Dto;
 using Folks.ChatService.Infrastructure.Persistence;
 using Folks.ChatService.Domain.Entities;
@@ -24,19 +26,25 @@ public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, Cha
         var group = _mapper.Map<Group>(request);
 
         _dbContext.Groups.Add(group);
-
-        var users = _dbContext.Users
-            .AsEnumerable()
-            .Where(user => group.UserIds.Any(userId => userId == user.Id));
-
-        foreach (var user in users)
-        {
-            user.GroupIds.Add(group.Id);
-        }
-        _dbContext.Users.UpdateRange(users);
+        UpdateUsersGroupIds(group.UserIds, group.Id);
 
         _dbContext.SaveChanges();
 
         return Task.FromResult(_mapper.Map<ChannelDto>(group));
+    }
+
+    private void UpdateUsersGroupIds(IEnumerable<ObjectId> userIds, ObjectId groupId)
+    {
+        var users = _dbContext.Users;
+
+        foreach (var user in users)
+        {
+            if (userIds.Contains(user.Id))
+            {
+                user.GroupIds.Add(groupId);
+            }
+        }
+
+        _dbContext.Users.UpdateRange(users);
     }
 }
