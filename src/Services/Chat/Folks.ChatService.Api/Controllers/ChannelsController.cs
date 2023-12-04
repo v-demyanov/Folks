@@ -31,12 +31,8 @@ public class ChannelsController : ControllerBase
     public async Task<ActionResult<IEnumerable<ChannelDto>>> GetOwnChannels()
     {
         var ownerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (ownerId is null)
-        {
-            return Unauthorized();
-        }
 
-        var query = new GetOwnChannelsQuery { OwnerId = ownerId };
+        var query = new GetOwnChannelsQuery { OwnerId = ownerId ?? string.Empty };
         var channels = await _mediator.Send(query);
 
         return Ok(channels);
