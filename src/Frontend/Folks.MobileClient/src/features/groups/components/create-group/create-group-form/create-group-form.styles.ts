@@ -11,15 +11,13 @@ const buildStyles = (theme: Theme) =>
       paddingHorizontal: 20,
     },
     groupImageView: {
-      width: '25%',
+      width: '30%',
       display: 'flex',
       justifyContent: 'center',
     },
     inputView: {
-      width: '75%',
+      width: '70%',
       display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     textInput: {
       backgroundColor: theme.colors.background,

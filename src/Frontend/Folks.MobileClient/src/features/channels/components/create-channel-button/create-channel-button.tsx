@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { StackNavigation } from '../../../../navigation/app-navigator';
 
-const ChannelCreateButton = (): JSX.Element => {
+const CreateChannelButton = (): JSX.Element => {
   const navigation = useNavigation<StackNavigation>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -24,7 +24,7 @@ const ChannelCreateButton = (): JSX.Element => {
         {
           icon: 'account-group-outline',
           label: 'Group',
-          onPress: () => navigation.navigate('NewGroup'),
+          onPress: () => navigation.navigate('CreateGroupScreen'),
         },
       ]}
       onStateChange={onStateChange}
@@ -32,4 +32,4 @@ const ChannelCreateButton = (): JSX.Element => {
   );
 };
 
-export default ChannelCreateButton;
+export default CreateChannelButton;

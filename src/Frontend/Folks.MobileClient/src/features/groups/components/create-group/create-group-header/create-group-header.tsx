@@ -3,7 +3,7 @@ import { Appbar } from 'react-native-paper';
 
 import { StackNavigation } from '../../../../../navigation/app-navigator';
 
-const NewGroupHeader = (): JSX.Element => {
+const CreateGroupHeader = (): JSX.Element => {
   const navigation = useNavigation<StackNavigation>();
 
   return (
@@ -14,4 +14,4 @@ const NewGroupHeader = (): JSX.Element => {
   );
 };
 
-export default NewGroupHeader;
+export default CreateGroupHeader;

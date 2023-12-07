@@ -1,11 +1,11 @@
 import { FAB } from 'react-native-paper';
 
-import IGroupCreateButtonProps from '../../../models/group-create-button.props';
+import ICreateGroupButtonProps from '../../../models/create-group-button.props';
 
-const GroupCreateButton = ({
+const CreateGroupButton = ({
   onPress,
   disabled,
-}: IGroupCreateButtonProps): JSX.Element => {
+}: ICreateGroupButtonProps): JSX.Element => {
   return (
     <FAB
       icon="check"
@@ -16,4 +16,4 @@ const GroupCreateButton = ({
   );
 };
 
-export default GroupCreateButton;
+export default CreateGroupButton;
