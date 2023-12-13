@@ -10,9 +10,8 @@ import { AuthProvider } from './src/features/auth/context/auth-provider';
 import { store } from './src/store/store';
 
 export default function App() {
-  const colorScheme = useColorScheme();
-
-  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
+  const colorSchemeName = useColorScheme();
+  const theme = (colorSchemeName == 'dark' ? darkTheme : lightTheme);
 
   return (
     <NavigationContainer>

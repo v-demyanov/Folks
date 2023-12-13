@@ -41,6 +41,11 @@
     "onSurfaceDisabled": "rgba(28, 27, 31, 0.38)",
     "backdrop": "rgba(49, 47, 56, 0.4)",
     "check": "rgb(94, 202, 0)",
-    "ripple": "rgba(228, 223, 228, 255)"
+    "ripple": "rgba(228, 223, 228, 255)",
+    "messageContainer": "rgb(170, 144, 255)",
+    "ownMessageContainer": "rgb(68, 43, 181)",
+    "messageContainerTitle": "rgb(106, 0, 172)",
+    "messageContainerContent": "rgb(255, 255, 255)",
+    "dateContainer": "rgba(170, 144, 255, 0.5)"
   }
 }
