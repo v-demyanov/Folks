@@ -24,7 +24,7 @@ const CreateChannelButton = (): JSX.Element => {
         {
           icon: 'account-group-outline',
           label: 'Group',
-          onPress: () => navigation.navigate('CreateGroupScreen'),
+          onPress: () => navigation.navigate('CreateGroup'),
         },
       ]}
       onStateChange={onStateChange}

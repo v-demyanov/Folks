@@ -3,10 +3,13 @@ import { View } from 'react-native';
 
 import { LIST_ITEM_IMAGE_SIZE } from '../../../../../common/constants/icons.constants';
 import buildStyles from './channels-list-item.styles';
-import IChannel from '../../../models/channel';
 import { getUserFrendlyDateString } from '../../../../../common/helpers/date-helpers';
+import IChannelsListItemProps from '../../../models/channels-list-item.props';
 
-const ChannelsListItem = ({ channel }: { channel: IChannel }): JSX.Element => {
+const ChannelsListItem = ({
+  channel,
+  onPress,
+}: IChannelsListItemProps): JSX.Element => {
   const styles = buildStyles();
 
   return (
@@ -15,7 +18,7 @@ const ChannelsListItem = ({ channel }: { channel: IChannel }): JSX.Element => {
       title={channel.title}
       titleStyle={[styles.title]}
       description={'Last message...'}
-      onPress={() => {}}
+      onPress={() => onPress(channel)}
       left={() => <Avatar.Icon size={LIST_ITEM_IMAGE_SIZE} icon="account" />}
       right={() => (
         <View style={[styles.view]}>
