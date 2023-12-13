@@ -1,22 +1,24 @@
+import { formatInNN } from './number-helpers';
+
 export function getUserFrendlyDateString(date: Date): string {
   const now = new Date();
-  const weekDay = date.getDay();
   const monthDay = date.getDate();
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
   if (now.getFullYear() !== year) {
-    return `${monthDay}/${month}/${year}`;
+    return `${formatInNN(monthDay)}/${formatInNN(month)}/${year}`;
   }
 
   if (isThisWeek(date)) {
-    return getWeekDayName(weekDay);
+    return getWeekDayName(date);
   }
 
-  return `${monthDay}/${month}`;
+  return `${date.toLocaleDateString('default', { month: 'long' })} ${monthDay}`;
 }
 
-export function getWeekDayName(day: number): string {
+export function getWeekDayName(date: Date): string {
+  const day = date.getDay();
   const weekDays = [
     'Sunday',
     'Monday',
@@ -41,4 +43,8 @@ export function isThisWeek(date: Date): boolean {
   lastDayOfWeek.setDate(lastDayOfWeek.getDate() + 6);
 
   return date >= firstDayOfWeek && date <= lastDayOfWeek;
+}
+
+export function formatInHHMM(date: Date): string {
+  return `${formatInNN(date.getHours())}:${formatInNN(date.getMinutes())}`;
 }
