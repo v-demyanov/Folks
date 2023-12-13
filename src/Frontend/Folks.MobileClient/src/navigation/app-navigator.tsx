@@ -6,12 +6,15 @@ import HomeScreen from '../screens/app-navigator-screens/home-screen/home-screen
 import WelcomeScreen from '../screens/app-navigator-screens/welcome-screen/welcome-screen';
 import useAuth from '../features/auth/hooks/use-auth';
 import CreateGroupScreen from '../screens/app-navigator-screens/create-group-screen/create-group-screen';
+import GroupScreen from '../screens/app-navigator-screens/group-screen/group-screen';
+import IChannel from '../features/channels/models/channel';
 
 export type RootStackParamList = {
   Home: undefined;
   Chat: undefined;
   Welcome: undefined;
   CreateGroup: undefined;
+  Group: IChannel;
 };
 
 export type StackNavigation = NavigationProp<RootStackParamList>;
@@ -30,10 +33,8 @@ const AppNavigator = (): JSX.Element => {
         <>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Chat" component={ChatScreen} />
-          <Stack.Screen
-            name="CreateGroup"
-            component={CreateGroupScreen}
-          />
+          <Stack.Screen name="CreateGroup" component={CreateGroupScreen} />
+          <Stack.Screen name="Group" component={GroupScreen} />
         </>
       ) : (
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
