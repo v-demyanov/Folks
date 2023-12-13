@@ -20,4 +20,5 @@ export const api = createApi({
     },
   }),
   endpoints: () => ({}),
+  refetchOnReconnect: true,
 });
