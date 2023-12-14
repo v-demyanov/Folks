@@ -9,6 +9,7 @@ const buildStyles = (theme: Theme) =>
       display: 'flex',
       flexDirection: 'row',
       paddingHorizontal: 20,
+      paddingVertical: 10,
     },
     groupImageView: {
       width: '30%',

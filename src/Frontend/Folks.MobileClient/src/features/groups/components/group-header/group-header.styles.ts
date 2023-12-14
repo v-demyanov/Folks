@@ -1,7 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-const buildStyles = () =>
+import { Theme } from '../../../../themes/types/theme';
+
+const buildStyles = (theme: Theme) =>
   StyleSheet.create({
+    header: {
+      backgroundColor: theme.colors.primary,
+    },
     contentView: {
       display: 'flex',
       flexDirection: 'row',
@@ -13,6 +18,12 @@ const buildStyles = () =>
     groupDetailsView: {
       display: 'flex',
       flexDirection: 'column',
+    },
+    groupTitle: {
+      color: theme.colors.onPrimary,
+    },
+    members: {
+      color: theme.colors.onPrimary,
     },
   });
 

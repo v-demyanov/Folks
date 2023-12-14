@@ -1,7 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-const buildStyles = () =>
+import { Theme } from '../../../themes/types/theme';
+
+const buildStyles = (theme: Theme) =>
   StyleSheet.create({
+    header: {
+      backgroundColor: theme.colors.primary,
+    },
     titleView: {
       display: 'flex',
       flexDirection: 'row',

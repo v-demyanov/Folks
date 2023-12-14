@@ -1,21 +1,15 @@
-import { View, StyleSheet } from 'react-native';
-import { Text, Avatar } from 'react-native-paper';
+import { View } from 'react-native';
+import { Text, Avatar, useTheme } from 'react-native-paper';
+import { useMemo } from 'react';
 
 import { USER_ACCOUNT_IMAGE_SIZE } from '../../../../common/constants/icons.constants';
 import useAuth from '../../../auth/hooks/use-auth';
-
-const styles = StyleSheet.create({
-  view: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  avatarIcon: {
-    marginRight: 6,
-  },
-});
+import { Theme } from '../../../../themes/types/theme';
+import buildStyles from './user-account.styles';
 
 const UserAccount = (): JSX.Element => {
+  const theme = useTheme<Theme>();
+  const styles = useMemo(() => buildStyles(theme), [theme]);
   const { currentUser } = useAuth();
 
   return (
@@ -25,7 +19,9 @@ const UserAccount = (): JSX.Element => {
         size={USER_ACCOUNT_IMAGE_SIZE}
         icon="account"
       />
-      <Text variant="titleMedium">{currentUser?.name}</Text>
+      <Text variant="titleMedium" style={[styles.userName]}>
+        {currentUser?.name}
+      </Text>
     </View>
   );
 };

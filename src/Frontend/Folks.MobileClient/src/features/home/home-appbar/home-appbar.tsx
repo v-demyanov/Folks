@@ -1,5 +1,5 @@
-import { Appbar } from 'react-native-paper';
-import { memo } from 'react';
+import { Appbar, useTheme } from 'react-native-paper';
+import { memo, useMemo } from 'react';
 import { View } from 'react-native';
 
 import UserAccount from '../../users/components/user-account/user-account';
@@ -8,9 +8,11 @@ import { useAppDispatch } from '../../../common/hooks/store-hooks';
 import { api } from '../../../api/api';
 import buildStyles from './home-appbar.styles';
 import ChannelsLoadingIndicator from '../../channels/components/channels-loading-indicator/channels-loading-indicator';
+import { Theme } from '../../../themes/types/theme';
 
 const HomeAppbar = (): JSX.Element => {
-  const styles = buildStyles();
+  const theme = useTheme<Theme>();
+  const styles = useMemo(() => buildStyles(theme), [theme]);
   const { signOutAsync } = useAuth();
   const dispatch = useAppDispatch();
 
@@ -20,7 +22,7 @@ const HomeAppbar = (): JSX.Element => {
   };
 
   return (
-    <Appbar.Header>
+    <Appbar.Header style={[styles.header]}>
       <Appbar.Content
         title={
           <View style={[styles.titleView]}>
@@ -30,7 +32,11 @@ const HomeAppbar = (): JSX.Element => {
           </View>
         }
       />
-      <Appbar.Action icon="logout" onPress={handleLogoutButtonPress} />
+      <Appbar.Action
+        icon="logout"
+        color={theme.colors.onPrimary}
+        onPress={handleLogoutButtonPress}
+      />
     </Appbar.Header>
   );
 };

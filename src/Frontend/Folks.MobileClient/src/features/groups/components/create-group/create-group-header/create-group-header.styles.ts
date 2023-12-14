@@ -1,15 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-import { Theme } from '../../../../themes/types/theme';
+import { Theme } from '../../../../../themes/types/theme';
 
 const buildStyles = (theme: Theme) =>
   StyleSheet.create({
-    connectingIndicatorView: {
-      display: 'flex',
-      flexDirection: 'row',
+    header: {
+      backgroundColor: theme.colors.primary,
     },
-    connectingIndicatorText: {
-      paddingLeft: 2,
+    content: {
+      fontWeight: 'bold',
       color: theme.colors.onPrimary,
     },
   });

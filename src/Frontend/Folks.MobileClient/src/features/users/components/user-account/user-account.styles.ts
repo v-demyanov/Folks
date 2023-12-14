@@ -4,12 +4,15 @@ import { Theme } from '../../../../themes/types/theme';
 
 const buildStyles = (theme: Theme) =>
   StyleSheet.create({
-    connectingIndicatorView: {
+    view: {
       display: 'flex',
       flexDirection: 'row',
+      alignItems: 'center',
     },
-    connectingIndicatorText: {
-      paddingLeft: 2,
+    avatarIcon: {
+      marginRight: 6,
+    },
+    userName: {
       color: theme.colors.onPrimary,
     },
   });

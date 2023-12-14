@@ -11,7 +11,7 @@ import { store } from './src/store/store';
 
 export default function App() {
   const colorSchemeName = useColorScheme();
-  const theme = (colorSchemeName == 'dark' ? darkTheme : lightTheme);
+  const theme = colorSchemeName == 'dark' ? darkTheme : lightTheme;
 
   return (
     <NavigationContainer>

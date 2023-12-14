@@ -1,15 +1,23 @@
 import { useNavigation } from '@react-navigation/native';
-import { Appbar } from 'react-native-paper';
+import { Appbar, useTheme } from 'react-native-paper';
 
 import { StackNavigation } from '../../../../../navigation/app-navigator';
+import { Theme } from '../../../../../themes/types/theme';
+import { useMemo } from 'react';
+import buildStyles from './create-group-header.styles';
 
 const CreateGroupHeader = (): JSX.Element => {
+  const theme = useTheme<Theme>();
+  const styles = useMemo(() => buildStyles(theme), [theme]);
   const navigation = useNavigation<StackNavigation>();
 
   return (
-    <Appbar.Header>
-      <Appbar.BackAction onPress={() => navigation.goBack()} />
-      <Appbar.Content title="New group" titleStyle={{fontWeight: 'bold'}} />
+    <Appbar.Header style={[styles.header]}>
+      <Appbar.BackAction
+        color={theme.colors.onPrimary}
+        onPress={() => navigation.goBack()}
+      />
+      <Appbar.Content title="New group" titleStyle={[styles.content]} />
     </Appbar.Header>
   );
 };

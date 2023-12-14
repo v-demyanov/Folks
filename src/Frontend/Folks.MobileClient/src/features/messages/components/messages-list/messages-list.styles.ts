@@ -11,7 +11,6 @@ const buildStyles = (theme: Theme) =>
     safeAreaView: {
       flex: 1,
       backgroundColor: theme.colors.secondaryContainer,
-      paddingBottom: 3,
     },
     sectionList: {
       backgroundColor: theme.colors.secondaryContainer,

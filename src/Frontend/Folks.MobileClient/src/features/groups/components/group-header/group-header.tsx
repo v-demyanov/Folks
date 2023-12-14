@@ -1,19 +1,25 @@
 import { useNavigation } from '@react-navigation/native';
-import { Appbar, Text, Avatar } from 'react-native-paper';
+import { Appbar, Text, Avatar, useTheme } from 'react-native-paper';
 import { View } from 'react-native';
+import { useMemo } from 'react';
 
 import { StackNavigation } from '../../../../navigation/app-navigator';
 import IChannel from '../../../channels/models/channel';
 import { GROUP_ICON_SIZE } from '../../../../common/constants/icons.constants';
 import buildStyles from './group-header.styles';
+import { Theme } from '../../../../themes/types/theme';
 
 const GroupHeader = ({ group }: { group: IChannel }): JSX.Element => {
-  const styles = buildStyles();
+  const theme = useTheme<Theme>();
+  const styles = useMemo(() => buildStyles(theme), [theme]);
   const navigation = useNavigation<StackNavigation>();
 
   return (
-    <Appbar.Header>
-      <Appbar.BackAction onPress={() => navigation.goBack()} />
+    <Appbar.Header style={[styles.header]}>
+      <Appbar.BackAction
+        color={theme.colors.onPrimary}
+        onPress={() => navigation.goBack()}
+      />
       <Appbar.Content
         title={
           <View style={[styles.contentView]}>
@@ -23,13 +29,19 @@ const GroupHeader = ({ group }: { group: IChannel }): JSX.Element => {
               icon="image"
             />
             <View style={[styles.groupDetailsView]}>
-              <Text variant="titleMedium">{group.title}</Text>
-              <Text>3 members</Text>
+              <Text variant="titleMedium" style={[styles.groupTitle]}>
+                {group.title}
+              </Text>
+              <Text style={[styles.members]}>3 members</Text>
             </View>
           </View>
         }
       />
-      <Appbar.Action icon="phone" onPress={() => {}} />
+      <Appbar.Action
+        icon="phone"
+        color={theme.colors.onPrimary}
+        onPress={() => {}}
+      />
     </Appbar.Header>
   );
 };
