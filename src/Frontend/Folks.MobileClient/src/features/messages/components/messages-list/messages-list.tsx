@@ -14,6 +14,7 @@ import ISectionListItem from '../../../../common/models/section-list-item';
 import MessagesListFooter from './messages-list-footer/messages-list-footer';
 import buildStyles from './messages-list.styles';
 import mockData from './mock-data';
+import MessagesListEmpty from './messages-list-empty/messages-list-empty';
 
 const MessagesList = (): JSX.Element => {
   const theme = useTheme<Theme>();
@@ -92,7 +93,8 @@ const MessagesList = (): JSX.Element => {
         onViewableItemsChanged={handleViewableItemsChanged}
         onScroll={handleScroll}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        inverted
+        ListEmptyComponent={<MessagesListEmpty />}
+        inverted={!!sections.length}
       />
     </SafeAreaView>
   );
