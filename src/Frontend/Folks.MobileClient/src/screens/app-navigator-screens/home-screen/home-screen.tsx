@@ -1,11 +1,13 @@
+import ChannelsList from '../../../features/channels/components/channels-list/channels-list';
+import CreateChannelButton from '../../../features/channels/components/create-channel-button/create-channel-button';
 import HomeAppbar from '../../../features/home/home-appbar/home-appbar';
-import HomeNavigator from '../../../navigation/home-navigator/home-navigator';
 
 const HomeScreen = (): JSX.Element => {
   return (
     <>
       <HomeAppbar />
-      <HomeNavigator />
+      <ChannelsList />
+      <CreateChannelButton />
     </>
   );
 };

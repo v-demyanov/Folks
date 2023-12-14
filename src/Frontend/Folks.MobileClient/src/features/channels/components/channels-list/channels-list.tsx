@@ -45,6 +45,7 @@ const ChannelsList = (): JSX.Element => {
 
   return (
     <FlatList
+      style={[styles.flatList]}
       data={channels}
       renderItem={renderChannelsListItem}
       keyExtractor={(item) => item.id}
