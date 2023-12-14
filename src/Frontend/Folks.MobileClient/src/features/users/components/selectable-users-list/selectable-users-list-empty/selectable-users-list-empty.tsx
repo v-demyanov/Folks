@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 
-import buildStyles from './selectable-users-list-empty-result.styles';
+import buildStyles from './selectable-users-list-empty.styles';
 
-const SelectableUsersListEmptyResult = (): JSX.Element => {
+const SelectableUsersListEmpty = (): JSX.Element => {
   const styles = buildStyles();
 
   return (
@@ -13,4 +13,4 @@ const SelectableUsersListEmptyResult = (): JSX.Element => {
   );
 };
 
-export default SelectableUsersListEmptyResult;
+export default SelectableUsersListEmpty;

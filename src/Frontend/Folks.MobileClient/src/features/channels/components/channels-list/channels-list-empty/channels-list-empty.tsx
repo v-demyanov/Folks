@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 
-import buildStyles from './channels-list-empty-result.styles';
+import buildStyles from './channels-list-empty.styles';
 
-const ChannelsListEmptyResult = (): JSX.Element => {
+const ChannelsListEmpty = (): JSX.Element => {
   const styles = buildStyles();
 
   return (
@@ -13,4 +13,4 @@ const ChannelsListEmptyResult = (): JSX.Element => {
   );
 };
 
-export default ChannelsListEmptyResult;
+export default ChannelsListEmpty;

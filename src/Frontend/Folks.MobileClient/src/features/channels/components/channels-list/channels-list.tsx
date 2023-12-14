@@ -9,7 +9,7 @@ import { useGetOwnChannelsQuery } from '../../api/channels.api';
 import buildStyles from './channels-list.styles';
 import { Theme } from '../../../../themes/types/theme';
 import ChannelsListError from './channels-list-error/channels-list-error';
-import ChannelsListEmptyResult from './channels-list-empty-result/channels-list-empty-result';
+import ChannelsListEmpty from './channels-list-empty/channels-list-empty';
 import { StackNavigation } from '../../../../navigation/app-navigator';
 
 const ChannelsList = (): JSX.Element => {
@@ -40,7 +40,7 @@ const ChannelsList = (): JSX.Element => {
   }
 
   if (!channels.length) {
-    return <ChannelsListEmptyResult />;
+    return <ChannelsListEmpty />;
   }
 
   return (

@@ -7,7 +7,7 @@ import SelectableUsersListItem from './selectable-users-list-item/selectable-use
 import ISelectableUsersListProps from '../../models/selectable-users-list.props';
 import { Theme } from '../../../../themes/types/theme';
 import ISelectableUser from '../../models/selectable-user';
-import SelectableUsersListEmptyResult from './selectable-users-list-empty-result/selectable-users-list-empty-result';
+import SelectableUsersListEmpty from './selectable-users-list-empty/selectable-users-list-empty';
 import { useGetAllUsersQuery } from '../../api/users.api';
 import SelectableUsersListError from './selectable-users-list-error/selectable-users-list-error';
 
@@ -41,7 +41,7 @@ const SelectableUsersList = ({
       renderItem={renderListItem}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => <View style={[styles.itemSeparator]} />}
-      ListEmptyComponent={<SelectableUsersListEmptyResult />}
+      ListEmptyComponent={<SelectableUsersListEmpty />}
     />
   );
 };
