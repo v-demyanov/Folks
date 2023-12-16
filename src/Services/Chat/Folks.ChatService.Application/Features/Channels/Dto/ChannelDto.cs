@@ -1,4 +1,6 @@
-﻿namespace Folks.ChatService.Application.Features.Channels.Dto;
+﻿using Folks.ChatService.Application.Features.Channels.Enums;
+
+namespace Folks.ChatService.Application.Features.Channels.Dto;
 
 public record class ChannelDto
 {
