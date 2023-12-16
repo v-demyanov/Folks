@@ -7,7 +7,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
 
-  chatdb:
+  channelsdb:
     image: mongo
 
   rabbitmq:
@@ -19,11 +19,11 @@ services:
       context: .
       dockerfile: ApiGateways/Folks.ApiGateway/Dockerfile
 
-  folks.chatservice.api:
-    image: ${DOCKER_REGISTRY-}folkschatserviceapi
+  folks.channelsservice.api:
+    image: ${DOCKER_REGISTRY-}folkschannelsserviceapi
     build:
       context: .
-      dockerfile: Services/Chat/Folks.ChatService.Api/Dockerfile
+      dockerfile: Services/Channels/Folks.ChannelsService.Api/Dockerfile
 
   folks.identityservice.api:
     image: ${DOCKER_REGISTRY-}folksidentityserviceapi

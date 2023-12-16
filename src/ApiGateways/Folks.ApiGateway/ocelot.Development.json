@@ -5,20 +5,21 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "folks.chatservice.api",
+          "Host": "folks.channelsservice.api",
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/chatservice/{path}",
+      "UpstreamPathTemplate": "/channelsservice/{path}",
       "UpstreamHttpMethod": [
         "GET",
         "POST",
-        "PUT"
+        "PUT",
+        "DELETE"
       ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityServerApiKey",
         "AllowedScopes": [
-          "chatServiceApi"
+          "channelsServiceApi"
         ]
       }
     },

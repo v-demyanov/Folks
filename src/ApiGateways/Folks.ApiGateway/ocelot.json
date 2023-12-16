@@ -9,16 +9,17 @@
           "Port": 8001
         }
       ],
-      "UpstreamPathTemplate": "/chatservice/{path}",
+      "UpstreamPathTemplate": "/channelsservice/{path}",
       "UpstreamHttpMethod": [
         "GET",
         "POST",
-        "PUT"
+        "PUT",
+        "DELETE"
       ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityServerApiKey",
         "AllowedScopes": [
-          "chatServiceApi"
+          "channelsServiceApi"
         ]
       }
     },

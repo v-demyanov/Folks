@@ -22,8 +22,8 @@ services:
     volumes:
       - pgadmin_data:/root/.pgadmin
 
-  chatdb:
-    container_name: chatdb
+  channelsdb:
+    container_name: channelsdb
     restart: always
     ports:
       - "27017:27017"
@@ -44,20 +44,20 @@ services:
       - "AuthenticationOptions__Authority=http://folks.identityservice.api"
     depends_on:
       - folks.identityservice.api
-      - folks.chatservice.api
+      - folks.channelsservice.api
     ports:
       - "8000:80"
 
-  folks.chatservice.api:
-    container_name: folks.chatservice.api
+  folks.channelsservice.api:
+    container_name: folks.channelsservice.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "AuthenticationOptions__Authority=http://folks.identityservice.api"
-      - "MongoDbConfig__ConnectionString=mongodb://chatdb:27017"
-      - "MongoDbConfig__DatabaseName=ChatDb"
+      - "MongoDbConfig__ConnectionString=mongodb://channelsdb:27017"
+      - "MongoDbConfig__DatabaseName=ChannelsDb"
       - "EventBusConfig__HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
-      - chatdb
+      - channelsdb
       - rabbitmq
 
   folks.identityservice.api:
