@@ -10,10 +10,6 @@ public class Message : BaseEntity
 
     public DateTimeOffset SentAt { get; set; }
 
-    public DateTimeOffset? DeliveredAt { get; set; }
-
-    public DateTimeOffset? SeenAt { get; set; }
-
     public required ObjectId OwnerId { get; set; }
 
     public ObjectId? GroupId { get; set; }
