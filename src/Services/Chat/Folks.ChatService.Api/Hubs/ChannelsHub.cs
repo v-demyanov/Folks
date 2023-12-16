@@ -1,21 +1,41 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
+using MediatR;
+
+using Folks.ChatService.Application.Features.Messages.Commands.CreateMessageCommand;
+using Folks.ChatService.Application.Features.Channels.Enums;
+
 namespace Folks.ChatService.Api.Hubs;
 
 [Authorize]
 public class ChannelsHub : Hub
 {
-    public void EnterGroup()
+    private readonly IMediator _mediator;
+
+    public ChannelsHub(IMediator mediator)
     {
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
-    public void SendChatMessage()
+    public async Task SendMessage(CreateMessageCommand createMessageCommand)
     {
-        // Create new chat if it doesn't exist
+        switch (createMessageCommand.ChannelType)
+        {
+            case ChannelType.Group:
+                await SendMessageInGroupAsync(createMessageCommand);
+                break;
+            default:
+                break;
+        }
     }
 
-    public void SendGroupMessage()
+    private async Task SendMessageInGroupAsync(CreateMessageCommand createMessageCommand)
     {
+        var messageDto = await _mediator.Send(createMessageCommand);
+        if (messageDto.ChannelId is not null)
+        {
+            await Clients.Group(messageDto.ChannelId).SendAsync("Receive", messageDto);
+        }
     }
 }
