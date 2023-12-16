@@ -4,7 +4,7 @@ import IChannel from '../models/channel';
 const channelsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getOwnChannels: builder.query<IChannel[], null>({
-      query: () => ({ url: '/chatservice/channels', method: 'GET' }),
+      query: () => ({ url: '/channelsservice/channels', method: 'GET' }),
     }),
   }),
   overrideExisting: false,

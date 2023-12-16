@@ -10,7 +10,7 @@ const authConfig: AuthConfig = {
     scopes: [
       'openid',
       'profile',
-      'chatServiceApi',
+      'channelsServiceApi',
       'IdentityServerApi',
       'email',
       'phone',
