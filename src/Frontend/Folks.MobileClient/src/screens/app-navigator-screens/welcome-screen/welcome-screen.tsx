@@ -6,6 +6,7 @@ import Logo from '../../../common/components/logo/logo';
 import useAuth from '../../../features/auth/hooks/use-auth';
 import buildStyles from './welcome-screen-styles';
 import { Theme } from '../../../themes/types/theme';
+import { channelsHubConnection } from '../../../features/signalr/connections';
 
 const WelcomeScreen = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -15,7 +16,11 @@ const WelcomeScreen = (): JSX.Element => {
 
   const handleSignInButtonPressAsync = async (): Promise<void> => {
     setIsLoading(true);
-    signInAsync().finally(() => setIsLoading(false));
+    signInAsync()
+      .then(async () => {
+        await channelsHubConnection.start();
+      })
+      .finally(() => setIsLoading(false));
   };
 
   if (isLoading) {

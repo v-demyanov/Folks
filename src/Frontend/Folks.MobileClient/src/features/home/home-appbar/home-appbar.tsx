@@ -9,6 +9,7 @@ import { api } from '../../../api/api';
 import buildStyles from './home-appbar.styles';
 import ChannelsLoadingIndicator from '../../channels/components/channels-loading-indicator/channels-loading-indicator';
 import { Theme } from '../../../themes/types/theme';
+import { channelsHubConnection } from '../../signalr/connections';
 
 const HomeAppbar = (): JSX.Element => {
   const theme = useTheme<Theme>();
@@ -18,6 +19,7 @@ const HomeAppbar = (): JSX.Element => {
 
   const handleLogoutButtonPress = async (): Promise<void> => {
     await signOutAsync();
+    await channelsHubConnection.stop();
     dispatch(api.util.resetApiState());
   };
 
