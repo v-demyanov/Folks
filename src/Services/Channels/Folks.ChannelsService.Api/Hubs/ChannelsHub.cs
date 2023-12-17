@@ -20,6 +20,23 @@ public class ChannelsHub : Hub
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
+    public override async Task OnConnectedAsync()
+    {
+        var ownerId = Context.UserIdentifier;
+        if (ownerId is not null)
+        {
+            var getOwnChannelsQuery = new GetOwnChannelsQuery { OwnerId = ownerId };
+            var channels = await _mediator.Send(getOwnChannelsQuery);
+
+            foreach (var channel in channels)
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, channel.Id);
+            }
+        }
+
+        await base.OnConnectedAsync();
+    }
+
     public async Task SendMessage(CreateMessageCommand createMessageCommand)
     {
         var messageDto = await _mediator.Send(createMessageCommand);

@@ -9,7 +9,7 @@ public record class CreateMessageCommand : IRequest<MessageDto>
 {
     public required string OwnerId { get; init; }
 
-    public string? ChannelId { get; init; }
+    public required string ChannelId { get; init; }
 
     public ChannelType ChannelType { get; init; }
 
