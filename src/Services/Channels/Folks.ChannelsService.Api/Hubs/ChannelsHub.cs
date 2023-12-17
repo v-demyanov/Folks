@@ -5,6 +5,8 @@ using MediatR;
 
 using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
 using Folks.ChannelsService.Application.Features.Channels.Enums;
+using Folks.ChannelsService.Application.Features.Messages.Dto;
+using Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
 
 namespace Folks.ChannelsService.Api.Hubs;
 
@@ -20,22 +22,24 @@ public class ChannelsHub : Hub
 
     public async Task SendMessage(CreateMessageCommand createMessageCommand)
     {
+        var messageDto = await _mediator.Send(createMessageCommand);
+
         switch (createMessageCommand.ChannelType)
         {
             case ChannelType.Group:
-                await SendMessageInGroupAsync(createMessageCommand);
+                await SendMessageInGroupAsync(messageDto);
                 break;
             default:
-                break;
+                throw new ArgumentOutOfRangeException(nameof(createMessageCommand.ChannelType));
         }
     }
 
-    private async Task SendMessageInGroupAsync(CreateMessageCommand createMessageCommand)
+    private async Task SendMessageInGroupAsync(MessageDto messageDto)
     {
-        var messageDto = await _mediator.Send(createMessageCommand);
         if (messageDto.ChannelId is not null)
         {
-            await Clients.Group(messageDto.ChannelId).SendAsync("Receive", messageDto);
+            await Clients.Group(messageDto.ChannelId)
+                .SendAsync("Receive", messageDto);
         }
     }
 }
