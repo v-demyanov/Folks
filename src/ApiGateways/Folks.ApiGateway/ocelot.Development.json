@@ -1,6 +1,18 @@
 ﻿{
   "Routes": [
     {
+      "DownstreamPathTemplate": "/api/v1/hubs/{path}",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "folks.channelsservice.api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/channelsservice/hubs/{path}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/v1/{path}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -10,12 +22,7 @@
         }
       ],
       "UpstreamPathTemplate": "/channelsservice/{path}",
-      "UpstreamHttpMethod": [
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE"
-      ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityServerApiKey",
         "AllowedScopes": [
@@ -33,11 +40,7 @@
         }
       ],
       "UpstreamPathTemplate": "/identityservice/{path}",
-      "UpstreamHttpMethod": [
-        "GET",
-        "POST",
-        "PUT"
-      ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityServerApiKey",
         "AllowedScopes": [

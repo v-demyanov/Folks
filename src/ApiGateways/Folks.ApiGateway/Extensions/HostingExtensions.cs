@@ -26,6 +26,7 @@ public static class HostingExtensions
         builder.Services
             .AddOcelot()
             .AddCacheManager(settings => settings.WithDictionaryHandle());
+        builder.Services.AddSignalR();
 
         return builder;
     }
@@ -37,6 +38,7 @@ public static class HostingExtensions
 
         app.UseHttpsRedirection();
 
+        app.UseWebSockets();
         await app.UseOcelot();
 
         return app;
