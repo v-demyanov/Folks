@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import AuthContextValue from '../models/auth-context-value';
+import IAuthContextValue from '../models/auth-context-value';
 import SignInResult from '../models/auth-result-type';
 
 const defaultValue = {
@@ -9,8 +9,8 @@ const defaultValue = {
   authRequest: null,
   currentUser: null,
   isAuthenticated: (): boolean => false,
-} as AuthContextValue;
+} as IAuthContextValue;
 
-const AuthContext = createContext<AuthContextValue>(defaultValue);
+const AuthContext = createContext<IAuthContextValue>(defaultValue);
 
 export default AuthContext;

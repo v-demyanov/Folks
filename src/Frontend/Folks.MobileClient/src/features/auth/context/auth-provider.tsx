@@ -9,7 +9,7 @@ import AuthContext from './auth-context';
 import useSecureStore from '../../../common/hooks/use-secure-store';
 import { TOKEN_RESPONSE_KEY } from '../../../common/constants/secure-store-keys.constants';
 import authConfig from '../configs/auth-config';
-import AuthContextValue from '../models/auth-context-value';
+import IAuthContextValue from '../models/auth-context-value';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -90,15 +90,16 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   const isAuthenticated = (): boolean => currentUser !== null;
 
-  const value = useMemo<AuthContextValue>(
+  const value = useMemo<IAuthContextValue>(
     () => ({
       signInAsync,
       signOutAsync,
       authRequest,
       currentUser,
       isAuthenticated,
+      tokenResponse,
     }),
-    [currentUser, authRequest]
+    [currentUser, authRequest, tokenResponse]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
