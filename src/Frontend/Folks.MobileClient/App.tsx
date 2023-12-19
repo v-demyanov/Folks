@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useColorScheme } from 'react-native';
 import { Provider } from 'react-redux';
 
+import './src/common/extensions/array.extensions';
 import { darkTheme, lightTheme } from './src/themes/themes';
 import AppNavigator from './src/navigation/app-navigator';
 import { AuthProvider } from './src/features/auth/context/auth-provider';
