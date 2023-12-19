@@ -1,36 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
+using MediatR;
 
 using Folks.ChannelsService.Api.Constants;
+using Folks.ChannelsService.Application.Features.Messages.Queries.GetMessagesQuery;
+using Folks.ChannelsService.Application.Features.Messages.Dto;
+using Folks.ChannelsService.Api.Models;
 using Folks.ChannelsService.Application.Features.Channels.Enums;
 
 namespace Folks.ChannelsService.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route($"{ApiRoutePatterns.MessagesController}")]
 public class MessagesController : ControllerBase
 {
-    private readonly ILogger<MessagesController> _logger;
+    private readonly IMediator _mediator;
 
-    public MessagesController(ILogger<MessagesController> logger)
+    public MessagesController(IMediator mediator)
     {
-        _logger = logger;
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
     [HttpGet]
-    public void GetAll(string channelId, ChannelType channelType)
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(IEnumerable<MessageDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IEnumerable<MessageDto>>> Get(string channelId, ChannelType channelType)
     {
-        _logger.LogInformation($"GetAll: channelId = {channelId}, channelType = {channelType}");
-    }
-
-    [HttpPut("{messageId}")]
-    public void Update(string channelId, string messageId)
-    {
-        _logger.LogInformation($"Update: messageId = {messageId}");
-    }
-
-    [HttpDelete("{messageId}")]
-    public void Delete(string channelId, string messageId)
-    {
-        _logger.LogInformation($"Delete: messageId = {messageId}");
+        var getMessagesQuery = new GetMessagesQuery { ChannelId = channelId, ChannelType = channelType };
+        var messages = await _mediator.Send(getMessagesQuery);
+        return Ok(messages);
     }
 }

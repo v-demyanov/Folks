@@ -10,7 +10,7 @@ public record class MessageDto
 
     public DateTimeOffset SentAt { get; init; }
 
-    public required string? ChannelId { get; init; }
+    public required string ChannelId { get; init; }
 
     public required UserDto Owner { get; init; }
 }
