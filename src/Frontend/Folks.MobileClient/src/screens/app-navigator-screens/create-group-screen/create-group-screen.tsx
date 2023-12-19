@@ -27,24 +27,14 @@ const CreateGroupScreen = (): JSX.Element => {
       initialValues: {},
       enableReinitialize: true,
       validationSchema: CreateGroupFormValidationSchema,
-      onSubmit: (value: ICreateGroupFormValue) => {
-        if (!currentUser) {
+      onSubmit: async (value: ICreateGroupFormValue) => {
+        const createGroupCommand = prepareCreateGroupCommand(value);
+        if (!createGroupCommand) {
           return;
         }
 
-        const userIds = selectableUsers
-          .filter((user) => user.isSelected)
-          .map((user) => user.id);
-        userIds.push(currentUser.sub);
-
-        createGroup({
-          title: value.title,
-          userIds,
-        } as ICreateGroupCommand)
-          .unwrap()
-          .then((createdGroup) => {
-            console.log('createdGroup: ', createdGroup);
-          });
+        await createGroup(createGroupCommand).unwrap();
+        createGroupForm.resetForm();
       },
     });
 
@@ -71,6 +61,24 @@ const CreateGroupScreen = (): JSX.Element => {
         isSelected: false,
         status: 'last seen recently',
       }));
+  }
+
+  function prepareCreateGroupCommand(
+    formValue: ICreateGroupFormValue
+  ): ICreateGroupCommand | null {
+    if (!currentUser) {
+      return null;
+    }
+
+    const userIds = selectableUsers
+      .filter((user) => user.isSelected)
+      .map((user) => user.id);
+    userIds.push(currentUser.sub);
+
+    return {
+      title: formValue.title,
+      userIds,
+    } as ICreateGroupCommand;
   }
 
   return (
