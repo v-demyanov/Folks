@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 using MediatR;
 
@@ -7,6 +8,7 @@ using Folks.ChannelsService.Api.Constants;
 using Folks.ChannelsService.Application.Features.Channels.Dto;
 using Folks.ChannelsService.Api.Models;
 using Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
+using Folks.ChannelsService.Api.Hubs;
 
 namespace Folks.ChannelsService.Api.Controllers;
 
@@ -16,10 +18,12 @@ namespace Folks.ChannelsService.Api.Controllers;
 public class GroupsController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IHubContext<ChannelsHub> _channelsHubContext;
 
-    public GroupsController(IMediator mediator)
+    public GroupsController(IMediator mediator, IHubContext<ChannelsHub> channelsHubContext)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        _channelsHubContext = channelsHubContext ?? throw new ArgumentNullException(nameof(channelsHubContext));
     }
 
     [HttpPost]
@@ -29,6 +33,20 @@ public class GroupsController : ControllerBase
     public async Task<ActionResult<ChannelDto>> Create([FromBody] CreateGroupCommand createGroupCommand)
     {
         var group = await _mediator.Send(createGroupCommand);
+
+        _ = _channelsHubContext.Clients
+            .Users(createGroupCommand.UserIds)
+            .SendAsync("ReceiveChannel", group);
+
+        foreach (var userId in createGroupCommand.UserIds)
+        {
+            var connections = HubConnectionsStore.GetConnections(userId);
+            foreach (var connection in connections)
+            {
+                _ = _channelsHubContext.Groups.AddToGroupAsync(connection, group.Id);
+            }
+        }
+
         return Ok(group);
     }
 }
