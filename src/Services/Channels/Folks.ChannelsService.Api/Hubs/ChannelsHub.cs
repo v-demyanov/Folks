@@ -22,10 +22,12 @@ public class ChannelsHub : Hub
 
     public override async Task OnConnectedAsync()
     {
-        var ownerId = Context.UserIdentifier;
-        if (ownerId is not null)
+        var currentUserId = Context.UserIdentifier;
+        if (currentUserId is not null)
         {
-            var getOwnChannelsQuery = new GetOwnChannelsQuery { OwnerId = ownerId };
+            HubConnectionsStore.AddConnection(currentUserId, Context.ConnectionId);
+
+            var getOwnChannelsQuery = new GetOwnChannelsQuery { OwnerId = currentUserId };
             var channels = await _mediator.Send(getOwnChannelsQuery);
 
             foreach (var channel in channels)
@@ -35,6 +37,17 @@ public class ChannelsHub : Hub
         }
 
         await base.OnConnectedAsync();
+    }
+
+    public override Task OnDisconnectedAsync(Exception? exception)
+    {
+        var currentUserId = Context.UserIdentifier;
+        if (currentUserId is not null)
+        {
+            HubConnectionsStore.RemoveConnection(currentUserId, Context.ConnectionId);
+        }
+
+        return base.OnDisconnectedAsync(exception);
     }
 
     public async Task SendMessage(CreateMessageCommand createMessageCommand)
@@ -56,7 +69,7 @@ public class ChannelsHub : Hub
         if (messageDto.ChannelId is not null)
         {
             await Clients.Group(messageDto.ChannelId)
-                .SendAsync("Receive", messageDto);
+                .SendAsync("ReceiveMessage", messageDto);
         }
     }
 }
