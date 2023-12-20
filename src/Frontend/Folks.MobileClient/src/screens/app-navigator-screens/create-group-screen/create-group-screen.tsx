@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormikProps, useFormik } from 'formik';
+import { useNavigation } from '@react-navigation/native';
 
 import CreateGroupForm from '../../../features/groups/components/create-group/create-group-form/create-group-form';
 import CreateGroupHeader from '../../../features/groups/components/create-group/create-group-header/create-group-header';
@@ -13,14 +14,39 @@ import ICreateGroupFormValue from '../../../features/groups/models/create-group-
 import { useCreateGroupMutation } from '../../../features/groups/api/groups.api';
 import ICreateGroupCommand from '../../../features/groups/models/create-group-command';
 import CreateGroupFormValidationSchema from '../../../features/groups/validation/create-group-form.validation';
+import useArrayEffect from '../../../common/hooks/use-array-effect';
+import { StackNavigation } from '../../../navigation/app-navigator';
 
 const CreateGroupScreen = (): JSX.Element => {
-  const [selectableUsers, setSelectableUsers] = useState<ISelectableUser[]>([]);
   const { currentUser } = useAuth();
-  const { data: users = [], isSuccess: isUsersQuerySuccess } =
-    useGetAllUsersQuery(null, { refetchOnMountOrArgChange: true });
+  const navigation = useNavigation<StackNavigation>();
+
+  const { data: users = [] } = useGetAllUsersQuery(null, {
+    refetchOnMountOrArgChange: true,
+  });
   const [createGroup, { isLoading: isCreatingGroup }] =
     useCreateGroupMutation();
+
+  const [selectableUsers, setSelectableUsers] = useState<ISelectableUser[]>([]);
+
+  useArrayEffect(() => {
+    const selectableUsers = prepareSelecatableUsers();
+    setSelectableUsers(selectableUsers);
+  }, [users, currentUser]);
+
+  function prepareSelecatableUsers(): ISelectableUser[] {
+    if (!currentUser) {
+      return [];
+    }
+
+    return users
+      .filter((user) => user.id !== currentUser.sub)
+      .map((user) => ({
+        ...user,
+        isSelected: false,
+        status: 'last seen recently',
+      }));
+  }
 
   const createGroupForm: FormikProps<ICreateGroupFormValue> =
     useFormik<ICreateGroupFormValue>({
@@ -33,35 +59,28 @@ const CreateGroupScreen = (): JSX.Element => {
           return;
         }
 
-        await createGroup(createGroupCommand).unwrap();
-        createGroupForm.resetForm();
+        const group = await createGroup(createGroupCommand).unwrap();
+        resetCreateGroupForm();
+
+        navigation.navigate('Group', group);
       },
     });
 
-  useEffect(() => {
+  const resetCreateGroupForm = (): void => {
+    createGroupForm.resetForm();
     const selectableUsers = prepareSelecatableUsers();
     setSelectableUsers(selectableUsers);
-  }, [isUsersQuerySuccess]);
+  };
 
   const handleListItemPress = (user: ISelectableUser) => {
     user.isSelected = !user.isSelected;
-    setSelectableUsers([...selectableUsers]);
+    setSelectableUsers(selectableUsers);
   };
 
   const handleChipClose = (user: ISelectableUser) => {
     user.isSelected = false;
-    setSelectableUsers([...selectableUsers]);
+    setSelectableUsers(selectableUsers);
   };
-
-  function prepareSelecatableUsers(): ISelectableUser[] {
-    return users
-      .filter((user) => user.id !== currentUser?.sub)
-      .map((user) => ({
-        ...user,
-        isSelected: false,
-        status: 'last seen recently',
-      }));
-  }
 
   function prepareCreateGroupCommand(
     formValue: ICreateGroupFormValue
