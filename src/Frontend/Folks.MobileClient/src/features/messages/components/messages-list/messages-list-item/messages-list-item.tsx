@@ -24,7 +24,7 @@ const MessagesListItem = ({ item }: IMessagesListItemProps): JSX.Element => {
         <MessageContainer isLeftAlign={item.isLeftAlign}>
           {item.isLeftAlign ? (
             <Text variant="titleSmall" style={[styles.userNameText]}>
-              {item.userName}
+              {item.owner.userName}
             </Text>
           ) : null}
           <Text style={[styles.contentText]} variant="bodyLarge">

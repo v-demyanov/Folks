@@ -18,7 +18,7 @@ const GroupHeader = ({ group }: { group: IChannel }): JSX.Element => {
     <Appbar.Header style={[styles.header]}>
       <Appbar.BackAction
         color={theme.colors.onPrimary}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate('Home')}
       />
       <Appbar.Content
         title={

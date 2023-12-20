@@ -13,10 +13,10 @@ import IMessagesListItem from '../../models/messages-list-item';
 import ISectionListItem from '../../../../common/models/section-list-item';
 import MessagesListFooter from './messages-list-footer/messages-list-footer';
 import buildStyles from './messages-list.styles';
-import mockData from './mock-data';
 import MessagesListEmpty from './messages-list-empty/messages-list-empty';
+import IMessagesListProps from '../../models/messages-list.props';
 
-const MessagesList = (): JSX.Element => {
+const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
@@ -25,8 +25,6 @@ const MessagesList = (): JSX.Element => {
   );
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
-  const [sections, setSections] =
-    useState<ISectionListItem<Date, IMessagesListItem>[]>(mockData);
 
   const renderItem = ({ item }: { item: IMessagesListItem }) => (
     <MessagesListItem item={item} />
