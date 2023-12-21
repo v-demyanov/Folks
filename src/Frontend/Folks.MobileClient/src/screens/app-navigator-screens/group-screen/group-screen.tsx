@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FormikProps, useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Snackbar, useTheme } from 'react-native-paper';
 
 import GroupHeader from '../../../features/groups/components/group-header/group-header';
 import MessageInput from '../../../features/messages/components/message-input/message-input';
@@ -23,28 +24,39 @@ import {
   splitContentOnFragments,
 } from '../../../features/messages/helpers/message.helpers';
 import useArrayEffect from '../../../common/hooks/use-array-effect';
+import InformationContainer from '../../../common/components/information-container/information-container';
+import { Theme } from '../../../themes/types/theme';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Group'>;
 
 const GroupScreen = ({ route }: Props): JSX.Element => {
   const channel = route.params;
   const { currentUser } = useAuth();
+  const theme = useTheme<Theme>();
 
-  const [sendMessage, { isLoading: isSendingMessage }] =
-    useSendMessageMutation();
-  const { data: messages = [] } = useGetMessagesQuery({
-    channelId: channel.id,
-    channelType: channel.type,
-  } as IGetMessagesQuery);
+  const [
+    sendMessage,
+    { isLoading: isSendingMessage, isError: isSendMessageError },
+  ] = useSendMessageMutation();
+  const { data: messages = [], isError: isGetMessagesError } =
+    useGetMessagesQuery({
+      channelId: channel.id,
+      channelType: channel.type,
+    } as IGetMessagesQuery);
 
   const [messagesSections, setMessagesSections] = useState<
     ISectionListItem<Date, IMessagesListItem>[]
   >([]);
+  const [sendMessageErrorVisible, setSendMessageErrorVisible] = useState(false);
 
   useArrayEffect(() => {
     const messagesSections = prepareMessagesSections();
     setMessagesSections(messagesSections);
   }, [messages, currentUser]);
+
+  useEffect(() => {
+    setSendMessageErrorVisible(isSendMessageError);
+  }, [isSendMessageError]);
 
   function prepareMessagesSections(): ISectionListItem<
     Date,
@@ -97,17 +109,49 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
       },
     });
 
+  function getMessagesErrorMessage(): string {
+    return 'Oops! Something went wrong,\n while messages loading.';
+  }
+
+  function getSendMessageErrorMessage(): string {
+    return 'Oops! Something went wrong, while message sending.';
+  }
+
+  function isSendMessageDisabled(): boolean {
+    return (
+      !sendMessageForm.isValid ||
+      !sendMessageForm.dirty ||
+      isSendingMessage ||
+      isGetMessagesError
+    );
+  }
+
   return (
     <>
       <GroupHeader group={channel} />
-      <MessagesList sections={messagesSections} />
+      {isGetMessagesError ? (
+        <InformationContainer
+          message={getMessagesErrorMessage()}
+          backgroudColor={theme.colors.secondaryContainer}
+        />
+      ) : (
+        <MessagesList sections={messagesSections} />
+      )}
       <MessageInput
         onSendPress={sendMessageForm.handleSubmit}
         form={sendMessageForm}
-        sendDisabled={
-          !sendMessageForm.isValid || !sendMessageForm.dirty || isSendingMessage
-        }
+        sendDisabled={isSendMessageDisabled()}
       />
+      <Snackbar
+        visible={sendMessageErrorVisible}
+        onDismiss={() => setSendMessageErrorVisible(false)}
+        action={{
+          label: 'Close',
+          onPress: () => setSendMessageErrorVisible(false),
+        }}
+      >
+        {getSendMessageErrorMessage()}
+      </Snackbar>
     </>
   );
 };

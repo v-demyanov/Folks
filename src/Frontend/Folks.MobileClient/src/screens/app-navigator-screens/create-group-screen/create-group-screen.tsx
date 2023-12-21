@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormikProps, useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
+import { Snackbar } from 'react-native-paper';
 
 import CreateGroupForm from '../../../features/groups/components/create-group/create-group-form/create-group-form';
 import CreateGroupHeader from '../../../features/groups/components/create-group/create-group-header/create-group-header';
@@ -16,23 +17,34 @@ import ICreateGroupCommand from '../../../features/groups/models/create-group-co
 import CreateGroupFormValidationSchema from '../../../features/groups/validation/create-group-form.validation';
 import useArrayEffect from '../../../common/hooks/use-array-effect';
 import { StackNavigation } from '../../../navigation/app-navigator';
+import InformationContainer from '../../../common/components/information-container/information-container';
 
 const CreateGroupScreen = (): JSX.Element => {
   const { currentUser } = useAuth();
   const navigation = useNavigation<StackNavigation>();
 
-  const { data: users = [] } = useGetAllUsersQuery(null, {
-    refetchOnMountOrArgChange: true,
-  });
-  const [createGroup, { isLoading: isCreatingGroup }] =
-    useCreateGroupMutation();
+  const { data: users = [], isError: isGetAllUsersError } = useGetAllUsersQuery(
+    null,
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
+  const [
+    createGroup,
+    { isLoading: isCreatingGroup, isError: isCreateGroupError },
+  ] = useCreateGroupMutation();
 
   const [selectableUsers, setSelectableUsers] = useState<ISelectableUser[]>([]);
+  const [createGroupErrorVisible, setCreateGroupErrorVisible] = useState(false);
 
   useArrayEffect(() => {
     const selectableUsers = prepareSelecatableUsers();
     setSelectableUsers(selectableUsers);
   }, [users, currentUser]);
+
+  useEffect(() => {
+    setCreateGroupErrorVisible(isCreateGroupError);
+  }, [isCreateGroupError]);
 
   function prepareSelecatableUsers(): ISelectableUser[] {
     if (!currentUser) {
@@ -61,7 +73,6 @@ const CreateGroupScreen = (): JSX.Element => {
 
         const group = await createGroup(createGroupCommand).unwrap();
         resetCreateGroupForm();
-
         navigation.navigate('Group', group);
       },
     });
@@ -74,12 +85,12 @@ const CreateGroupScreen = (): JSX.Element => {
 
   const handleListItemPress = (user: ISelectableUser) => {
     user.isSelected = !user.isSelected;
-    setSelectableUsers(selectableUsers);
+    setSelectableUsers([...selectableUsers]);
   };
 
   const handleChipClose = (user: ISelectableUser) => {
     user.isSelected = false;
-    setSelectableUsers(selectableUsers);
+    setSelectableUsers([...selectableUsers]);
   };
 
   function prepareCreateGroupCommand(
@@ -100,6 +111,14 @@ const CreateGroupScreen = (): JSX.Element => {
     } as ICreateGroupCommand;
   }
 
+  function getGetAllUsersErrorMessage(): string {
+    return 'Oops! Something went wrong,\n while users loading.';
+  }
+
+  function getCreateGroupErrorMessage(): string {
+    return 'Oops! Something went wrong, while group creating.';
+  }
+
   return (
     <>
       <CreateGroupHeader />
@@ -108,16 +127,30 @@ const CreateGroupScreen = (): JSX.Element => {
         users={selectableUsers}
         onChipClose={handleChipClose}
       />
-      <SelectableUsersList
-        users={selectableUsers}
-        onListItemPress={handleListItemPress}
-      />
+      {isGetAllUsersError ? (
+        <InformationContainer message={getGetAllUsersErrorMessage()} />
+      ) : (
+        <SelectableUsersList
+          users={selectableUsers}
+          onListItemPress={handleListItemPress}
+        />
+      )}
       <CreateGroupButton
         onPress={createGroupForm.handleSubmit}
         disabled={
           !createGroupForm.isValid || !createGroupForm.dirty || isCreatingGroup
         }
       />
+      <Snackbar
+        visible={createGroupErrorVisible}
+        onDismiss={() => setCreateGroupErrorVisible(false)}
+        action={{
+          label: 'Close',
+          onPress: () => setCreateGroupErrorVisible(false),
+        }}
+      >
+        {getCreateGroupErrorMessage()}
+      </Snackbar>
     </>
   );
 };

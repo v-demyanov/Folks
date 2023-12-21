@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native';
 
-import { Theme } from '../../../../../themes/types/theme';
+import { Theme } from '../../../themes/types/theme';
 
 const buildStyles = (theme: Theme) =>
   StyleSheet.create({
-    usersQueryError: {
-      height: '100%',
-      paddingTop: '60%',
+    view: {
+      flex: 1,
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
       backgroundColor: theme.colors.background,
     },
-    usersQueryErrorText: {
+    text: {
       textAlign: 'center',
     },
   });

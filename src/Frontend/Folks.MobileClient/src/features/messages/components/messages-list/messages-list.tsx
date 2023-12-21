@@ -79,6 +79,10 @@ const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
     setTimerId(newTimerId);
   };
 
+  if (!sections.length) {
+    return <MessagesListEmpty />;
+  }
+
   return (
     <SafeAreaView style={[styles.safeAreaView]}>
       {isScrolling ? renderStickyFooter() : null}
@@ -91,7 +95,6 @@ const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
         onViewableItemsChanged={handleViewableItemsChanged}
         onScroll={handleScroll}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        ListEmptyComponent={<MessagesListEmpty />}
         inverted={!!sections.length}
       />
     </SafeAreaView>

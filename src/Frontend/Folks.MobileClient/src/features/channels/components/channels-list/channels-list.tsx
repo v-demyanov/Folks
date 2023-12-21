@@ -8,9 +8,9 @@ import IChannel from '../../models/channel';
 import { useGetOwnChannelsQuery } from '../../api/channels.api';
 import buildStyles from './channels-list.styles';
 import { Theme } from '../../../../themes/types/theme';
-import ChannelsListError from './channels-list-error/channels-list-error';
 import ChannelsListEmpty from './channels-list-empty/channels-list-empty';
 import { StackNavigation } from '../../../../navigation/app-navigator';
+import InformationContainer from '../../../../common/components/information-container/information-container';
 
 const ChannelsList = (): JSX.Element => {
   const theme = useTheme<Theme>();
@@ -18,7 +18,7 @@ const ChannelsList = (): JSX.Element => {
 
   const navigation = useNavigation<StackNavigation>();
 
-  const { data: channels = [], isError: isChannelsQueryError } =
+  const { data: channels = [], isError: isGetChannelsError } =
     useGetOwnChannelsQuery(null);
 
   const handleListItemPress = (group: IChannel): void => {
@@ -35,8 +35,12 @@ const ChannelsList = (): JSX.Element => {
     );
   };
 
-  if (isChannelsQueryError) {
-    return <ChannelsListError />;
+  function getChannelsErrorMessage(): string {
+    return 'Oops! Something went wrong,\n while channels loading.';
+  }
+
+  if (isGetChannelsError) {
+    return <InformationContainer message={getChannelsErrorMessage()} />;
   }
 
   if (!channels.length) {

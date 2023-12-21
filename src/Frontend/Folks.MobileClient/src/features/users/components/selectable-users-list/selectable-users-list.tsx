@@ -8,8 +8,6 @@ import ISelectableUsersListProps from '../../models/selectable-users-list.props'
 import { Theme } from '../../../../themes/types/theme';
 import ISelectableUser from '../../models/selectable-user';
 import SelectableUsersListEmpty from './selectable-users-list-empty/selectable-users-list-empty';
-import { useGetAllUsersQuery } from '../../api/users.api';
-import SelectableUsersListError from './selectable-users-list-error/selectable-users-list-error';
 
 const SelectableUsersList = ({
   users,
@@ -17,8 +15,6 @@ const SelectableUsersList = ({
 }: ISelectableUsersListProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
-
-  const { isError: isUsersQueryError } = useGetAllUsersQuery(null);
 
   const renderListItem = ({ item }: { item: ISelectableUser }) => {
     return (
@@ -30,8 +26,8 @@ const SelectableUsersList = ({
     );
   };
 
-  if (isUsersQueryError) {
-    return <SelectableUsersListError />;
+  if (!users.length) {
+    return <SelectableUsersListEmpty />;
   }
 
   return (
@@ -41,7 +37,6 @@ const SelectableUsersList = ({
       renderItem={renderListItem}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => <View style={[styles.itemSeparator]} />}
-      ListEmptyComponent={<SelectableUsersListEmpty />}
     />
   );
 };

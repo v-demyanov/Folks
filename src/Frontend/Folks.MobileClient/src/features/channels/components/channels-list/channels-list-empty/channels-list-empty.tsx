@@ -1,10 +1,13 @@
 import { View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
+import { useMemo } from 'react';
 
 import buildStyles from './channels-list-empty.styles';
+import { Theme } from '../../../../../themes/types/theme';
 
 const ChannelsListEmpty = (): JSX.Element => {
-  const styles = buildStyles();
+  const theme = useTheme<Theme>();
+  const styles = useMemo(() => buildStyles(theme), [theme]);
 
   return (
     <View style={[styles.centeredView]}>

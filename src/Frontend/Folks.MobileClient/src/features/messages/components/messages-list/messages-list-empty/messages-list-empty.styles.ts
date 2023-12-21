@@ -1,11 +1,15 @@
 import { StyleSheet } from 'react-native';
 
-const buildStyles = () =>
+import { Theme } from '../../../../../themes/types/theme';
+
+const buildStyles = (theme: Theme) =>
   StyleSheet.create({
     centeredView: {
+      flex: 1,
       display: 'flex',
-      paddingTop: '60%',
       alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.secondaryContainer,
     },
   });
 
