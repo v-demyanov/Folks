@@ -17,7 +17,6 @@ import {
   ICreateGroupCommand,
 } from '../../../features/groups/models';
 import { useGetAllUsersQuery } from '../../../features/users';
-import { ISelectableUser } from '../../../features/users/models';
 import {
   SelectableUsersList,
   SelectedUsersChips,
@@ -26,6 +25,8 @@ import { useAuth } from '../../../features/auth/hooks';
 import { useArrayEffect } from '../../../common/hooks';
 import { InformationContainer } from '../../../common/components';
 import { StackNavigation } from '../../../navigation/app-navigator';
+import { SelectableItem } from '../../../common/models';
+import { IUser } from '../../../features/users/models';
 
 const CreateGroupScreen = (): JSX.Element => {
   const { currentUser } = useAuth();
@@ -42,7 +43,9 @@ const CreateGroupScreen = (): JSX.Element => {
     { isLoading: isCreatingGroup, isError: isCreateGroupError },
   ] = useCreateGroupMutation();
 
-  const [selectableUsers, setSelectableUsers] = useState<ISelectableUser[]>([]);
+  const [selectableUsers, setSelectableUsers] = useState<
+    SelectableItem<IUser>[]
+  >([]);
   const [createGroupErrorVisible, setCreateGroupErrorVisible] = useState(false);
 
   useArrayEffect(() => {
@@ -54,7 +57,7 @@ const CreateGroupScreen = (): JSX.Element => {
     setCreateGroupErrorVisible(isCreateGroupError);
   }, [isCreateGroupError]);
 
-  function prepareSelecatableUsers(): ISelectableUser[] {
+  function prepareSelecatableUsers(): SelectableItem<IUser>[] {
     if (!currentUser) {
       return [];
     }
@@ -91,12 +94,12 @@ const CreateGroupScreen = (): JSX.Element => {
     setSelectableUsers(selectableUsers);
   };
 
-  const handleListItemPress = (user: ISelectableUser) => {
+  const handleListItemPress = (user: SelectableItem<IUser>) => {
     user.isSelected = !user.isSelected;
     setSelectableUsers([...selectableUsers]);
   };
 
-  const handleChipClose = (user: ISelectableUser) => {
+  const handleChipClose = (user: SelectableItem<IUser>) => {
     user.isSelected = false;
     setSelectableUsers([...selectableUsers]);
   };
@@ -132,14 +135,14 @@ const CreateGroupScreen = (): JSX.Element => {
       <CreateGroupHeader />
       <CreateGroupForm form={createGroupForm} />
       <SelectedUsersChips
-        users={selectableUsers}
+        items={selectableUsers}
         onChipClose={handleChipClose}
       />
       {isGetAllUsersError ? (
         <InformationContainer message={getGetAllUsersErrorMessage()} />
       ) : (
         <SelectableUsersList
-          users={selectableUsers}
+          items={selectableUsers}
           onListItemPress={handleListItemPress}
         />
       )}

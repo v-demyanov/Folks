@@ -8,7 +8,7 @@ import { ISelectableUsersListItemProps } from '../../../models';
 
 const SelectableUsersListItem = ({
   onPress,
-  user,
+  item,
 }: ISelectableUsersListItemProps): JSX.Element => {
   const styles = buildStyles();
   const [isOnFocus, setIsOnFocus] = useState(false);
@@ -16,19 +16,19 @@ const SelectableUsersListItem = ({
   return (
     <List.Item
       style={[styles.listItem]}
-      title={user.userName}
+      title={item.userName}
       titleStyle={[styles.title]}
-      description={user.status}
+      description={item.status}
       left={() => (
         <>
           <Avatar.Icon
             size={IconsConstants.LIST_ITEM_IMAGE_SIZE}
             icon="account"
           ></Avatar.Icon>
-          {user.isSelected ? <ListCheckBox isOnFocus={isOnFocus} /> : null}
+          {item.isSelected ? <ListCheckBox isOnFocus={isOnFocus} /> : null}
         </>
       )}
-      onPress={() => onPress(user)}
+      onPress={() => onPress(item)}
       onPressIn={() => setIsOnFocus(true)}
       onPressOut={() => setIsOnFocus(false)}
     />

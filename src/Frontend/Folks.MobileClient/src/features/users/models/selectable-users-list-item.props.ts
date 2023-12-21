@@ -1,6 +1,7 @@
-import ISelectableUser from './selectable-user';
+import { SelectableItem } from '../../../common/models';
+import IUser from './user';
 
 export default interface ISelectableUsersListItemProps {
-  onPress: (user: ISelectableUser) => void;
-  user: ISelectableUser;
+  onPress: (item: SelectableItem<IUser>) => void;
+  item: SelectableItem<IUser>;
 }

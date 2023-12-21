@@ -5,21 +5,22 @@ import { useMemo } from 'react';
 import buildStyles from './selectable-users-list.styles';
 import SelectableUsersListItem from './selectable-users-list-item/selectable-users-list-item';
 import { Theme } from '../../../../themes/types/theme';
-import { ISelectableUsersListProps, ISelectableUser } from '../../models';
+import { ISelectableUsersListProps, IUser } from '../../models';
 import SelectableUsersListEmpty from './selectable-users-list-empty/selectable-users-list-empty';
+import { SelectableItem } from '../../../../common/models';
 
 const SelectableUsersList = ({
-  users,
+  items: users,
   onListItemPress,
 }: ISelectableUsersListProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
-  const renderListItem = ({ item }: { item: ISelectableUser }) => {
+  const renderListItem = ({ item }: { item: SelectableItem<IUser> }) => {
     return (
       <SelectableUsersListItem
         key={item.id}
-        user={item}
+        item={item}
         onPress={onListItemPress}
       />
     );

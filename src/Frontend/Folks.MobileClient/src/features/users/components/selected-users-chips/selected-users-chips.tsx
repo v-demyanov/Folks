@@ -7,25 +7,25 @@ import { Theme } from '../../../../themes/types/theme';
 import buildStyles from './selected-users-chips.styles';
 
 const SelectedUsersChips = ({
-  users,
+  items,
   onChipClose,
 }: ISelectedUsersChipsProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
   const renderChips = (): JSX.Element[] => {
-    return users
-      .filter((user) => user.isSelected)
-      .map((user) => (
+    return items
+      .filter((item) => item.isSelected)
+      .map((item) => (
         <Chip
           style={[styles.chip]}
           icon="account"
           closeIcon="close"
           onPress={() => {}}
-          onClose={() => onChipClose(user)}
-          key={user.id}
+          onClose={() => onChipClose(item)}
+          key={item.id}
         >
-          {user.userName}
+          {item.userName}
         </Chip>
       ));
   };
@@ -33,7 +33,7 @@ const SelectedUsersChips = ({
   return (
     <View>
       <ScrollView horizontal={true} style={[styles.scrollView]}>
-        {users.filter((user) => user.isSelected).length ? (
+        {items.filter((item) => item.isSelected).length ? (
           renderChips()
         ) : (
           <Text style={[styles.emptyView]} variant="titleMedium">
