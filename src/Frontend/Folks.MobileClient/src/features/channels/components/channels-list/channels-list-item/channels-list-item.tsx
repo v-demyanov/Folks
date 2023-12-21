@@ -1,10 +1,10 @@
 import { Avatar, Badge, List, Text } from 'react-native-paper';
 import { View } from 'react-native';
 
-import { LIST_ITEM_IMAGE_SIZE } from '../../../../../common/constants/icons.constants';
+import { IconsConstants } from '../../../../../common';
 import buildStyles from './channels-list-item.styles';
-import { getUserFrendlyDateString } from '../../../../../common/helpers/date-helpers';
-import IChannelsListItemProps from '../../../models/channels-list-item.props';
+import { getUserFrendlyDateString } from '../../../../../common/helpers';
+import { IChannelsListItemProps } from '../../../models';
 
 const ChannelsListItem = ({
   channel,
@@ -19,7 +19,12 @@ const ChannelsListItem = ({
       titleStyle={[styles.title]}
       description={'Last message...'}
       onPress={() => onPress(channel)}
-      left={() => <Avatar.Icon size={LIST_ITEM_IMAGE_SIZE} icon="account" />}
+      left={() => (
+        <Avatar.Icon
+          size={IconsConstants.LIST_ITEM_IMAGE_SIZE}
+          icon="account"
+        />
+      )}
       right={() => (
         <View style={[styles.view]}>
           <Text variant="bodySmall">

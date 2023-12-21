@@ -2,7 +2,7 @@ import { ScrollView, View } from 'react-native';
 import { Chip, Text, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
 
-import ISelectedUsersChipsProps from '../../models/selected-users-chips.props';
+import { ISelectedUsersChipsProps } from '../../models';
 import { Theme } from '../../../../themes/types/theme';
 import buildStyles from './selected-users-chips.styles';
 

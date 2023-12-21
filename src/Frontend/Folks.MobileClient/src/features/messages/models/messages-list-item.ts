@@ -1,4 +1,4 @@
-import IUser from '../../users/models/user';
+import { IUser } from '../../users/models';
 
 export default interface IMessagesListItem {
   id: string;

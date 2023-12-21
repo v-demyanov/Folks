@@ -3,21 +3,29 @@ import { FormikProps, useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import { Snackbar } from 'react-native-paper';
 
-import CreateGroupForm from '../../../features/groups/components/create-group/create-group-form/create-group-form';
-import CreateGroupHeader from '../../../features/groups/components/create-group/create-group-header/create-group-header';
-import SelectableUsersList from '../../../features/users/components/selectable-users-list/selectable-users-list';
-import SelectedUsersChips from '../../../features/users/components/selected-users-chips/selected-users-chips';
-import CreateGroupButton from '../../../features/groups/components/create-group/create-group-button/create-group-button';
-import { useGetAllUsersQuery } from '../../../features/users/api/users.api';
-import ISelectableUser from '../../../features/users/models/selectable-user';
-import useAuth from '../../../features/auth/hooks/use-auth';
-import ICreateGroupFormValue from '../../../features/groups/models/create-group-form-value';
-import { useCreateGroupMutation } from '../../../features/groups/api/groups.api';
-import ICreateGroupCommand from '../../../features/groups/models/create-group-command';
-import CreateGroupFormValidationSchema from '../../../features/groups/validation/create-group-form.validation';
-import useArrayEffect from '../../../common/hooks/use-array-effect';
+import {
+  CreateGroupButton,
+  CreateGroupForm,
+  CreateGroupHeader,
+} from '../../../features/groups/components';
+import {
+  CreateGroupFormValidationSchema,
+  useCreateGroupMutation,
+} from '../../../features/groups';
+import {
+  ICreateGroupFormValue,
+  ICreateGroupCommand,
+} from '../../../features/groups/models';
+import { useGetAllUsersQuery } from '../../../features/users';
+import { ISelectableUser } from '../../../features/users/models';
+import {
+  SelectableUsersList,
+  SelectedUsersChips,
+} from '../../../features/users/components';
+import { useAuth } from '../../../features/auth/hooks';
+import { useArrayEffect } from '../../../common/hooks';
+import { InformationContainer } from '../../../common/components';
 import { StackNavigation } from '../../../navigation/app-navigator';
-import InformationContainer from '../../../common/components/information-container/information-container';
 
 const CreateGroupScreen = (): JSX.Element => {
   const { currentUser } = useAuth();

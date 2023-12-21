@@ -4,13 +4,13 @@ import { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import ChannelsListItem from './channels-list-item/channels-list-item';
-import IChannel from '../../models/channel';
+import { IChannel } from '../../models';
 import { useGetOwnChannelsQuery } from '../../api/channels.api';
 import buildStyles from './channels-list.styles';
 import { Theme } from '../../../../themes/types/theme';
 import ChannelsListEmpty from './channels-list-empty/channels-list-empty';
 import { StackNavigation } from '../../../../navigation/app-navigator';
-import InformationContainer from '../../../../common/components/information-container/information-container';
+import { InformationContainer } from '../../../../common/components';
 
 const ChannelsList = (): JSX.Element => {
   const theme = useTheme<Theme>();

@@ -1,5 +1,4 @@
-import IMessage from '../models/message';
-import IMessagesListItem from '../models/messages-list-item';
+import { IMessage, IMessagesListItem } from '../models';
 
 export function mapMessagesListItem(
   message: IMessage,

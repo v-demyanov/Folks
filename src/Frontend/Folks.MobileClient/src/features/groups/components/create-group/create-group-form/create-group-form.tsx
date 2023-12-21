@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Avatar, HelperText, TextInput, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
 
-import ICreateGroupFormProps from '../../../models/create-group-form.props';
+import { ICreateGroupFormProps } from '../../../models';
 import { Theme } from '../../../../../themes/types/theme';
 import buildStyles from './create-group-form.styles';
 

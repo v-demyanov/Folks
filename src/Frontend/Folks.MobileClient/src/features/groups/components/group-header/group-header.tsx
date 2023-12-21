@@ -4,8 +4,8 @@ import { View } from 'react-native';
 import { useMemo } from 'react';
 
 import { StackNavigation } from '../../../../navigation/app-navigator';
-import IChannel from '../../../channels/models/channel';
-import { GROUP_ICON_SIZE } from '../../../../common/constants/icons.constants';
+import { IChannel } from '../../../channels/models';
+import { IconsConstants } from '../../../../common';
 import buildStyles from './group-header.styles';
 import { Theme } from '../../../../themes/types/theme';
 
@@ -25,7 +25,7 @@ const GroupHeader = ({ group }: { group: IChannel }): JSX.Element => {
           <View style={[styles.contentView]}>
             <Avatar.Icon
               style={[styles.groupImage]}
-              size={GROUP_ICON_SIZE}
+              size={IconsConstants.GROUP_ICON_SIZE}
               icon="image"
             />
             <View style={[styles.groupDetailsView]}>

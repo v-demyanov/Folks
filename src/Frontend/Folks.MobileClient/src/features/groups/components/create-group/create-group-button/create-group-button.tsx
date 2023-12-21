@@ -1,6 +1,6 @@
 import { FAB } from 'react-native-paper';
 
-import ICreateGroupButtonProps from '../../../models/create-group-button.props';
+import { ICreateGroupButtonProps } from '../../../models';
 
 const CreateGroupButton = ({
   onPress,

@@ -2,14 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
 
-import IAuthProviderProps from '../models/auth-provider-props';
-import ICurrentUser from '../models/current-user';
-import SignInResult from '../models/auth-result-type';
+import {
+  IAuthProviderProps,
+  ICurrentUser,
+  SignInResult,
+  IAuthContextValue,
+} from '../models';
 import AuthContext from './auth-context';
-import useSecureStore from '../../../common/hooks/use-secure-store';
-import { TOKEN_RESPONSE_KEY } from '../../../common/constants/secure-store-keys.constants';
+import { useSecureStore } from '../../../common/hooks';
+import { SecureStoreKeysConstants } from '../../../common';
 import authConfig from '../configs/auth-config';
-import IAuthContextValue from '../models/auth-context-value';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -18,7 +20,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   const [tokenResponse, setTokenResponse, clearTokenResponse] = useSecureStore<
     AuthSession.TokenResponse | undefined
-  >(TOKEN_RESPONSE_KEY);
+  >(SecureStoreKeysConstants.TOKEN_RESPONSE_KEY);
 
   const discoveryDocument = AuthSession.useAutoDiscovery(
     authConfig.identityServerUrl

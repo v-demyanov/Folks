@@ -2,7 +2,7 @@ import { View, Image } from 'react-native';
 import { useTheme, Text, Button, ActivityIndicator } from 'react-native-paper';
 import { useMemo, useState } from 'react';
 
-import Logo from '../../../common/components/logo/logo';
+import { Logo } from '../../../common/components';
 import useAuth from '../../../features/auth/hooks/use-auth';
 import buildStyles from './welcome-screen-styles';
 import { Theme } from '../../../themes/types/theme';

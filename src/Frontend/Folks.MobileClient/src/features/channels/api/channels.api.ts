@@ -1,6 +1,6 @@
 import { api } from '../../../api/api';
 import { channelsHubConnection } from '../../signalr/connections';
-import IChannel from '../models/channel';
+import { IChannel } from '../models';
 
 const channelsApi = api.injectEndpoints({
   endpoints: (builder) => ({

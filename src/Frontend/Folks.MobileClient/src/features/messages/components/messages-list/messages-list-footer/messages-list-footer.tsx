@@ -3,8 +3,8 @@ import { useTheme, Text } from 'react-native-paper';
 import { useMemo } from 'react';
 
 import { Theme } from '../../../../../themes/types/theme';
-import { getUserFrendlyDateString } from '../../../../../common/helpers/date-helpers';
-import IMessagesListFooterProps from '../../../models/messages-list-footer.props';
+import { getUserFrendlyDateString } from '../../../../../common/helpers';
+import { IMessagesListFooterProps } from '../../../models';
 import buildStyles from './messages-list-footer.styles';
 
 const MessagesListFooter = ({

@@ -2,14 +2,14 @@ import { Appbar, useTheme } from 'react-native-paper';
 import { memo, useMemo } from 'react';
 import { View } from 'react-native';
 
-import UserAccount from '../../users/components/user-account/user-account';
-import useAuth from '../../auth/hooks/use-auth';
-import { useAppDispatch } from '../../../common/hooks/store-hooks';
+import { useAuth } from '../../auth/hooks';
+import { useAppDispatch } from '../../../common/hooks';
 import { api } from '../../../api/api';
 import buildStyles from './home-appbar.styles';
-import ChannelsLoadingIndicator from '../../channels/components/channels-loading-indicator/channels-loading-indicator';
+import { ChannelsLoadingIndicator } from '../../channels/components';
 import { Theme } from '../../../themes/types/theme';
 import { channelsHubConnection } from '../../signalr/connections';
+import { UserAccount } from '../../users/components';
 
 const HomeAppbar = (): JSX.Element => {
   const theme = useTheme<Theme>();

@@ -1,4 +1,4 @@
-import IBaseModel from '../../../common/models/base-model';
+import { IBaseModel } from '../../../common/models';
 
 export default interface IUser extends IBaseModel {
   userName: string;

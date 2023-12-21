@@ -1,5 +1,5 @@
-import IBaseModel from '../../../common/models/base-model';
-import ChannelType from '../enums/channel-type';
+import { IBaseModel } from '../../../common/models';
+import { ChannelType } from '../enums';
 
 export default interface IChannel extends IBaseModel {
   title: string;

@@ -4,9 +4,8 @@ import { useMemo } from 'react';
 
 import buildStyles from './selectable-users-list.styles';
 import SelectableUsersListItem from './selectable-users-list-item/selectable-users-list-item';
-import ISelectableUsersListProps from '../../models/selectable-users-list.props';
 import { Theme } from '../../../../themes/types/theme';
-import ISelectableUser from '../../models/selectable-user';
+import { ISelectableUsersListProps, ISelectableUser } from '../../models';
 import SelectableUsersListEmpty from './selectable-users-list-empty/selectable-users-list-empty';
 
 const SelectableUsersList = ({

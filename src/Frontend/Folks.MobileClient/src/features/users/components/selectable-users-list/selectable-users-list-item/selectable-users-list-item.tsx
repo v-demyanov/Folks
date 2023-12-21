@@ -1,10 +1,10 @@
 import { Avatar, List } from 'react-native-paper';
 import { useState } from 'react';
 
-import { LIST_ITEM_IMAGE_SIZE } from '../../../../../common/constants/icons.constants';
+import { IconsConstants } from '../../../../../common';
 import buildStyles from './selectable-users-list-item.styles';
-import ListCheckBox from '../../../../../common/components/list-check-box/list-check-box';
-import ISelectableUsersListItemProps from '../../../models/selectable-users-list-item.props';
+import { ListCheckBox } from '../../../../../common/components';
+import { ISelectableUsersListItemProps } from '../../../models';
 
 const SelectableUsersListItem = ({
   onPress,
@@ -21,7 +21,10 @@ const SelectableUsersListItem = ({
       description={user.status}
       left={() => (
         <>
-          <Avatar.Icon size={LIST_ITEM_IMAGE_SIZE} icon="account"></Avatar.Icon>
+          <Avatar.Icon
+            size={IconsConstants.LIST_ITEM_IMAGE_SIZE}
+            icon="account"
+          ></Avatar.Icon>
           {user.isSelected ? <ListCheckBox isOnFocus={isOnFocus} /> : null}
         </>
       )}

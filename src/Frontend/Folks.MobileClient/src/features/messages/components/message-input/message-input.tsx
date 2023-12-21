@@ -2,10 +2,10 @@ import { TextInput, View } from 'react-native';
 import { IconButton, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
 
-import { SEND_MESSAGE_BUTTON_ICON_SIZE } from '../../../../common/constants/icons.constants';
+import { IconsConstants } from '../../../../common';
 import { Theme } from '../../../../themes/types/theme';
 import buildStyles from './message-input.styles';
-import IMessageInputProps from '../../models/message-input.props';
+import { IMessageInputProps } from '../../models';
 
 const MessageInput = ({
   form,
@@ -27,7 +27,7 @@ const MessageInput = ({
       />
       <IconButton
         icon="send"
-        size={SEND_MESSAGE_BUTTON_ICON_SIZE}
+        size={IconsConstants.SEND_MESSAGE_BUTTON_ICON_SIZE}
         onPress={onSendPress}
         disabled={sendDisabled}
       />

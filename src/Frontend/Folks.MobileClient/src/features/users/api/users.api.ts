@@ -1,5 +1,5 @@
 import { api } from '../../../api/api';
-import IUser from '../models/user';
+import { IUser } from '../models';
 
 const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({

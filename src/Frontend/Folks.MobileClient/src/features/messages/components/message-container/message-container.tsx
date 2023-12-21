@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 import buildStyles from './message-container.styles';
 import { Theme } from '../../../../themes/types/theme';
-import IMessageContainerProps from '../../models/message-container.props';
+import { IMessageContainerProps } from '../../models';
 
 const MessageContainer = ({
   isLeftAlign,

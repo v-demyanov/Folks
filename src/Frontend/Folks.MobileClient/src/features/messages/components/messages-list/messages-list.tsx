@@ -9,12 +9,11 @@ import { useMemo, useState } from 'react';
 
 import { Theme } from '../../../../themes/types/theme';
 import MessagesListItem from './messages-list-item/messages-list-item';
-import IMessagesListItem from '../../models/messages-list-item';
-import ISectionListItem from '../../../../common/models/section-list-item';
+import { ISectionListItem } from '../../../../common/models';
 import MessagesListFooter from './messages-list-footer/messages-list-footer';
 import buildStyles from './messages-list.styles';
 import MessagesListEmpty from './messages-list-empty/messages-list-empty';
-import IMessagesListProps from '../../models/messages-list.props';
+import { IMessagesListProps, IMessagesListItem } from '../../models';
 
 const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
   const theme = useTheme<Theme>();

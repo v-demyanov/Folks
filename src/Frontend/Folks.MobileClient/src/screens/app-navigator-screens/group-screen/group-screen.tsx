@@ -3,29 +3,33 @@ import { FormikProps, useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { Snackbar, useTheme } from 'react-native-paper';
 
-import GroupHeader from '../../../features/groups/components/group-header/group-header';
-import MessageInput from '../../../features/messages/components/message-input/message-input';
-import MessagesList from '../../../features/messages/components/messages-list/messages-list';
 import { RootStackParamList } from '../../../navigation/app-navigator';
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
-} from '../../../features/messages/api/messages.api';
-import ISendMessageFormValue from '../../../features/messages/models/send-message-form-value';
-import SendMessageFormValidationSchema from '../../../features/messages/validation/send-message-form.validation';
-import ICreateMessageCommand from '../../../features/messages/models/create-message-command';
-import useAuth from '../../../features/auth/hooks/use-auth';
-import IGetMessagesQuery from '../../../features/messages/models/get-messages-query';
-import IMessagesListItem from '../../../features/messages/models/messages-list-item';
-import ISectionListItem from '../../../common/models/section-list-item';
-import { mapMessagesListItem } from '../../../features/messages/helpers/messages-list-item.helpers';
+  SendMessageFormValidationSchema,
+} from '../../../features/messages';
+import {
+  MessageInput,
+  MessagesList,
+} from '../../../features/messages/components';
+import {
+  ISendMessageFormValue,
+  ICreateMessageCommand,
+  IGetMessagesQuery,
+  IMessagesListItem,
+} from '../../../features/messages/models';
 import {
   groupMessagesByDate,
   splitContentOnFragments,
-} from '../../../features/messages/helpers/message.helpers';
-import useArrayEffect from '../../../common/hooks/use-array-effect';
-import InformationContainer from '../../../common/components/information-container/information-container';
+  mapMessagesListItem,
+} from '../../../features/messages/helpers';
+import { useAuth } from '../../../features/auth/hooks';
+import { ISectionListItem } from '../../../common/models';
+import { useArrayEffect } from '../../../common/hooks';
+import { InformationContainer } from '../../../common/components';
 import { Theme } from '../../../themes/types/theme';
+import { GroupHeader } from '../../../features/groups/components';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Group'>;
 

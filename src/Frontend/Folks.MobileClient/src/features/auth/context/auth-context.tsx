@@ -1,7 +1,6 @@
 import { createContext } from 'react';
 
-import IAuthContextValue from '../models/auth-context-value';
-import SignInResult from '../models/auth-result-type';
+import { IAuthContextValue, SignInResult } from '../models';
 
 const defaultValue = {
   signInAsync: async (): Promise<SignInResult> => SignInResult.Error,

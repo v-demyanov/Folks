@@ -1,5 +1,5 @@
-import * as MessagesConstants from '../../../features/messages/constants/messages.constants';
-import IMessage from '../models/message';
+import { MessagesConstants } from '..';
+import { IMessage } from '../models';
 
 export function splitContentOnFragments(content: string): string[] {
   const matcher = new RegExp(

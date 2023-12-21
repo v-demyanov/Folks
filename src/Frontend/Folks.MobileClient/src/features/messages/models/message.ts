@@ -1,5 +1,5 @@
-import IBaseModel from '../../../common/models/base-model';
-import IUser from '../../users/models/user';
+import { IBaseModel } from '../../../common/models';
+import { IUser } from '../../users/models';
 
 export default interface IMessage extends IBaseModel {
   content: string;

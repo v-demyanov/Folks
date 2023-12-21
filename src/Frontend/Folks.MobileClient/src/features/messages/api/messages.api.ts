@@ -2,9 +2,7 @@ import { HttpStatusCode } from 'axios';
 
 import { api } from '../../../api/api';
 import { channelsHubConnection } from '../../signalr/connections';
-import ICreateMessageCommand from '../models/create-message-command';
-import IGetMessagesQuery from '../models/get-messages-query';
-import IMessage from '../models/message';
+import { ICreateMessageCommand, IGetMessagesQuery, IMessage } from '../models';
 
 const messagesApi = api.injectEndpoints({
   endpoints: (builder) => ({

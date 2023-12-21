@@ -1,12 +1,14 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
 
-import HomeScreen from '../screens/app-navigator-screens/home-screen/home-screen';
-import WelcomeScreen from '../screens/app-navigator-screens/welcome-screen/welcome-screen';
-import useAuth from '../features/auth/hooks/use-auth';
-import CreateGroupScreen from '../screens/app-navigator-screens/create-group-screen/create-group-screen';
-import GroupScreen from '../screens/app-navigator-screens/group-screen/group-screen';
-import IChannel from '../features/channels/models/channel';
+import {
+  HomeScreen,
+  WelcomeScreen,
+  CreateGroupScreen,
+  GroupScreen,
+} from '../screens';
+import { useAuth } from '../features/auth/hooks';
+import { IChannel } from '../features/channels/models';
 
 export type RootStackParamList = {
   Home: undefined;

@@ -1,4 +1,4 @@
-import ISectionListItem from '../../../common/models/section-list-item';
+import { ISectionListItem } from '../../../common/models';
 import IMessagesListItem from './messages-list-item';
 
 export default interface IMessagesListProps {

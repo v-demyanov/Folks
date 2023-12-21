@@ -2,11 +2,11 @@ import { View } from 'react-native';
 import { Avatar, Text, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
 
-import IMessagesListItemProps from '../../../models/messages-list-item.props';
+import { IMessagesListItemProps } from '../../../models';
 import { Theme } from '../../../../../themes/types/theme';
 import buildStyles from './messages-list-item.styles';
 import MessageContainer from '../../message-container/message-container';
-import { formatInHHMM } from '../../../../../common/helpers/date-helpers';
+import { formatInHHMM } from '../../../../../common/helpers';
 
 const MessagesListItem = ({ item }: IMessagesListItemProps): JSX.Element => {
   const theme = useTheme<Theme>();

@@ -1,4 +1,4 @@
-import ChannelType from '../../channels/enums/channel-type';
+import { ChannelType } from '../../channels/enums';
 
 export default interface IGetMessagesQuery {
   channelId: string;

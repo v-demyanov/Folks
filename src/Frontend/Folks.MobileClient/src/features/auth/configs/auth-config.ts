@@ -1,6 +1,6 @@
 import * as AuthSession from 'expo-auth-session';
 
-import AuthConfig from '../models/auth-config';
+import { AuthConfig } from '../models';
 
 const redirectUri = AuthSession.makeRedirectUri();
 

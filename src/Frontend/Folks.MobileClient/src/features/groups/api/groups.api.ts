@@ -1,6 +1,6 @@
 import { api } from '../../../api/api';
-import IChannel from '../../channels/models/channel';
-import ICreateGroupCommand from '../models/create-group-command';
+import { IChannel } from '../../channels/models';
+import { ICreateGroupCommand } from '../models';
 
 const groupsApi = api.injectEndpoints({
   endpoints: (builder) => ({

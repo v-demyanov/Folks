@@ -2,8 +2,8 @@ import { View } from 'react-native';
 import { Text, Avatar, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
 
-import { USER_ACCOUNT_IMAGE_SIZE } from '../../../../common/constants/icons.constants';
-import useAuth from '../../../auth/hooks/use-auth';
+import { IconsConstants } from '../../../../common';
+import { useAuth } from '../../../auth/hooks';
 import { Theme } from '../../../../themes/types/theme';
 import buildStyles from './user-account.styles';
 
@@ -16,7 +16,7 @@ const UserAccount = (): JSX.Element => {
     <View style={[styles.view]}>
       <Avatar.Icon
         style={[styles.avatarIcon]}
-        size={USER_ACCOUNT_IMAGE_SIZE}
+        size={IconsConstants.USER_ACCOUNT_IMAGE_SIZE}
         icon="account"
       />
       <Text variant="titleMedium" style={[styles.userName]}>
