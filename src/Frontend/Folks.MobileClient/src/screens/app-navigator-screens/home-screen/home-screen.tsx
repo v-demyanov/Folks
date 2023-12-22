@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Vibration } from 'react-native';
 
@@ -6,6 +6,8 @@ import { useGetOwnChannelsQuery } from '../../../features/channels';
 import {
   CreateChannelButton,
   ChannelsList,
+  ChannelsToolbar,
+  DeleteChannelDialog,
 } from '../../../features/channels/components';
 import HomeAppbar from '../../../features/home/home-appbar/home-appbar';
 import { IChannel } from '../../../features/channels/models';
@@ -26,6 +28,21 @@ const HomeScreen = (): JSX.Element => {
   >([]);
   const [wasPressTimerRefCalled, setWasPressTimerRefCalled] = useState(false);
   const pressTimerRef = useRef<NodeJS.Timeout>();
+
+  const selectedChannelsCount = useMemo(
+    (): number =>
+      selectableChannels.reduce((count, item) => {
+        if (item.isSelected) {
+          count++;
+        }
+        return count;
+      }, 0),
+    [selectableChannels]
+  );
+  const isSelectableMode = useMemo(
+    (): boolean => selectedChannelsCount > 0,
+    [selectedChannelsCount]
+  );
 
   useArrayEffect(() => {
     const selectableChannels = prepareSelectableChannels();
@@ -49,8 +66,9 @@ const HomeScreen = (): JSX.Element => {
       return;
     }
 
-    if (isSelectableMode()) {
+    if (isSelectableMode) {
       channel.isSelected = !channel.isSelected;
+      setSelectableChannels([...selectableChannels]);
     } else {
       navigation.navigate('Group', channel);
     }
@@ -71,13 +89,35 @@ const HomeScreen = (): JSX.Element => {
     clearTimeout(pressTimerRef.current);
   }
 
-  function isSelectableMode(): boolean {
-    return selectableChannels.some((channel) => channel.isSelected);
+  function handleCancelPress(): void {
+    selectableChannels.forEach((channel) => (channel.isSelected = false));
+    setSelectableChannels([...selectableChannels]);
   }
+
+  const [deleteChannelDialogVisible, setDeleteChannelDialogVisible] =
+    useState(false);
+
+  function handleDeletePress(): void {
+    setDeleteChannelDialogVisible(true);
+  }
+
+  function handleDeleteChannelDialogDissmiss(): void {
+    setDeleteChannelDialogVisible(false);
+  }
+
+  function handleDeleteChannelDialogConfirm(): void {}
 
   return (
     <>
-      <HomeAppbar />
+      {isSelectableMode ? (
+        <ChannelsToolbar
+          selectedChannelsCount={selectedChannelsCount}
+          onCancelPress={handleCancelPress}
+          onDeletePress={handleDeletePress}
+        />
+      ) : (
+        <HomeAppbar />
+      )}
       {isGetChannelsError ? (
         <InformationContainer message={getChannelsErrorMessage()} />
       ) : (
@@ -89,6 +129,12 @@ const HomeScreen = (): JSX.Element => {
         />
       )}
       <CreateChannelButton />
+      <DeleteChannelDialog
+        visible={deleteChannelDialogVisible}
+        onDismiss={handleDeleteChannelDialogDissmiss}
+        onConfirmPress={handleDeleteChannelDialogConfirm}
+        channels={selectableChannels}
+      />
     </>
   );
 };
