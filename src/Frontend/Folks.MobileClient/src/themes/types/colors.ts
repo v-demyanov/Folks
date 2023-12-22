@@ -8,4 +8,5 @@ export type Colors = MD3Colors & {
   messageContainerTitle: string;
   messageContainerContent: string;
   dateContainer: string;
+  dialogContainer: string;
 };
