@@ -1,47 +1,38 @@
 import { FlatList, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
-import { useNavigation } from '@react-navigation/native';
 
 import ChannelsListItem from './channels-list-item/channels-list-item';
-import { IChannel } from '../../models';
-import { useGetOwnChannelsQuery } from '../../api/channels.api';
+import { IChannel, IChannelListProps } from '../../models';
 import buildStyles from './channels-list.styles';
 import { Theme } from '../../../../themes/types/theme';
 import ChannelsListEmpty from './channels-list-empty/channels-list-empty';
-import { StackNavigation } from '../../../../navigation/app-navigator';
-import { InformationContainer } from '../../../../common/components';
+import { SelectableItem } from '../../../../common/models';
 
-const ChannelsList = (): JSX.Element => {
+const ChannelsList = ({
+  channels,
+  onListItemPress,
+  onListItemPressIn,
+  onListItemPressOut,
+}: IChannelListProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
-  const navigation = useNavigation<StackNavigation>();
-
-  const { data: channels = [], isError: isGetChannelsError } =
-    useGetOwnChannelsQuery(null);
-
-  const handleListItemPress = (group: IChannel): void => {
-    navigation.navigate('Group', group);
-  };
-
-  const renderChannelsListItem = ({ item }: { item: IChannel }) => {
+  const renderChannelsListItem = ({
+    item,
+  }: {
+    item: SelectableItem<IChannel>;
+  }) => {
     return (
       <ChannelsListItem
         key={item.id}
         channel={item}
-        onPress={handleListItemPress}
+        onPress={onListItemPress}
+        onPressIn={onListItemPressIn}
+        onPressOut={onListItemPressOut}
       />
     );
   };
-
-  function getChannelsErrorMessage(): string {
-    return 'Oops! Something went wrong,\n while channels loading.';
-  }
-
-  if (isGetChannelsError) {
-    return <InformationContainer message={getChannelsErrorMessage()} />;
-  }
 
   if (!channels.length) {
     return <ChannelsListEmpty />;
