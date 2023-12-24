@@ -18,9 +18,11 @@ const messagesApi = api.injectEndpoints({
         try {
           await cacheDataLoaded;
 
-          channelsHubConnection.on('ReceiveMessage', (message: IMessage) => {
+          channelsHubConnection.on('MessageSent', (message: IMessage) => {
             updateCachedData((draft) => {
-              draft.push(message);
+              if (message.channelId === arg.channelId) {
+                draft.push(message);
+              }
             });
           });
         } catch {}

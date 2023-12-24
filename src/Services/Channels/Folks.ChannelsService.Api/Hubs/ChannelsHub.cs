@@ -69,7 +69,7 @@ public class ChannelsHub : Hub
         if (messageDto.ChannelId is not null)
         {
             await Clients.Group(messageDto.ChannelId)
-                .SendAsync("ReceiveMessage", messageDto);
+                .SendAsync("MessageSent", messageDto);
         }
     }
 }

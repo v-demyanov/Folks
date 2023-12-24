@@ -36,7 +36,7 @@ public class GroupsController : ControllerBase
 
         _ = _channelsHubContext.Clients
             .Users(createGroupCommand.UserIds)
-            .SendAsync("ReceiveChannel", group);
+            .SendAsync("ChannelCreated", group);
 
         foreach (var userId in createGroupCommand.UserIds)
         {

@@ -13,7 +13,7 @@ const channelsApi = api.injectEndpoints({
         try {
           await cacheDataLoaded;
 
-          channelsHubConnection.on('ReceiveChannel', (channel: IChannel) => {
+          channelsHubConnection.on('ChannelCreated', (channel: IChannel) => {
             updateCachedData((draft) => {
               draft.push(channel);
             });
