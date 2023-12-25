@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 using MediatR;
 
-using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
+using MongoDB.Bson;
+
 using Folks.ChannelsService.Application.Features.Channels.Enums;
 using Folks.ChannelsService.Application.Features.Messages.Dto;
-using Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
+using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
+using Folks.ChannelsService.Api.Models;
+using Folks.ChannelsService.Infrastructure.Persistence;
+using Folks.ChannelsService.Application.Extensions;
 
 namespace Folks.ChannelsService.Api.Hubs;
 
@@ -14,10 +20,14 @@ namespace Folks.ChannelsService.Api.Hubs;
 public class ChannelsHub : Hub
 {
     private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
+    private readonly ChatServiceDbContext _dbContext;
 
-    public ChannelsHub(IMediator mediator)
+    public ChannelsHub(IMediator mediator, IMapper mapper, ChatServiceDbContext dbContext)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     public override async Task OnConnectedAsync()
@@ -25,50 +35,38 @@ public class ChannelsHub : Hub
         var currentUserId = Context.UserIdentifier;
         if (currentUserId is not null)
         {
-            HubConnectionsStore.AddConnection(currentUserId, Context.ConnectionId);
-
-            var getOwnChannelsQuery = new GetOwnChannelsQuery { OwnerId = currentUserId };
-            var channels = await _mediator.Send(getOwnChannelsQuery);
-
-            foreach (var channel in channels)
-            {
-                await Groups.AddToGroupAsync(Context.ConnectionId, channel.Id);
-            }
+            await Groups.AddToGroupAsync(Context.ConnectionId, currentUserId);
         }
 
         await base.OnConnectedAsync();
     }
 
-    public override Task OnDisconnectedAsync(Exception? exception)
+    public async Task SendMessage(SendMessageRequest request)
     {
-        var currentUserId = Context.UserIdentifier;
-        if (currentUserId is not null)
-        {
-            HubConnectionsStore.RemoveConnection(currentUserId, Context.ConnectionId);
-        }
-
-        return base.OnDisconnectedAsync(exception);
-    }
-
-    public async Task SendMessage(CreateMessageCommand createMessageCommand)
-    {
+        var createMessageCommand = _mapper.Map<CreateMessageCommand>(request);
         var messageDto = await _mediator.Send(createMessageCommand);
 
-        switch (createMessageCommand.ChannelType)
+        switch (request.ChannelType)
         {
             case ChannelType.Group:
                 await SendMessageInGroupAsync(messageDto);
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(createMessageCommand.ChannelType));
+                throw new ArgumentOutOfRangeException(nameof(request.ChannelType));
         }
     }
 
     private async Task SendMessageInGroupAsync(MessageDto messageDto)
     {
-        if (messageDto.ChannelId is not null)
+        if (messageDto.ChannelId is null)
         {
-            await Clients.Group(messageDto.ChannelId)
+            return;
+        }
+
+        var users = _dbContext.Users.GetByGroupId(ObjectId.Parse(messageDto.ChannelId));
+        foreach (var user in users)
+        {
+            await Clients.Group(user.SourceId)
                 .SendAsync("MessageSent", messageDto);
         }
     }

@@ -34,17 +34,11 @@ public class GroupsController : ControllerBase
     {
         var group = await _mediator.Send(createGroupCommand);
 
-        _ = _channelsHubContext.Clients
-            .Users(createGroupCommand.UserIds)
-            .SendAsync("ChannelCreated", group);
-
         foreach (var userId in createGroupCommand.UserIds)
         {
-            var connections = HubConnectionsStore.GetConnections(userId);
-            foreach (var connection in connections)
-            {
-                _ = _channelsHubContext.Groups.AddToGroupAsync(connection, group.Id);
-            }
+            _ = _channelsHubContext.Clients
+                .Group(userId)
+                .SendAsync("ChannelCreated", group);
         }
 
         return Ok(group);
