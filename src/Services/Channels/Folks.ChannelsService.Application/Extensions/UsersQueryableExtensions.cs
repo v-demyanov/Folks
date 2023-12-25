@@ -10,8 +10,18 @@ public static class UsersQueryableExtensions
         users.Where(user => sourceIds.Any(userId => userId == user.SourceId));
 
     public static User GetBySourceId(this IQueryable<User> users, string sourceId) =>
-        users.First(users => users.SourceId == sourceId);
+        users.First(user => user.SourceId == sourceId);
 
     public static User GetById(this IQueryable<User> users, ObjectId id) =>
-        users.First(users => users.Id == id);
+        users.First(user => user.Id == id);
+
+    // TODO: Replace it on IQueryable after mongo-efcore-provider will be updated
+    public static IEnumerable<User> GetByGroupId(this IQueryable<User> users, ObjectId groupId) =>
+        users.AsEnumerable()
+            .Where(user => user.GroupIds.Any(id => id == groupId));
+
+    // TODO: Replace it on IQueryable after mongo-efcore-provider will be updated
+    public static IEnumerable<User> GetByChatId(this IQueryable<User> users, ObjectId chatId) =>
+        users.AsEnumerable()
+            .Where(user => user.ChatIds.Any(id => id == chatId));
 }
