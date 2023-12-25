@@ -8,6 +8,7 @@ using Folks.ChannelsService.Application.Features.Messages.Dto;
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Application.Features.Channels.Enums;
 using Folks.ChannelsService.Application.Extensions;
+using Folks.ChannelsService.Domain.Entities;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Queries.GetMessagesQuery;
 
@@ -34,7 +35,7 @@ public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, IEnumer
                 _dbContext.Messages
                     .GetByChatId(ObjectId.Parse(request.ChannelId))
                     .AsEnumerable(),
-            _ => throw new ArgumentOutOfRangeException(nameof(request.ChannelType))
+            _ => new List<Message>(),
         };
 
         var messagesDto = _mapper.Map<IEnumerable<MessageDto>>(messages);

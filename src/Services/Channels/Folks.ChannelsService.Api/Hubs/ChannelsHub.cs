@@ -52,7 +52,7 @@ public class ChannelsHub : Hub
                 await SendMessageInGroupAsync(messageDto);
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(request.ChannelType));
+                break;
         }
     }
 
