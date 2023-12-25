@@ -8,7 +8,6 @@ import {
 } from 'react-native-paper';
 import { useMemo } from 'react';
 import { View } from 'react-native';
-import { BlurView } from 'expo-blur';
 
 import { IDeleteChannelDialogProps } from '../../models';
 import { Theme } from '../../../../themes/types/theme';
@@ -37,7 +36,7 @@ const DeleteChannelDialog = ({
   return (
     <Portal>
       <Modal visible={visible} onDismiss={onDismiss} dismissable={false}>
-        <BlurView style={[styles.blurView]} intensity={70}>
+        <View style={[styles.wrapperView]}>
           <View style={[styles.headerView]}>
             {selectedChannelsCount > 1 ? (
               <Text variant="titleMedium">
@@ -69,7 +68,7 @@ const DeleteChannelDialog = ({
               Delete
             </Button>
           </View>
-        </BlurView>
+        </View>
       </Modal>
     </Portal>
   );

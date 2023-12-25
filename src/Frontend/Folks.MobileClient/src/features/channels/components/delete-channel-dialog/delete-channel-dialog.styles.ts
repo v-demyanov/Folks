@@ -4,12 +4,11 @@ import { Theme } from '../../../../themes/types/theme';
 
 const buildStyles = (theme: Theme) =>
   StyleSheet.create({
-    blurView: {
-      backgroundColor: theme.colors.dialogContainer,
+    wrapperView: {
+      backgroundColor: theme.colors.background,
       borderRadius: 10,
       width: '70%',
       padding: 20,
-      overflow: 'hidden',
       alignSelf: 'center',
     },
     headerView: {

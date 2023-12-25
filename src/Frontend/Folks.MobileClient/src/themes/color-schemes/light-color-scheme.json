@@ -47,6 +47,5 @@
     "messageContainerTitle": "rgb(106, 0, 172)",
     "messageContainerContent": "rgb(255, 255, 255)",
     "dateContainer": "rgba(170, 144, 255, 0.5)",
-    "dialogContainer": "rgba(255, 255, 255, 0.5)"
   }
 }
