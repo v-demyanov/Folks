@@ -2,15 +2,21 @@ import { useMemo, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Vibration } from 'react-native';
 
-import { useGetOwnChannelsQuery } from '../../../features/channels';
+import {
+  useGetOwnChannelsQuery,
+  useLeaveChannelsMutation,
+} from '../../../features/channels';
 import {
   CreateChannelButton,
   ChannelsList,
   ChannelsToolbar,
-  DeleteChannelDialog,
+  LeaveChannelsDialog,
 } from '../../../features/channels/components';
 import HomeAppbar from '../../../features/home/home-appbar/home-appbar';
-import { IChannel } from '../../../features/channels/models';
+import {
+  IChannel,
+  ILeaveChannelRequest,
+} from '../../../features/channels/models';
 import { SelectableItem } from '../../../common/models';
 import { useArrayEffect } from '../../../common/hooks';
 import { InformationContainer } from '../../../common/components';
@@ -22,6 +28,10 @@ const HomeScreen = (): JSX.Element => {
 
   const { data: channels = [], isError: isGetChannelsError } =
     useGetOwnChannelsQuery(null);
+  const [
+    leaveChannels,
+    { isLoading: isLeavingChannels, isError: isLeaveChannelsError },
+  ] = useLeaveChannelsMutation();
 
   const [selectableChannels, setSelectableChannels] = useState<
     SelectableItem<IChannel>[]
@@ -77,8 +87,10 @@ const HomeScreen = (): JSX.Element => {
   function handleListItemPressIn(channel: SelectableItem<IChannel>): void {
     pressTimerRef.current = setTimeout(() => {
       channel.isSelected = !channel.isSelected;
+
       setWasPressTimerRefCalled(true);
       setSelectableChannels([...selectableChannels]);
+
       Vibration.vibrate(
         InteractionConstants.LONGPRESS_CALLBACK_VIBRATION_PATTERN
       );
@@ -94,18 +106,31 @@ const HomeScreen = (): JSX.Element => {
     setSelectableChannels([...selectableChannels]);
   }
 
-  const [deleteChannelDialogVisible, setDeleteChannelDialogVisible] =
+  const [leaveChannelsDialogVisible, setLeaveChannelsDialogVisible] =
     useState(false);
 
-  function handleDeletePress(): void {
-    setDeleteChannelDialogVisible(true);
+  function handleLeavePress(): void {
+    setLeaveChannelsDialogVisible(true);
   }
 
-  function handleDeleteChannelDialogDissmiss(): void {
-    setDeleteChannelDialogVisible(false);
+  function handleLeaveChannelsDialogDissmiss(): void {
+    setLeaveChannelsDialogVisible(false);
   }
 
-  function handleDeleteChannelDialogConfirm(): void {}
+  async function handleLeaveChannelsDialogConfirm(): Promise<void> {
+    const requests = selectableChannels
+      .filter((channel) => channel.isSelected)
+      .map(
+        (channel) =>
+          ({
+            channelId: channel.id,
+            channelType: channel.type,
+          } as ILeaveChannelRequest)
+      );
+    console.log('requests: ', requests);
+    const results = await leaveChannels(requests).unwrap();
+    console.log('results: ', results);
+  }
 
   return (
     <>
@@ -113,7 +138,7 @@ const HomeScreen = (): JSX.Element => {
         <ChannelsToolbar
           selectedChannelsCount={selectedChannelsCount}
           onCancelPress={handleCancelPress}
-          onDeletePress={handleDeletePress}
+          onLeavePress={handleLeavePress}
         />
       ) : (
         <HomeAppbar />
@@ -129,10 +154,10 @@ const HomeScreen = (): JSX.Element => {
         />
       )}
       <CreateChannelButton />
-      <DeleteChannelDialog
-        visible={deleteChannelDialogVisible}
-        onDismiss={handleDeleteChannelDialogDissmiss}
-        onConfirmPress={handleDeleteChannelDialogConfirm}
+      <LeaveChannelsDialog
+        visible={leaveChannelsDialogVisible}
+        onDismiss={handleLeaveChannelsDialogDissmiss}
+        onConfirmPress={handleLeaveChannelsDialogConfirm}
         channels={selectableChannels}
       />
     </>

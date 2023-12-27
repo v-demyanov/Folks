@@ -5,10 +5,10 @@ import { ICreateGroupCommand } from '../models';
 const groupsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     createGroup: builder.mutation<IChannel, ICreateGroupCommand>({
-      query: (body: ICreateGroupCommand) => ({
+      query: (arg) => ({
         url: '/channelsservice/channels/groups',
         method: 'POST',
-        body,
+        body: arg,
       }),
     }),
   }),

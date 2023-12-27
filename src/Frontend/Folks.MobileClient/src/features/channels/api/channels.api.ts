@@ -1,6 +1,11 @@
 import { api } from '../../../api/api';
 import { channelsHubConnection } from '../../signalr/connections';
-import { IChannel } from '../models';
+import {
+  IChannel,
+  ILeaveChannelCommandErrorResult,
+  ILeaveChannelCommandSuccessResult,
+  ILeaveChannelRequest,
+} from '../models';
 
 const channelsApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,8 +28,20 @@ const channelsApi = api.injectEndpoints({
         await cacheEntryRemoved;
       },
     }),
+    leaveChannels: builder.mutation<
+      Array<
+        ILeaveChannelCommandErrorResult | ILeaveChannelCommandSuccessResult
+      >,
+      ILeaveChannelRequest[]
+    >({
+      query: (arg) => ({
+        url: '/channelsservice/channels/leave',
+        method: 'POST',
+        body: arg,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetOwnChannelsQuery } = channelsApi;
+export const { useGetOwnChannelsQuery, useLeaveChannelsMutation } = channelsApi;

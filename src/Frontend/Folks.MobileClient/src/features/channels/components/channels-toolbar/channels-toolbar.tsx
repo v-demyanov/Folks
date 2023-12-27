@@ -9,7 +9,7 @@ import buildStyles from './channels-toolbar.styles';
 const ChannelsToolbar = ({
   selectedChannelsCount,
   onCancelPress,
-  onDeletePress,
+  onLeavePress,
 }: IChannelsToolbarProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
@@ -33,7 +33,7 @@ const ChannelsToolbar = ({
               <IconButton
                 icon="trash-can-outline"
                 iconColor={theme.colors.onPrimary}
-                onPress={onDeletePress}
+                onPress={onLeavePress}
               />
             </View>
           </View>

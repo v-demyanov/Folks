@@ -9,16 +9,16 @@ import {
 import { useMemo } from 'react';
 import { View } from 'react-native';
 
-import { IDeleteChannelDialogProps } from '../../models';
+import { ILeaveChannelsDialogProps } from '../../models';
 import { Theme } from '../../../../themes/types/theme';
-import buildStyles from './delete-channel-dialog.styles';
+import buildStyles from './leave-channels-dialog.styles';
 
-const DeleteChannelDialog = ({
+const LeaveChannelsDialog = ({
   visible,
   onDismiss,
   onConfirmPress,
   channels,
-}: IDeleteChannelDialogProps): JSX.Element => {
+}: ILeaveChannelsDialogProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
@@ -40,7 +40,7 @@ const DeleteChannelDialog = ({
           <View style={[styles.headerView]}>
             {selectedChannelsCount > 1 ? (
               <Text variant="titleMedium">
-                Delete {selectedChannelsCount} channels
+                Leave {selectedChannelsCount} channels
               </Text>
             ) : (
               <>
@@ -65,7 +65,7 @@ const DeleteChannelDialog = ({
           <View style={[styles.actionsView]}>
             <Button onPress={onDismiss}>Cancel</Button>
             <Button onPress={onConfirmPress} textColor={theme.colors.error}>
-              Delete
+              Leave
             </Button>
           </View>
         </View>
@@ -74,4 +74,4 @@ const DeleteChannelDialog = ({
   );
 };
 
-export default DeleteChannelDialog;
+export default LeaveChannelsDialog;
