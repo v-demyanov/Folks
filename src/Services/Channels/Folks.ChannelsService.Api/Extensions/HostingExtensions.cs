@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 using MassTransit;
+
 using Folks.ChannelsService.Infrastructure;
 using Folks.ChannelsService.Application;
 using Folks.ChannelsService.Api.Consumers;
@@ -52,6 +53,9 @@ public static class HostingExtensions
         });
 
         builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        builder.Services.AddMediatR(config => {
+            config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+        });
 
         var authority = builder.Configuration.GetValue<string>("AuthenticationOptions:Authority");
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
