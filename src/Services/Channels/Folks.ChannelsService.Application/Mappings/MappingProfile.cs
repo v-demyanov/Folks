@@ -30,7 +30,8 @@ public class MappingProfile : Profile
 
         CreateMap<CreateGroupCommand, Group>()
             .ForMember(destination => destination.Id, options => options.MapFrom(source => ObjectId.GenerateNewId()))
-            .ForMember(destination => destination.UserIds, options => options.MapFrom<CreateGroupCommandUsersValueResolver>());
+            .ForMember(destination => destination.UserIds, options => options.MapFrom<CreateGroupCommandUsersValueResolver>())
+            .ForMember(destination => destination.OwnerId, options => options.MapFrom<CreateGroupCommandOwnerIdValueResolver>());
 
         CreateMap<AddUserCommand, User>()
             .ForMember(destination => destination.Id, options => options.MapFrom(source => ObjectId.GenerateNewId()))

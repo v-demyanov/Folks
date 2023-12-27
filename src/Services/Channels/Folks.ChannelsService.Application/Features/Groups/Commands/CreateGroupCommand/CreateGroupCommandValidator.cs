@@ -17,5 +17,9 @@ public class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>
         RuleFor(command => command.UserIds)
             .Must(userIds => userIds.Except(dbContext.Users.ToList().Select(user => user.SourceId)).Count() == 0)
             .WithMessage("Some users don't exist.");
+
+        RuleFor(command => command.OwnerId)
+            .Must(ownerId => dbContext.Users.Any(user => user.SourceId == ownerId))
+            .WithMessage(query => $"The user with id=\"{query.OwnerId}\" doesn't exist.");
     }
 }

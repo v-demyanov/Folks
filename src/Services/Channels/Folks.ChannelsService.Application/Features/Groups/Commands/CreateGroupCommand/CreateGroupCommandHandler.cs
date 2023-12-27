@@ -1,11 +1,13 @@
-﻿using MediatR;
+﻿using AutoMapper;
 
-using AutoMapper;
+using MediatR;
 
 using MongoDB.Bson;
+
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Domain.Entities;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
+using Folks.ChannelsService.Application.Extensions;
 
 namespace Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
 
@@ -34,14 +36,11 @@ public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, Cha
 
     private void UpdateUsersGroupIds(IEnumerable<ObjectId> userIds, ObjectId groupId)
     {
-        var users = _dbContext.Users;
+        var users = _dbContext.Users.GetByIds(userIds);
 
         foreach (var user in users)
         {
-            if (userIds.Contains(user.Id))
-            {
-                user.GroupIds.Add(groupId);
-            }
+            user.GroupIds.Add(groupId);
         }
 
         _dbContext.Users.UpdateRange(users);

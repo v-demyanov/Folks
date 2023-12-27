@@ -7,5 +7,7 @@ public record class CreateGroupCommand : IRequest<ChannelDto>
 {
     public required string Title { get; init; }
 
+    public required string OwnerId { get; init; }
+
     public required IEnumerable<string> UserIds { get; init; }
 }
