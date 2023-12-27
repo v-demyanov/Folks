@@ -4,6 +4,6 @@ public enum LeaveChannelCommandInternalEvent
 {
     ChannelRemoved,
     UserLeft,
-    NewOwnerSet,
+    NewGroupOwnerSet,
     Error,
 }

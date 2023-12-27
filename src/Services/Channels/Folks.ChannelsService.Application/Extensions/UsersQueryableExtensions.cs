@@ -16,6 +16,11 @@ public static class UsersQueryableExtensions
         users.First(user => user.Id == id);
 
     // TODO: Replace it on IQueryable after mongo-efcore-provider will be updated
+    public static IEnumerable<User> GetByIds(this IQueryable<User> users, IEnumerable<ObjectId> ids) =>
+        users.AsEnumerable()
+            .Where(user => ids.Any(id => id == user.Id));
+
+    // TODO: Replace it on IQueryable after mongo-efcore-provider will be updated
     public static IEnumerable<User> GetByGroupId(this IQueryable<User> users, ObjectId groupId) =>
         users.AsEnumerable()
             .Where(user => user.GroupIds.Any(id => id == groupId));

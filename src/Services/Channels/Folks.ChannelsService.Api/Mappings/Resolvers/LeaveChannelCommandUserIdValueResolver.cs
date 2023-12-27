@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 
 using System.Security.Claims;
+
 using Folks.ChannelsService.Application.Features.Channels.Commands.LeaveChannelCommand;
 using Folks.ChannelsService.Api.Common.Models;
 

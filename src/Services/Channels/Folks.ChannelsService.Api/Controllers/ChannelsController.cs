@@ -62,16 +62,35 @@ public class ChannelsController : ControllerBase
 
         foreach (var leaveChannelCommand in leaveChannelCommands)
         {
-            var result = await _mediator.Send(leaveChannelCommand);
-            results.Add(result);
+            LeaveChannelCommandResult? result;
+            try
+            {
+                result = await _mediator.Send(leaveChannelCommand);
+                if (result is LeaveChannelCommandSuccessResult)
+                {
+                    _ = HandleLeaveChannelCommandResultEventsAsync((LeaveChannelCommandSuccessResult)result, currentUserId);
+                }
+            }
+            catch (Exception exception)
+            {
+                result = new LeaveChannelCommandErrorResult
+                {
+                    ChannelId = leaveChannelCommand.ChannelId,
+                    ChannelType = leaveChannelCommand.ChannelType,
+                    Error = exception.Message,
+                };
+            }
 
-            _ = HandleLeaveChannelCommandResultEventsAsync(result, currentUserId);
+            if (result is not null)
+            {
+                results.Add(result);
+            }
         }
 
         return Ok(results);
     }
 
-    private async Task HandleLeaveChannelCommandResultEventsAsync(LeaveChannelCommandResult result, string currentUserId)
+    private async Task HandleLeaveChannelCommandResultEventsAsync(LeaveChannelCommandSuccessResult result, string currentUserId)
     {
         foreach (var channelsHubEvent in result.Events)
         {
@@ -80,8 +99,8 @@ public class ChannelsController : ControllerBase
                 case LeaveChannelCommandInternalEvent.ChannelRemoved:
                     await HandleChannelRemovedAsync(result);
                     continue;
-                case LeaveChannelCommandInternalEvent.NewOwnerSet:
-                    await HandleNewOwnerSetAsync(result, currentUserId);
+                case LeaveChannelCommandInternalEvent.NewGroupOwnerSet:
+                    await HandleNewGroupOwnerSetAsync(result, currentUserId);
                     continue;
                 case LeaveChannelCommandInternalEvent.UserLeft:
                     await HandleUserLeftAsync(result, currentUserId);
@@ -91,22 +110,25 @@ public class ChannelsController : ControllerBase
         }
     }
 
-    private async Task HandleChannelRemovedAsync(LeaveChannelCommandResult result) =>
+    private async Task HandleChannelRemovedAsync(LeaveChannelCommandSuccessResult result) =>
         await _mediator.Publish(new ChannelRemovedNotification
         {
-            ChannelId = result.PreviousState.ChannelId,
-            ChannelType = result.PreviousState.ChannelType,
-            Recipients = result.PreviousState.UserIds,
-            ChannelTitle = result.PreviousState.Title,
+            ChannelDto = new ChannelDto
+            { 
+                Id = result.ChannelId, 
+                Type = result.ChannelType, 
+                Title = result.ChannelTitle ?? string.Empty,
+            },
+            Recipients = result.Recipients,
         });
 
-    private async Task HandleNewOwnerSetAsync(LeaveChannelCommandResult result, string currentUserId)
+    private async Task HandleNewGroupOwnerSetAsync(LeaveChannelCommandSuccessResult result, string currentUserId)
     {
         var messageDto = await _mediator.Send(new CreateMessageCommand
         {
             OwnerId = currentUserId,
-            ChannelId = result.PreviousState.ChannelId,
-            ChannelType = result.PreviousState.ChannelType,
+            ChannelId = result.ChannelId,
+            ChannelType = result.ChannelType,
             Content = "New owner has been set",
             SentAt = DateTimeOffset.Now,
             IsSpecific = true,
@@ -115,18 +137,18 @@ public class ChannelsController : ControllerBase
         await _mediator.Publish(new MessageCreatedNotification
         {
             MessageDto = messageDto,
-            Recipients = result.PreviousState.UserIds
+            Recipients = result.Recipients,
         });
     }
 
-    private async Task HandleUserLeftAsync(LeaveChannelCommandResult result, string currentUserId)
+    private async Task HandleUserLeftAsync(LeaveChannelCommandSuccessResult result, string currentUserId)
     {
         var currentUser = _dbContext.Users.GetBySourceId(currentUserId);
         var messageDto = await _mediator.Send(new CreateMessageCommand
         {
             OwnerId = currentUserId,
-            ChannelId = result.PreviousState.ChannelId,
-            ChannelType = result.PreviousState.ChannelType,
+            ChannelId = result.ChannelId,
+            ChannelType = result.ChannelType,
             Content = $"{currentUser.UserName} has left",
             SentAt = DateTimeOffset.Now,
             IsSpecific = true,
@@ -135,7 +157,7 @@ public class ChannelsController : ControllerBase
         await _mediator.Publish(new MessageCreatedNotification
         {
             MessageDto = messageDto,
-            Recipients = result.PreviousState.UserIds
+            Recipients = result.Recipients,
         });
     }
 }

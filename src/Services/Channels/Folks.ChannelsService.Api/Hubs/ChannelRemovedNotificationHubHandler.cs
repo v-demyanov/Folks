@@ -22,7 +22,7 @@ public class ChannelRemovedNotificationHubHandler : INotificationHandler<Channel
         {
             _ = _channelsHubContext.Clients
                 .Group(userId)
-                .SendAsync(nameof(ChannelsHubEvent.ChannelRemoved), notification);
+                .SendAsync(nameof(ChannelsHubEvent.ChannelRemoved), notification.ChannelDto);
         }
 
         return Task.CompletedTask;
