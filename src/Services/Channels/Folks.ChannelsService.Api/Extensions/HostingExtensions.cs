@@ -4,13 +4,12 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 using MassTransit;
-
-using Folks.ChannelsService.Api.Constants;
 using Folks.ChannelsService.Infrastructure;
 using Folks.ChannelsService.Application;
 using Folks.ChannelsService.Api.Consumers;
 using Folks.ChannelsService.Api.Hubs;
 using Folks.ChannelsService.Api.Middlewares;
+using Folks.ChannelsService.Api.Common.Constants;
 
 namespace Folks.ChannelsService.Api.Extensions;
 

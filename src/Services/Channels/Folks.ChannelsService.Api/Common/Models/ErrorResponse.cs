@@ -1,4 +1,4 @@
-﻿namespace Folks.ChannelsService.Api.Models;
+﻿namespace Folks.ChannelsService.Api.Common.Models;
 
 public record class ErrorResponse
 {

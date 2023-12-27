@@ -10,9 +10,11 @@ public class Message : BaseEntity
 
     public DateTimeOffset SentAt { get; set; }
 
-    public required ObjectId OwnerId { get; set; }
+    public ObjectId OwnerId { get; set; }
 
     public ObjectId? GroupId { get; set; }
 
     public ObjectId? ChatId { get; set; }
+
+    public bool IsSpecific { get; set; }
 }

@@ -3,10 +3,9 @@
 using AutoMapper;
 
 using MongoDB.Bson;
-
-using Folks.ChannelsService.Application.Features.Channels.Dto;
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Domain.Entities;
+using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
 

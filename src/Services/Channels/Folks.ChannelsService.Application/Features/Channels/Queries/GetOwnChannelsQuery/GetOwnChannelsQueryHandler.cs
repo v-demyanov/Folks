@@ -1,10 +1,9 @@
 ﻿using MediatR;
 
 using AutoMapper;
-
-using Folks.ChannelsService.Application.Features.Channels.Dto;
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Application.Extensions;
+using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
 

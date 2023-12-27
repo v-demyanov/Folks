@@ -3,14 +3,14 @@
 using MongoDB.Bson;
 
 using Folks.ChannelsService.Domain.Entities;
-using Folks.ChannelsService.Application.Features.Channels.Dto;
 using Folks.ChannelsService.Application.Mappings.Resolvers;
 using Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
 using Folks.ChannelsService.Application.Features.Users.Commands.AddUserCommand;
-using Folks.ChannelsService.Application.Features.Channels.Enums;
 using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
-using Folks.ChannelsService.Application.Features.Messages.Dto;
-using Folks.ChannelsService.Application.Features.Users.Dto;
+using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
+using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
+using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
+using Folks.ChannelsService.Application.Features.Users.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Mappings;
 

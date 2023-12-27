@@ -7,12 +7,12 @@ using MediatR;
 
 using MongoDB.Bson;
 
-using Folks.ChannelsService.Application.Features.Channels.Enums;
-using Folks.ChannelsService.Application.Features.Messages.Dto;
 using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
-using Folks.ChannelsService.Api.Models;
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Application.Extensions;
+using Folks.ChannelsService.Application.Features.Messages.Notifications.MessageCreatedNotification;
+using Folks.ChannelsService.Api.Common.Models;
+using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 
 namespace Folks.ChannelsService.Api.Hubs;
 
@@ -46,28 +46,18 @@ public class ChannelsHub : Hub
         var createMessageCommand = _mapper.Map<CreateMessageCommand>(request);
         var messageDto = await _mediator.Send(createMessageCommand);
 
-        switch (request.ChannelType)
+        var userIds = request.ChannelType switch
         {
-            case ChannelType.Group:
-                await SendMessageInGroupAsync(messageDto);
-                break;
-            default:
-                break;
-        }
-    }
+            ChannelType.Group => _dbContext.Users
+                .GetByGroupId(ObjectId.Parse(messageDto.ChannelId))
+                .Select(user => user.SourceId),
+            _ => new List<string>(),
+        };
 
-    private async Task SendMessageInGroupAsync(MessageDto messageDto)
-    {
-        if (messageDto.ChannelId is null)
-        {
-            return;
-        }
-
-        var users = _dbContext.Users.GetByGroupId(ObjectId.Parse(messageDto.ChannelId));
-        foreach (var user in users)
-        {
-            await Clients.Group(user.SourceId)
-                .SendAsync("MessageSent", messageDto);
-        }
+        await _mediator.Publish(new MessageCreatedNotification 
+        { 
+            MessageDto = messageDto, 
+            Recipients = userIds,
+        });
     }
 }

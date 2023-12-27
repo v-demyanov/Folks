@@ -1,4 +1,4 @@
-﻿namespace Folks.ChannelsService.Application.Features.Users.Dto;
+﻿namespace Folks.ChannelsService.Application.Features.Users.Common.Dto;
 
 public record class UserDto
 {

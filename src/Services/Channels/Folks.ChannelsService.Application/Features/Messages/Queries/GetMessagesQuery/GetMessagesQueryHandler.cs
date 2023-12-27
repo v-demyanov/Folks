@@ -3,12 +3,11 @@
 using MediatR;
 
 using MongoDB.Bson;
-
-using Folks.ChannelsService.Application.Features.Messages.Dto;
 using Folks.ChannelsService.Infrastructure.Persistence;
-using Folks.ChannelsService.Application.Features.Channels.Enums;
 using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Domain.Entities;
+using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
+using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Queries.GetMessagesQuery;
 

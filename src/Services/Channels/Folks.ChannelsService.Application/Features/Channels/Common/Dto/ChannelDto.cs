@@ -1,6 +1,6 @@
-﻿using Folks.ChannelsService.Application.Features.Channels.Enums;
+﻿using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 
-namespace Folks.ChannelsService.Application.Features.Channels.Dto;
+namespace Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 
 public record class ChannelDto
 {

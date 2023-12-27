@@ -1,4 +1,4 @@
-﻿namespace Folks.ChannelsService.Api.Constants;
+﻿namespace Folks.ChannelsService.Api.Common.Constants;
 
 public static class ApiRoutePatterns
 {

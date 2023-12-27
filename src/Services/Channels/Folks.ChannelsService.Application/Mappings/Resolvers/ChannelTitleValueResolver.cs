@@ -3,9 +3,8 @@
 using Microsoft.AspNetCore.Http;
 
 using System.Security.Claims;
-
-using Folks.ChannelsService.Application.Features.Channels.Dto;
 using Folks.ChannelsService.Domain.Entities;
+using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 

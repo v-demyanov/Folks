@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-
-using Folks.ChannelsService.Application.Features.Channels.Enums;
+using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 using Folks.ChannelsService.Infrastructure.Persistence;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Queries.GetMessagesQuery;

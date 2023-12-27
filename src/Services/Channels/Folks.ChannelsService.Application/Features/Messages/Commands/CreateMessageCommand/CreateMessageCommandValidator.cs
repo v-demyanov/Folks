@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-
-using Folks.ChannelsService.Application.Features.Channels.Enums;
+using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 using Folks.ChannelsService.Domain.Constants;
 using Folks.ChannelsService.Infrastructure.Persistence;
 

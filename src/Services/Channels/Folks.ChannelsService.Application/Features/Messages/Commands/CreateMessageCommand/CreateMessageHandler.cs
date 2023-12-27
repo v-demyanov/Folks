@@ -1,10 +1,9 @@
 ﻿using MediatR;
 
 using AutoMapper;
-
-using Folks.ChannelsService.Application.Features.Messages.Dto;
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Domain.Entities;
+using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
 

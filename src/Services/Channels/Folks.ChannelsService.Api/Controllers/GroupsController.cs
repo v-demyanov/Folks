@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
 using MediatR;
 
-using Folks.ChannelsService.Api.Constants;
-using Folks.ChannelsService.Application.Features.Channels.Dto;
-using Folks.ChannelsService.Api.Models;
 using Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
-using Folks.ChannelsService.Api.Hubs;
+using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelCreatedNotification;
+using Folks.ChannelsService.Api.Common.Constants;
+using Folks.ChannelsService.Api.Common.Models;
+using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 
 namespace Folks.ChannelsService.Api.Controllers;
 
@@ -18,12 +17,10 @@ namespace Folks.ChannelsService.Api.Controllers;
 public class GroupsController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IHubContext<ChannelsHub> _channelsHubContext;
 
-    public GroupsController(IMediator mediator, IHubContext<ChannelsHub> channelsHubContext)
+    public GroupsController(IMediator mediator)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        _channelsHubContext = channelsHubContext ?? throw new ArgumentNullException(nameof(channelsHubContext));
     }
 
     [HttpPost]
@@ -32,15 +29,14 @@ public class GroupsController : ControllerBase
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<ChannelDto>> Create([FromBody] CreateGroupCommand createGroupCommand)
     {
-        var group = await _mediator.Send(createGroupCommand);
+        var channelDto = await _mediator.Send(createGroupCommand);
 
-        foreach (var userId in createGroupCommand.UserIds)
-        {
-            _ = _channelsHubContext.Clients
-                .Group(userId)
-                .SendAsync("ChannelCreated", group);
-        }
+        _ = _mediator.Publish(new ChannelCreatedNotification 
+        { 
+            ChannelDto = channelDto, 
+            Recipients = createGroupCommand.UserIds,
+        });
 
-        return Ok(group);
+        return Ok(channelDto);
     }
 }

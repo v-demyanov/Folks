@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 
 using Folks.ChannelsService.Application.Extensions;
-using Folks.ChannelsService.Application.Features.Messages.Dto;
-using Folks.ChannelsService.Application.Features.Users.Dto;
+using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
+using Folks.ChannelsService.Application.Features.Users.Common.Dto;
 using Folks.ChannelsService.Domain.Entities;
 using Folks.ChannelsService.Infrastructure.Persistence;
 
