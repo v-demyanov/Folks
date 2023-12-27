@@ -7,7 +7,7 @@ namespace Folks.ChannelsService.Application.Features.Messages.Commands.CreateMes
 
 public class CreateMessageCommandValidator : AbstractValidator<CreateMessageCommand>
 {
-    public CreateMessageCommandValidator(ChatServiceDbContext dbContext)
+    public CreateMessageCommandValidator(ChannelsServiceDbContext dbContext)
     {
         RuleFor(query => query.OwnerId)
             .NotEmpty();

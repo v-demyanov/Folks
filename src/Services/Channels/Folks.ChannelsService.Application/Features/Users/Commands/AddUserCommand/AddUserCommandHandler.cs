@@ -9,10 +9,10 @@ namespace Folks.ChannelsService.Application.Features.Users.Commands.AddUserComma
 
 public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
 {
-    private readonly ChatServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext _dbContext;
     private readonly IMapper _mapper;
 
-    public AddUserCommandHandler(ChatServiceDbContext dbContext, IMapper mapper)
+    public AddUserCommandHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

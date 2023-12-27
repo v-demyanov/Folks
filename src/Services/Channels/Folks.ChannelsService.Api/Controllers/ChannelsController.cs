@@ -27,9 +27,9 @@ public class ChannelsController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-    private readonly ChatServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext _dbContext;
 
-    public ChannelsController(IMediator mediator, IMapper mapper, ChatServiceDbContext dbContext)
+    public ChannelsController(IMediator mediator, IMapper mapper, ChannelsServiceDbContext dbContext)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

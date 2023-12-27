@@ -9,10 +9,10 @@ namespace Folks.ChannelsService.Application.Features.Messages.Commands.CreateMes
 
 public class CreateMessageHandler : IRequestHandler<CreateMessageCommand, MessageDto>
 {
-    private readonly ChatServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext _dbContext;
     private readonly IMapper _mapper;
 
-    public CreateMessageHandler(ChatServiceDbContext dbContext, IMapper mapper)
+    public CreateMessageHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

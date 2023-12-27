@@ -11,9 +11,9 @@ namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
 public class CreateGroupCommandUsersValueResolver : IValueResolver<CreateGroupCommand, Group, ICollection<ObjectId>>
 {
-    private readonly ChatServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext _dbContext;
 
-    public CreateGroupCommandUsersValueResolver(ChatServiceDbContext dbContext)
+    public CreateGroupCommandUsersValueResolver(ChannelsServiceDbContext dbContext)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }

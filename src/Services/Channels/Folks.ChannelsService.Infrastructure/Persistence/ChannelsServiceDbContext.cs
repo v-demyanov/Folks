@@ -8,9 +8,9 @@ using Folks.ChannelsService.Domain.Entities;
 
 namespace Folks.ChannelsService.Infrastructure.Persistence;
 
-public class ChatServiceDbContext : DbContext
+public class ChannelsServiceDbContext : DbContext
 {
-    public ChatServiceDbContext(DbContextOptions<ChatServiceDbContext> options) : base(options)
+    public ChannelsServiceDbContext(DbContextOptions<ChannelsServiceDbContext> options) : base(options)
     {
     }
 

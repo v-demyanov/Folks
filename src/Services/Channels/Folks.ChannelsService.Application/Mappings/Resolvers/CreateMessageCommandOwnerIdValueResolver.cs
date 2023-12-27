@@ -11,9 +11,9 @@ namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
 public class CreateMessageCommandOwnerIdValueResolver : IValueResolver<CreateMessageCommand, Message, ObjectId>
 {
-    private readonly ChatServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext _dbContext;
 
-    public CreateMessageCommandOwnerIdValueResolver(ChatServiceDbContext dbContext)
+    public CreateMessageCommandOwnerIdValueResolver(ChannelsServiceDbContext dbContext)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }

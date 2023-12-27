@@ -6,7 +6,7 @@ namespace Folks.ChannelsService.Application.Features.Messages.Queries.GetMessage
 
 public class GetMessagesQueryValidator : AbstractValidator<GetMessagesQuery>
 {
-    public GetMessagesQueryValidator(ChatServiceDbContext dbContext)
+    public GetMessagesQueryValidator(ChannelsServiceDbContext dbContext)
     {
         RuleFor(query => query.ChannelId)
             .NotEmpty();

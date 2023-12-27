@@ -9,10 +9,10 @@ namespace Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChan
 
 public class GetOwnChannelsQueryHandler : IRequestHandler<GetOwnChannelsQuery, IEnumerable<ChannelDto>>
 {
-    private readonly ChatServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext _dbContext;
     private readonly IMapper _mapper;
 
-    public GetOwnChannelsQueryHandler(ChatServiceDbContext dbContext, IMapper mapper)
+    public GetOwnChannelsQueryHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

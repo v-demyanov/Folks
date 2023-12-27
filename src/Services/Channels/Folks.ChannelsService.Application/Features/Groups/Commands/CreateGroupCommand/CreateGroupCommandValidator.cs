@@ -7,7 +7,7 @@ namespace Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroup
 
 public class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>
 {
-    public CreateGroupCommandValidator(ChatServiceDbContext dbContext)
+    public CreateGroupCommandValidator(ChannelsServiceDbContext dbContext)
     {
         RuleFor(command => command.Title)
             .NotEmpty()

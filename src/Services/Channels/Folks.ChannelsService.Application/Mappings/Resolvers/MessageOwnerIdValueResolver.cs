@@ -10,10 +10,10 @@ namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
 public class MessageOwnerIdValueResolver : IValueResolver<Message, MessageDto, UserDto>
 {
-    private readonly ChatServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext _dbContext;
     private readonly IMapper _mapper;
 
-    public MessageOwnerIdValueResolver(ChatServiceDbContext dbContext, IMapper mapper)
+    public MessageOwnerIdValueResolver(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

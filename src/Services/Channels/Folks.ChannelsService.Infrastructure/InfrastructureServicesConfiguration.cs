@@ -38,7 +38,7 @@ public static class InfrastructureServicesConfiguration
         var mongoClient = new MongoClient(connectionString);
         var mongoDatabase = mongoClient.GetDatabase(databaseName);
 
-        services.AddDbContext<ChatServiceDbContext>(options =>
+        services.AddDbContext<ChannelsServiceDbContext>(options =>
             options.UseMongoDB(mongoDatabase.Client, mongoDatabase.DatabaseNamespace.DatabaseName));
 
         return services;

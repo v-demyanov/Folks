@@ -6,7 +6,7 @@ namespace Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChan
 
 public class GetOwnChannelsQueryValidator : AbstractValidator<GetOwnChannelsQuery>
 {
-    public GetOwnChannelsQueryValidator(ChatServiceDbContext dbContext)
+    public GetOwnChannelsQueryValidator(ChannelsServiceDbContext dbContext)
     {
         RuleFor(query => query.OwnerId)
             .NotEmpty();
