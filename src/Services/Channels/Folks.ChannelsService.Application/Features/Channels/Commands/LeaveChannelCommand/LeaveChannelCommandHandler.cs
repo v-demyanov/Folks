@@ -82,6 +82,8 @@ public class LeaveChannelCommandHandler : IRequestHandler<LeaveChannelCommand, L
 
     private void RemoveGroup(Group group, IEnumerable<User> users)
     {
+        var messages = _dbContext.Messages.GetByGroupId(group.Id);
+        _dbContext.Messages.RemoveRange(messages);
         _dbContext.Groups.Remove(group);
 
         foreach (var user in users)

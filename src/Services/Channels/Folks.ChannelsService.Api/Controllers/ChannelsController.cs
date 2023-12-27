@@ -51,10 +51,10 @@ public class ChannelsController : ControllerBase
         return Ok(channels);
     }
 
-    [HttpPost]
+    [HttpPost("leave")]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(IEnumerable<LeaveChannelCommandResult>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<LeaveChannelCommandResult>>> LeaveChannels([FromBody] IEnumerable<LeaveChannelRequest> batch)
+    public async Task<ActionResult<IEnumerable<LeaveChannelCommandResult>>> Leave([FromBody] IEnumerable<LeaveChannelRequest> batch)
     {
         var leaveChannelCommands = _mapper.Map<IEnumerable<LeaveChannelCommand>>(batch);
         var results = new List<LeaveChannelCommandResult>();
