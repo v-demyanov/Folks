@@ -6,4 +6,5 @@ export default interface IMessage extends IBaseModel {
   sentAt: string;
   channelId: string;
   owner: IUser;
+  isSpecific: boolean;
 }
