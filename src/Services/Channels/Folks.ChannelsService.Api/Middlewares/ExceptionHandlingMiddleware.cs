@@ -1,4 +1,4 @@
-﻿using Folks.ChannelsService.Api.Models;
+﻿using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Exceptions;
 
 namespace Folks.ChannelsService.Api.Middlewares;
