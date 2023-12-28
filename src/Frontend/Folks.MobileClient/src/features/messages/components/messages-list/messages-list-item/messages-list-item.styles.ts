@@ -33,6 +33,15 @@ const buildStyles = (theme: Theme) =>
       marginLeft: 50,
       color: theme.colors.onSecondaryContainer,
     },
+    specificMessageView: {
+      backgroundColor: theme.colors.dateContainer,
+      paddingHorizontal: 5,
+      paddingVertical: 2,
+      borderRadius: 40,
+      overflow: 'hidden',
+      alignSelf: 'center',
+      marginVertical: 5,
+    },
   });
 
 export default buildStyles;

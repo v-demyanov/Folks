@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { Avatar, Text, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
+import { BlurView } from 'expo-blur';
 
 import { IMessagesListItemProps } from '../../../models';
 import { Theme } from '../../../../../themes/types/theme';
@@ -11,6 +12,16 @@ import { formatInHHMM } from '../../../../../common/helpers';
 const MessagesListItem = ({ item }: IMessagesListItemProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
+
+  if (item.isSpecific) {
+    return (
+      <BlurView style={[styles.specificMessageView]} intensity={50}>
+        <Text style={[styles.contentText]} variant="titleSmall">
+          {item.content}
+        </Text>
+      </BlurView>
+    );
+  }
 
   return (
     <View

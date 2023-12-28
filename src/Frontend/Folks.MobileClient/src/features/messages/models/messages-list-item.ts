@@ -7,4 +7,5 @@ export default interface IMessagesListItem {
   channelId: string;
   owner: IUser;
   isLeftAlign: boolean;
+  isSpecific: boolean;
 }
