@@ -28,10 +28,8 @@ const HomeScreen = (): JSX.Element => {
 
   const { data: channels = [], isError: isGetChannelsError } =
     useGetOwnChannelsQuery(null);
-  const [
-    leaveChannels,
-    { isLoading: isLeavingChannels, isError: isLeaveChannelsError },
-  ] = useLeaveChannelsMutation();
+  const [leaveChannels, { isLoading: isLeavingChannels }] =
+    useLeaveChannelsMutation();
 
   const [selectableChannels, setSelectableChannels] = useState<
     SelectableItem<IChannel>[]
@@ -127,9 +125,9 @@ const HomeScreen = (): JSX.Element => {
             channelType: channel.type,
           } as ILeaveChannelRequest)
       );
-    console.log('requests: ', requests);
-    const results = await leaveChannels(requests).unwrap();
-    console.log('results: ', results);
+
+    await leaveChannels(requests).unwrap();
+    setLeaveChannelsDialogVisible(false);
   }
 
   return (
@@ -159,6 +157,8 @@ const HomeScreen = (): JSX.Element => {
         onDismiss={handleLeaveChannelsDialogDissmiss}
         onConfirmPress={handleLeaveChannelsDialogConfirm}
         channels={selectableChannels}
+        cancelButtonDisabled={isLeavingChannels}
+        leaveButtonDisabled={isLeavingChannels}
       />
     </>
   );

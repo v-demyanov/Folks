@@ -18,6 +18,8 @@ const LeaveChannelsDialog = ({
   onDismiss,
   onConfirmPress,
   channels,
+  cancelButtonDisabled,
+  leaveButtonDisabled,
 }: ILeaveChannelsDialogProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
@@ -63,8 +65,14 @@ const LeaveChannelsDialog = ({
             </Text>
           </View>
           <View style={[styles.actionsView]}>
-            <Button onPress={onDismiss}>Cancel</Button>
-            <Button onPress={onConfirmPress} textColor={theme.colors.error}>
+            <Button onPress={onDismiss} disabled={cancelButtonDisabled}>
+              Cancel
+            </Button>
+            <Button
+              onPress={onConfirmPress}
+              disabled={leaveButtonDisabled}
+              textColor={theme.colors.error}
+            >
               Leave
             </Button>
           </View>
