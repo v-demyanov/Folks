@@ -17,9 +17,7 @@ public record class LeaveChannelCommandResult
 
 public record class LeaveChannelCommandSuccessResult : LeaveChannelCommandResult
 {
-    public required IEnumerable<LeaveChannelCommandInternalEvent> Events { get; init; }
-
-    public required IEnumerable<string> Recipients { get; init; }
+    public required IDictionary<LeaveChannelCommandInternalEvent, HashSet<string>> Events { get; init; }
 }
 
 public record class LeaveChannelCommandErrorResult : LeaveChannelCommandResult

@@ -40,7 +40,7 @@ public class ChannelsController : ControllerBase
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(IEnumerable<ChannelDto>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ChannelDto>>> GetOwnChannels()
+    public async Task<ActionResult<IEnumerable<ChannelDto>>> GetOwn()
     {
         var ownerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var channels = await _mediator.Send(new GetOwnChannelsQuery 
@@ -92,25 +92,25 @@ public class ChannelsController : ControllerBase
 
     private async Task HandleLeaveChannelCommandResultEventsAsync(LeaveChannelCommandSuccessResult result, string currentUserId)
     {
-        foreach (var channelsHubEvent in result.Events)
+        foreach (var internalEvent in result.Events)
         {
-            switch (channelsHubEvent)
+            switch (internalEvent.Key)
             {
                 case LeaveChannelCommandInternalEvent.ChannelRemoved:
-                    await HandleChannelRemovedAsync(result);
+                    await HandleChannelRemovedAsync(result, internalEvent.Value);
                     continue;
                 case LeaveChannelCommandInternalEvent.NewGroupOwnerSet:
-                    await HandleNewGroupOwnerSetAsync(result, currentUserId);
+                    await HandleNewGroupOwnerSetAsync(result, internalEvent.Value, currentUserId);
                     continue;
-                case LeaveChannelCommandInternalEvent.UserLeft:
-                    await HandleUserLeftAsync(result, currentUserId);
+                case LeaveChannelCommandInternalEvent.UserLeftChannel:
+                    await HandleUserLeftChannelAsync(result, internalEvent.Value, currentUserId);
                     continue;
                 default: continue;
             }
         }
     }
 
-    private async Task HandleChannelRemovedAsync(LeaveChannelCommandSuccessResult result) =>
+    private async Task HandleChannelRemovedAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients) =>
         await _mediator.Publish(new ChannelRemovedNotification
         {
             ChannelDto = new ChannelDto
@@ -119,10 +119,10 @@ public class ChannelsController : ControllerBase
                 Type = result.ChannelType, 
                 Title = result.ChannelTitle ?? string.Empty,
             },
-            Recipients = result.Recipients,
+            Recipients = recipients,
         });
 
-    private async Task HandleNewGroupOwnerSetAsync(LeaveChannelCommandSuccessResult result, string currentUserId)
+    private async Task HandleNewGroupOwnerSetAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients, string currentUserId)
     {
         var messageDto = await _mediator.Send(new CreateMessageCommand
         {
@@ -137,11 +137,11 @@ public class ChannelsController : ControllerBase
         await _mediator.Publish(new MessageCreatedNotification
         {
             MessageDto = messageDto,
-            Recipients = result.Recipients,
+            Recipients = recipients,
         });
     }
 
-    private async Task HandleUserLeftAsync(LeaveChannelCommandSuccessResult result, string currentUserId)
+    private async Task HandleUserLeftChannelAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients, string currentUserId)
     {
         var currentUser = _dbContext.Users.GetBySourceId(currentUserId);
         var messageDto = await _mediator.Send(new CreateMessageCommand
@@ -157,7 +157,7 @@ public class ChannelsController : ControllerBase
         await _mediator.Publish(new MessageCreatedNotification
         {
             MessageDto = messageDto,
-            Recipients = result.Recipients,
+            Recipients = recipients,
         });
     }
 }

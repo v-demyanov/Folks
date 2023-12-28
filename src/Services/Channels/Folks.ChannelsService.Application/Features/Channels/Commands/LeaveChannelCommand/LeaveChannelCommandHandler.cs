@@ -30,25 +30,30 @@ public class LeaveChannelCommandHandler : IRequestHandler<LeaveChannelCommand, L
     private LeaveChannelCommandResult LeaveFromGroup(LeaveChannelCommand request)
     {
         var group = _dbContext.Groups.GetById(ObjectId.Parse(request.ChannelId));
-        var users = _dbContext.Users.GetByGroupId(group.Id);
+        var users = _dbContext.Users.GetByGroupId(group.Id).ToList();
+        var usersIds = users.Select(user => user.SourceId);
         var currentUser = _dbContext.Users.GetBySourceId(request.UserId);
-        var events = new List<LeaveChannelCommandInternalEvent>();
+        var events = new Dictionary<LeaveChannelCommandInternalEvent, HashSet<string>>();
 
         RemoveUserFromGroup(currentUser, group);
-        events.Add(LeaveChannelCommandInternalEvent.UserLeft);
+        events.Add(LeaveChannelCommandInternalEvent.UserLeftChannel, new HashSet<string>(usersIds));
+        events.Add(LeaveChannelCommandInternalEvent.ChannelRemoved, new HashSet<string> { currentUser.SourceId });
 
         if (group.UserIds.Any() && group.OwnerId == currentUser.Id)
         {
             SetNewGroupOwner(group);
-            events.Add(LeaveChannelCommandInternalEvent.NewGroupOwnerSet);
+            events.Add(LeaveChannelCommandInternalEvent.NewGroupOwnerSet, new HashSet<string>(usersIds));
         }
 
         if (group.UserIds.Count() == 0)
         {
             RemoveGroup(group, users);
-            events = new List<LeaveChannelCommandInternalEvent> 
-            { 
-                LeaveChannelCommandInternalEvent.ChannelRemoved 
+            events = new Dictionary<LeaveChannelCommandInternalEvent, HashSet<string>>
+            {
+                { 
+                    LeaveChannelCommandInternalEvent.ChannelRemoved,
+                    new HashSet<string>(usersIds)
+                }
             };
         }
 
@@ -60,7 +65,6 @@ public class LeaveChannelCommandHandler : IRequestHandler<LeaveChannelCommand, L
             ChannelType = request.ChannelType,
             ChannelTitle = group.Title,
             Events = events,
-            Recipients = users.Select(user => user.SourceId),
         };
     }
 
