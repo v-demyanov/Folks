@@ -23,6 +23,17 @@ const channelsApi = api.injectEndpoints({
               draft.push(channel);
             });
           });
+
+          channelsHubConnection.on('ChannelRemoved', (channel: IChannel) => {
+            updateCachedData((draft) => {
+              const index = draft.findIndex(
+                (draftChannel) =>
+                  draftChannel.id === channel.id &&
+                  draftChannel.type === channel.type
+              );
+              draft.splice(index, 1);
+            });
+          });
         } catch {}
 
         await cacheEntryRemoved;
