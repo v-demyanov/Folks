@@ -10,13 +10,12 @@ using System.Security.Claims;
 using Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
 using Folks.ChannelsService.Application.Features.Channels.Commands.LeaveChannelCommand;
 using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
-using Folks.ChannelsService.Infrastructure.Persistence;
-using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelRemovedNotification;
 using Folks.ChannelsService.Api.Common.Constants;
 using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 using Folks.ChannelsService.Application.Features.Messages.Notifications.MessageCreatedNotification;
+using Folks.ChannelsService.Domain.Enums;
 
 namespace Folks.ChannelsService.Api.Controllers;
 
@@ -27,13 +26,11 @@ public class ChannelsController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-    private readonly ChannelsServiceDbContext _dbContext;
 
-    public ChannelsController(IMediator mediator, IMapper mapper, ChannelsServiceDbContext dbContext)
+    public ChannelsController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     [HttpGet]
@@ -129,9 +126,8 @@ public class ChannelsController : ControllerBase
             OwnerId = currentUserId,
             ChannelId = result.ChannelId,
             ChannelType = result.ChannelType,
-            Content = "New owner has been set",
             SentAt = DateTimeOffset.Now,
-            IsSpecific = true,
+            Type = MessageType.NewGroupOwnerSetEvent,
         });
 
         await _mediator.Publish(new MessageCreatedNotification
@@ -143,15 +139,13 @@ public class ChannelsController : ControllerBase
 
     private async Task HandleUserLeftChannelAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients, string currentUserId)
     {
-        var currentUser = _dbContext.Users.GetBySourceId(currentUserId);
         var messageDto = await _mediator.Send(new CreateMessageCommand
         {
             OwnerId = currentUserId,
             ChannelId = result.ChannelId,
             ChannelType = result.ChannelType,
-            Content = $"{currentUser.UserName} has left",
             SentAt = DateTimeOffset.Now,
-            IsSpecific = true,
+            Type = MessageType.UserLeftEvent,
         });
 
         await _mediator.Publish(new MessageCreatedNotification

@@ -1,12 +1,13 @@
 ﻿using MongoDB.Bson;
 
 using Folks.ChannelsService.Domain.Common;
+using Folks.ChannelsService.Domain.Enums;
 
 namespace Folks.ChannelsService.Domain.Entities;
 
 public class Message : BaseEntity
 {
-    public required string Content { get; set; }
+    public string? Content { get; set; }
 
     public DateTimeOffset SentAt { get; set; }
 
@@ -16,5 +17,5 @@ public class Message : BaseEntity
 
     public ObjectId? ChatId { get; set; }
 
-    public bool IsSpecific { get; set; }
+    public MessageType Type { get; set; }
 }

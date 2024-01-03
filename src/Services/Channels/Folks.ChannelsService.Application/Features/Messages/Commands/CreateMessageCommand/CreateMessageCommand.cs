@@ -1,6 +1,8 @@
 ﻿using MediatR;
+
 using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
+using Folks.ChannelsService.Domain.Enums;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
 
@@ -12,9 +14,9 @@ public record class CreateMessageCommand : IRequest<MessageDto>
 
     public ChannelType ChannelType { get; init; }
 
-    public required string Content { get; init; }
+    public string? Content { get; init; }
 
     public required DateTimeOffset SentAt { get; init; }
 
-    public bool IsSpecific { get; init; }
+    public MessageType Type { get; init; } = MessageType.Text;
 }

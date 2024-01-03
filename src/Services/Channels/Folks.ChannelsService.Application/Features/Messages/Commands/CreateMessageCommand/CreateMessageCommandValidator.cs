@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
+
 using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 using Folks.ChannelsService.Domain.Constants;
+using Folks.ChannelsService.Domain.Enums;
 using Folks.ChannelsService.Infrastructure.Persistence;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
@@ -31,6 +33,7 @@ public class CreateMessageCommandValidator : AbstractValidator<CreateMessageComm
 
         RuleFor(command => command.Content)
             .NotEmpty()
-            .MaximumLength(MessageSettings.ContentMaximumLength);
+            .MaximumLength(MessageSettings.ContentMaximumLength)
+            .When(command => command.Type == MessageType.Text);
     }
 }
