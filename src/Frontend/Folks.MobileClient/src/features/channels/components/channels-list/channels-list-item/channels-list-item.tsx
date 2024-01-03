@@ -109,7 +109,9 @@ const ChannelsListItem = ({
         <View style={[styles.view]}>
           <Text variant="bodySmall">
             {getUserFrendlyDateString(
-              lastMessage ? new Date(lastMessage.sentAt) : new Date(),
+              lastMessage
+                ? new Date(lastMessage.sentAt)
+                : new Date(channel.createdAt),
               { formatInHHMM: true }
             )}
           </Text>
