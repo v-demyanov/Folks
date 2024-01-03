@@ -1,6 +1,10 @@
+import IUserFrendlyDateOptions from '../models/user-frendly-date-options';
 import { formatInNN } from './number-helpers';
 
-export function getUserFrendlyDateString(date: Date): string {
+export function getUserFrendlyDateString(
+  date: Date,
+  options?: IUserFrendlyDateOptions
+): string {
   const now = new Date();
   const monthDay = date.getDate();
   const month = date.getMonth() + 1;
@@ -8,6 +12,10 @@ export function getUserFrendlyDateString(date: Date): string {
 
   if (now.getFullYear() !== year) {
     return `${formatInNN(monthDay)}/${formatInNN(month)}/${year}`;
+  }
+
+  if (isToday(date) && options?.formatInHHMM) {
+    return formatInHHMM(date);
   }
 
   if (isThisWeek(date)) {
@@ -43,6 +51,11 @@ export function isThisWeek(date: Date): boolean {
   lastDayOfWeek.setDate(lastDayOfWeek.getDate() + 6);
 
   return date >= firstDayOfWeek && date <= lastDayOfWeek;
+}
+
+export function isToday(date: Date): boolean {
+  const today = new Date();
+  return today.toDateString() === date.toDateString();
 }
 
 export function formatInHHMM(date: Date): string {
