@@ -16,6 +16,21 @@ const buildStyles = () =>
     badge: {
       fontWeight: 'bold',
     },
+    descriptionWrapper: {
+      flexDirection: 'row',
+    },
+    messageOwner: {
+      color: '#3db5ff',
+      fontWeight: 'bold',
+    },
+    messageTextContent: {
+      color: 'gray',
+      paddingLeft: 3,
+    },
+    messageEventContent: {
+      color: '#3db5ff',
+      fontWeight: 'bold',
+    },
   });
 
 export default buildStyles;

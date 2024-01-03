@@ -9,6 +9,9 @@ import { IChannelsListItemProps } from '../../../models';
 import { ListCheckBox } from '../../../../../common/components';
 import { useGetMessagesQuery } from '../../../../messages';
 import { IGetMessagesQuery } from '../../../../messages/models';
+import { MessageType } from '../../../../messages/enums';
+import { useAuth } from '../../../../auth/hooks';
+import { formatMessageContentByType } from '../../../../messages/helpers';
 
 const ChannelsListItem = ({
   channel,
@@ -19,6 +22,7 @@ const ChannelsListItem = ({
   const styles = buildStyles();
   const [isOnFocus, setIsOnFocus] = useState(false);
 
+  const { currentUser } = useAuth();
   const { lastMessage } = useGetMessagesQuery(
     {
       channelId: channel.id,
@@ -51,12 +55,44 @@ const ChannelsListItem = ({
     }
   }
 
+  function renderDescription(): JSX.Element {
+    switch (lastMessage?.type) {
+      case MessageType.Text:
+        return (
+          <View style={[styles.descriptionWrapper]}>
+            <View>
+              <Text style={[styles.messageOwner]}>
+                {currentUser?.sub === lastMessage.owner.id
+                  ? 'You'
+                  : lastMessage.owner.userName}
+                :
+              </Text>
+            </View>
+            <View>
+              <Text style={[styles.messageTextContent]}>
+                {lastMessage.content}
+              </Text>
+            </View>
+          </View>
+        );
+      case MessageType.NewGroupOwnerSetEvent:
+      case MessageType.UserLeftEvent:
+        return (
+          <Text style={[styles.messageEventContent]}>
+            {formatMessageContentByType(lastMessage)}
+          </Text>
+        );
+      default:
+        return <></>;
+    }
+  }
+
   return (
     <List.Item
       style={[styles.listItem]}
       title={channel.title}
       titleStyle={[styles.title]}
-      description={lastMessage?.content}
+      description={renderDescription()}
       onPress={handlePress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}

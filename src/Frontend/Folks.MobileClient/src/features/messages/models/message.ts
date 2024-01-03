@@ -1,10 +1,11 @@
 import { IBaseModel } from '../../../common/models';
 import { IUser } from '../../users/models';
+import { MessageType } from '../enums';
 
 export default interface IMessage extends IBaseModel {
-  content: string;
+  content: string | null;
   sentAt: string;
   channelId: string;
   owner: IUser;
-  isSpecific: boolean;
+  type: MessageType;
 }

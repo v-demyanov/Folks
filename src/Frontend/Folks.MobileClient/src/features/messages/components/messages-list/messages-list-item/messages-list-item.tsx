@@ -8,12 +8,13 @@ import { Theme } from '../../../../../themes/types/theme';
 import buildStyles from './messages-list-item.styles';
 import MessageContainer from '../../message-container/message-container';
 import { formatInHHMM } from '../../../../../common/helpers';
+import { MessageType } from '../../../enums';
 
 const MessagesListItem = ({ item }: IMessagesListItemProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
-  if (item.isSpecific) {
+  if (item.type !== MessageType.Text) {
     return (
       <BlurView style={[styles.specificMessageView]} intensity={50}>
         <Text style={[styles.contentText]} variant="titleSmall">

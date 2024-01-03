@@ -1,4 +1,5 @@
 import { MessagesConstants } from '..';
+import { MessageType } from '../enums';
 import { IMessage } from '../models';
 
 export function splitContentOnFragments(content: string): string[] {
@@ -24,4 +25,17 @@ export function groupMessagesByDate(
 
     return date.toDateString();
   });
+}
+
+export function formatMessageContentByType(message: IMessage): string {
+  switch (message.type) {
+    case MessageType.Text:
+      return message.content ?? '';
+    case MessageType.NewGroupOwnerSetEvent:
+      return 'New owner has been set';
+    case MessageType.UserLeftEvent:
+      return `${message.owner.userName} has left`;
+    default:
+      return '';
+  }
 }
