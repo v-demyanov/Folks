@@ -9,4 +9,6 @@ public record class ChannelDto
     public required string Title { get; init; }
 
     public ChannelType Type { get; init; }
+
+    public DateTimeOffset CreatedAt { get; init; }
 }

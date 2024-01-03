@@ -1,4 +1,5 @@
 ﻿using MediatR;
+
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
