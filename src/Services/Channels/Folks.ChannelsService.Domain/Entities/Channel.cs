@@ -1,8 +1,6 @@
 ﻿using MongoDB.Bson;
 
 using System.ComponentModel.DataAnnotations.Schema;
-
-using Folks.ChannelsService.Domain.Common;
 using Folks.ChannelsService.Domain.Common.Abstractions;
 
 namespace Folks.ChannelsService.Domain.Entities;

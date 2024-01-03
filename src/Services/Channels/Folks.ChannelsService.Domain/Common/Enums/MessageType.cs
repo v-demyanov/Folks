@@ -1,4 +1,4 @@
-﻿namespace Folks.ChannelsService.Domain.Enums;
+﻿namespace Folks.ChannelsService.Domain.Common.Enums;
 
 public enum MessageType
 {

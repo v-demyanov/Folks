@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace Folks.ChannelsService.Domain.Common;
+namespace Folks.ChannelsService.Domain.Common.Abstractions;
 
 public abstract class BaseEntity
 {

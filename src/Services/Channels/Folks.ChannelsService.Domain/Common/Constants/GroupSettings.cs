@@ -1,4 +1,4 @@
-﻿namespace Folks.ChannelsService.Domain.Constants;
+﻿namespace Folks.ChannelsService.Domain.Common.Constants;
 
 public static class GroupSettings
 {

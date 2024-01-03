@@ -15,7 +15,7 @@ using Folks.ChannelsService.Api.Common.Constants;
 using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 using Folks.ChannelsService.Application.Features.Messages.Notifications.MessageCreatedNotification;
-using Folks.ChannelsService.Domain.Enums;
+using Folks.ChannelsService.Domain.Common.Enums;
 
 namespace Folks.ChannelsService.Api.Controllers;
 

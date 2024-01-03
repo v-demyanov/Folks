@@ -2,7 +2,7 @@
 
 using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
-using Folks.ChannelsService.Domain.Enums;
+using Folks.ChannelsService.Domain.Common.Enums;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
 

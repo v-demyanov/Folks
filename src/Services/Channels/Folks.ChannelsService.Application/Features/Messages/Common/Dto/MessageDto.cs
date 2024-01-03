@@ -1,5 +1,5 @@
 ﻿using Folks.ChannelsService.Application.Features.Users.Common.Dto;
-using Folks.ChannelsService.Domain.Enums;
+using Folks.ChannelsService.Domain.Common.Enums;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Common.Dto;
 

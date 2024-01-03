@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-
-using Folks.ChannelsService.Domain.Constants;
+using Folks.ChannelsService.Domain.Common.Constants;
 using Folks.ChannelsService.Infrastructure.Persistence;
 
 namespace Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
