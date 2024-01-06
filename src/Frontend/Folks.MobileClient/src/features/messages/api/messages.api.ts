@@ -3,6 +3,7 @@ import { HttpStatusCode } from 'axios';
 import { api } from '../../../api/api';
 import { channelsHubConnection } from '../../signalr/connections';
 import { ICreateMessageCommand, IGetMessagesQuery, IMessage } from '../models';
+import { ChannelsHubEventsConstants } from '../../../api/constants';
 
 const messagesApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,13 +19,16 @@ const messagesApi = api.injectEndpoints({
         try {
           await cacheDataLoaded;
 
-          channelsHubConnection.on('MessageSent', (message: IMessage) => {
-            updateCachedData((draft) => {
-              if (message.channelId === arg.channelId) {
-                draft.push(message);
-              }
-            });
-          });
+          channelsHubConnection.on(
+            ChannelsHubEventsConstants.MESSAGE_SENT,
+            (message: IMessage) => {
+              updateCachedData((draft) => {
+                if (message.channelId === arg.channelId) {
+                  draft.push(message);
+                }
+              });
+            }
+          );
         } catch {}
 
         await cacheEntryRemoved;
@@ -33,7 +37,10 @@ const messagesApi = api.injectEndpoints({
     sendMessage: builder.mutation<null, ICreateMessageCommand>({
       queryFn: async (arg) => {
         try {
-          const result = await channelsHubConnection.invoke('SendMessage', arg);
+          const result = await channelsHubConnection.invoke(
+            ChannelsHubEventsConstants.SEND_MESSAGE,
+            arg
+          );
           return {
             data: result,
           };

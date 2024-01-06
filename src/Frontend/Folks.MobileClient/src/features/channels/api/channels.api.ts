@@ -6,6 +6,7 @@ import {
   ILeaveChannelCommandSuccessResult,
   ILeaveChannelRequest,
 } from '../models';
+import { ChannelsHubEventsConstants } from '../../../api/constants';
 
 const channelsApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,39 +19,46 @@ const channelsApi = api.injectEndpoints({
         try {
           await cacheDataLoaded;
 
-          channelsHubConnection.on('ChannelCreated', (channel: IChannel) => {
-            updateCachedData((draft) => {
-              draft.push(channel);
-            });
-          });
+          channelsHubConnection.on(
+            ChannelsHubEventsConstants.CHANNEL_CREATED,
+            (channel: IChannel) => {
+              updateCachedData((draft) => {
+                draft.push(channel);
+              });
+            }
+          );
 
-          channelsHubConnection.on('ChannelRemoved', (channel: IChannel) => {
-            updateCachedData((draft) => {
-              const index = draft.findIndex(
-                (draftChannel) =>
-                  draftChannel.id === channel.id &&
-                  draftChannel.type === channel.type
-              );
-              if (index > -1) {
-                draft.splice(index, 1);
-              }
-            });
-          });
+          channelsHubConnection.on(
+            ChannelsHubEventsConstants.CHANNEL_REMOVED,
+            (channel: IChannel) => {
+              updateCachedData((draft) => {
+                const index = draft.findIndex(
+                  (draftChannel) =>
+                    draftChannel.id === channel.id &&
+                    draftChannel.type === channel.type
+                );
+                if (index > -1) {
+                  draft.splice(index, 1);
+                }
+              });
+            }
+          );
 
-          channelsHubConnection.on('ChannelUpdated', (channel: IChannel) => {
-            updateCachedData((draft) => {
-              const index = draft.findIndex(
-                (draftChannel) =>
-                  draftChannel.id === channel.id &&
-                  draftChannel.type === channel.type
-              );
-              if (index > -1) {
-                draft.splice(index, 1, channel);
-              }
-
-              console.log(channel);
-            });
-          });
+          channelsHubConnection.on(
+            ChannelsHubEventsConstants.CHANNEL_UPDATED,
+            (channel: IChannel) => {
+              updateCachedData((draft) => {
+                const index = draft.findIndex(
+                  (draftChannel) =>
+                    draftChannel.id === channel.id &&
+                    draftChannel.type === channel.type
+                );
+                if (index > -1) {
+                  draft.splice(index, 1, channel);
+                }
+              });
+            }
+          );
         } catch {}
 
         await cacheEntryRemoved;
