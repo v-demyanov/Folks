@@ -3,6 +3,7 @@
 using MediatR;
 
 using MongoDB.Bson;
+
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Domain.Entities;

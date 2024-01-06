@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
 
-using AutoMapper;
+using MediatR;
+
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;

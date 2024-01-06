@@ -13,6 +13,8 @@ using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Application.Features.Messages.Notifications.MessageCreatedNotification;
 using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
+using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelUpdatedNotitfication;
+using Folks.ChannelsService.Application.Features.Channels.Queries.GetChannelQuery;
 
 namespace Folks.ChannelsService.Api.Hubs;
 
@@ -54,9 +56,22 @@ public class ChannelsHub : Hub
             _ => new List<string>(),
         };
 
-        await _mediator.Publish(new MessageCreatedNotification 
+        _ = _mediator.Publish(new MessageCreatedNotification 
         { 
             MessageDto = messageDto, 
+            Recipients = userIds,
+        });
+
+        var getChannelQuery = new GetChannelQuery 
+        { 
+            Id = request.ChannelId,
+            Type = request.ChannelType,
+        };
+        var channelDto = await _mediator.Send(getChannelQuery);
+
+        _ = _mediator.Publish(new ChannelUpdatedNotification
+        {
+            ChannelDto = channelDto,
             Recipients = userIds,
         });
     }

@@ -16,6 +16,8 @@ using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 using Folks.ChannelsService.Application.Features.Messages.Notifications.MessageCreatedNotification;
 using Folks.ChannelsService.Domain.Common.Enums;
+using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelUpdatedNotitfication;
+using Folks.ChannelsService.Application.Features.Channels.Queries.GetChannelQuery;
 
 namespace Folks.ChannelsService.Api.Controllers;
 
@@ -135,6 +137,19 @@ public class ChannelsController : ControllerBase
             MessageDto = messageDto,
             Recipients = recipients,
         });
+
+        var getChannelQuery = new GetChannelQuery
+        {
+            Id = result.ChannelId,
+            Type = result.ChannelType,
+        };
+        var channelDto = await _mediator.Send(getChannelQuery);
+
+        await _mediator.Publish(new ChannelUpdatedNotification
+        {
+            ChannelDto = channelDto,
+            Recipients = recipients,
+        });
     }
 
     private async Task HandleUserLeftChannelAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients, string currentUserId)
@@ -151,6 +166,19 @@ public class ChannelsController : ControllerBase
         await _mediator.Publish(new MessageCreatedNotification
         {
             MessageDto = messageDto,
+            Recipients = recipients,
+        });
+
+        var getChannelQuery = new GetChannelQuery
+        {
+            Id = result.ChannelId,
+            Type = result.ChannelType,
+        };
+        var channelDto = await _mediator.Send(getChannelQuery);
+
+        await _mediator.Publish(new ChannelUpdatedNotification
+        {
+            ChannelDto = channelDto,
             Recipients = recipients,
         });
     }

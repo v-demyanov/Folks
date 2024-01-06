@@ -1,4 +1,10 @@
+using Serilog;
+
 using Folks.ChannelsService.Api.Extensions;
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 

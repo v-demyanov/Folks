@@ -3,6 +3,7 @@
 public enum ChannelsHubEvent
 {
     ChannelCreated,
+    ChannelUpdated,
     ChannelRemoved,
     MessageSent,
 }

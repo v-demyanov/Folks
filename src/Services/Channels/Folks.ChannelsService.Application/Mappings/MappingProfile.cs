@@ -23,10 +23,12 @@ public class MappingProfile : Profile
 
         CreateMap<Chat, ChannelDto>()
             .ForMember(destination => destination.Type, options => options.MapFrom(source => ChannelType.Chat))
-            .ForMember(destination => destination.Title, options => options.MapFrom<ChannelTitleValueResolver>());
+            .ForMember(destination => destination.Title, options => options.MapFrom<ChannelTitleValueResolver>())
+            .ForMember(destination => destination.LastMessage, options => options.MapFrom<ChannelChatLastMessageValueResolver>());
 
         CreateMap<Group, ChannelDto>()
-            .ForMember(destination => destination.Type, options => options.MapFrom(source => ChannelType.Group));
+            .ForMember(destination => destination.Type, options => options.MapFrom(source => ChannelType.Group))
+            .ForMember(destination => destination.LastMessage, options => options.MapFrom<ChannelGroupLastMessageValueResolver>());
 
         CreateMap<CreateGroupCommand, Group>()
             .ForMember(destination => destination.Id, options => options.MapFrom(source => ObjectId.GenerateNewId()))
