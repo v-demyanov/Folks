@@ -31,7 +31,24 @@ const channelsApi = api.injectEndpoints({
                   draftChannel.id === channel.id &&
                   draftChannel.type === channel.type
               );
-              draft.splice(index, 1);
+              if (index > -1) {
+                draft.splice(index, 1);
+              }
+            });
+          });
+
+          channelsHubConnection.on('ChannelUpdated', (channel: IChannel) => {
+            updateCachedData((draft) => {
+              const index = draft.findIndex(
+                (draftChannel) =>
+                  draftChannel.id === channel.id &&
+                  draftChannel.type === channel.type
+              );
+              if (index > -1) {
+                draft.splice(index, 1, channel);
+              }
+
+              console.log(channel);
             });
           });
         } catch {}

@@ -7,8 +7,6 @@ import buildStyles from './channels-list-item.styles';
 import { getUserFrendlyDateString } from '../../../../../common/helpers';
 import { IChannelsListItemProps } from '../../../models';
 import { ListCheckBox } from '../../../../../common/components';
-import { useGetMessagesQuery } from '../../../../messages';
-import { IGetMessagesQuery } from '../../../../messages/models';
 import { MessageType } from '../../../../messages/enums';
 import { useAuth } from '../../../../auth/hooks';
 import { formatMessageContentByType } from '../../../../messages/helpers';
@@ -23,17 +21,6 @@ const ChannelsListItem = ({
   const [isOnFocus, setIsOnFocus] = useState(false);
 
   const { currentUser } = useAuth();
-  const { lastMessage } = useGetMessagesQuery(
-    {
-      channelId: channel.id,
-      channelType: channel.type,
-    } as IGetMessagesQuery,
-    {
-      selectFromResult: ({ data }) => ({
-        lastMessage: data?.slice(-1).pop(),
-      }),
-    }
-  );
 
   function handlePressIn(): void {
     setIsOnFocus(true);
@@ -56,21 +43,21 @@ const ChannelsListItem = ({
   }
 
   function renderDescription(): JSX.Element {
-    switch (lastMessage?.type) {
+    switch (channel.lastMessage?.type) {
       case MessageType.Text:
         return (
           <View style={[styles.descriptionWrapper]}>
             <View>
               <Text style={[styles.messageOwner]}>
-                {currentUser?.sub === lastMessage.owner.id
+                {currentUser?.sub === channel.lastMessage.owner.id
                   ? 'You'
-                  : lastMessage.owner.userName}
+                  : channel.lastMessage.owner.userName}
                 :
               </Text>
             </View>
             <View>
               <Text style={[styles.messageTextContent]}>
-                {lastMessage.content}
+                {channel.lastMessage.content}
               </Text>
             </View>
           </View>
@@ -79,7 +66,7 @@ const ChannelsListItem = ({
       case MessageType.UserLeftEvent:
         return (
           <Text style={[styles.messageEventContent]}>
-            {formatMessageContentByType(lastMessage)}
+            {formatMessageContentByType(channel.lastMessage)}
           </Text>
         );
       default:
@@ -109,8 +96,8 @@ const ChannelsListItem = ({
         <View style={[styles.view]}>
           <Text variant="bodySmall">
             {getUserFrendlyDateString(
-              lastMessage
-                ? new Date(lastMessage.sentAt)
+              channel.lastMessage
+                ? new Date(channel.lastMessage.sentAt)
                 : new Date(channel.createdAt),
               { formatInHHMM: true }
             )}

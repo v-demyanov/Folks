@@ -58,10 +58,21 @@ const HomeScreen = (): JSX.Element => {
   }, [channels]);
 
   function prepareSelectableChannels(): SelectableItem<IChannel>[] {
-    return channels.map((channel) => ({
-      ...channel,
-      isSelected: false,
-    }));
+    return channels
+      .map((channel) => ({
+        ...channel,
+        isSelected: false,
+      }))
+      .sort((x, y) => {
+        const dateX = x.lastMessage
+          ? new Date(x.lastMessage.sentAt)
+          : new Date(x.createdAt);
+        const dateY = y.lastMessage
+          ? new Date(y.lastMessage.sentAt)
+          : new Date(y.createdAt);
+
+        return dateY.getTime() - dateX.getTime();
+      });
   }
 
   function getChannelsErrorMessage(): string {
