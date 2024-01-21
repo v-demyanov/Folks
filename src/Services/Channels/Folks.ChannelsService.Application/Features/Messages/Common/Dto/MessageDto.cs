@@ -16,4 +16,6 @@ public record class MessageDto
     public required UserDto Owner { get; init; }
 
     public MessageType Type { get; init; }
+
+    public required IEnumerable<UserDto> ReadBy { get; init; }
 }

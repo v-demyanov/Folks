@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+
 using Folks.ChannelsService.Domain.Common.Abstractions;
 using Folks.ChannelsService.Domain.Common.Enums;
 
@@ -17,4 +18,6 @@ public class Message : BaseEntity
     public ObjectId? ChatId { get; set; }
 
     public MessageType Type { get; set; }
+
+    public required ICollection<ObjectId> ReadByIds { get; set; } = new List<ObjectId>();
 }

@@ -51,6 +51,7 @@ public class MappingProfile : Profile
 
         CreateMap<Message, MessageDto>()
             .ForMember(destination => destination.ChannelId, options => options.MapFrom(source => source.ChatId ?? source.GroupId))
-            .ForMember(destination => destination.Owner, options => options.MapFrom<MessageOwnerIdValueResolver>());
+            .ForMember(destination => destination.Owner, options => options.MapFrom<MessageOwnerIdValueResolver>())
+            .ForMember(destination => destination.ReadBy, options => options.MapFrom<MessageReadByIdsValueResolver>());
     }
 }
