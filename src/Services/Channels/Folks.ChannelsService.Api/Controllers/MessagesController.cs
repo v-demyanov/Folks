@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 
 using MediatR;
 
+using System.Security.Claims;
+
 using Folks.ChannelsService.Application.Features.Messages.Queries.GetMessagesQuery;
 using Folks.ChannelsService.Api.Common.Constants;
 using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
+using Folks.ChannelsService.Application.Features.Messages.Commands.ReadMessageContentsCommand;
 
 namespace Folks.ChannelsService.Api.Controllers;
 
@@ -36,5 +39,23 @@ public class MessagesController : ControllerBase
         });
 
         return Ok(messages);
+    }
+
+    [HttpPut("readContents")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult> ReadContents([FromBody] IEnumerable<string> messageIds, string channelId, ChannelType channelType)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        await _mediator.Send(new ReadMessageContentsCommand
+        {
+            MessageIds = messageIds,
+            ChannelId = channelId,
+            ChannelType = channelType,
+            UserId = userId ?? string.Empty,
+        });
+
+        return NoContent();
     }
 }
