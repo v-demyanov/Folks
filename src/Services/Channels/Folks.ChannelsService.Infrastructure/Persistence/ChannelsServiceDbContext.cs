@@ -15,13 +15,18 @@ public class ChannelsServiceDbContext : DbContext
     {
     }
 
-    public DbSet<Chat> Chats => Set<Chat>();
+    public ChannelsServiceDbContext()
+    {
 
-    public DbSet<Group> Groups => Set<Group>();
+    }
 
-    public DbSet<Message> Messages => Set<Message>();
+    public virtual DbSet<Chat> Chats => Set<Chat>();
 
-    public DbSet<User> Users => Set<User>();
+    public virtual DbSet<Group> Groups => Set<Group>();
+
+    public virtual DbSet<Message> Messages => Set<Message>();
+
+    public virtual DbSet<User> Users => Set<User>();
 
     public override int SaveChanges()
     {
