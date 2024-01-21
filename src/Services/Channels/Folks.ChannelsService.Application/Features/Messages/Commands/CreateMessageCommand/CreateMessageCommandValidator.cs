@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 
-using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
+using Folks.ChannelsService.Application.Common.Models;
+using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Domain.Common.Constants;
 using Folks.ChannelsService.Domain.Common.Enums;
 using Folks.ChannelsService.Infrastructure.Persistence;
@@ -11,25 +12,20 @@ public class CreateMessageCommandValidator : AbstractValidator<CreateMessageComm
 {
     public CreateMessageCommandValidator(ChannelsServiceDbContext dbContext)
     {
-        RuleFor(query => query.OwnerId)
+        RuleFor(command => command.OwnerId)
             .NotEmpty();
 
-        RuleFor(query => query.OwnerId)
-            .Must(ownerId => dbContext.Users.Any(user => user.SourceId == ownerId))
-            .WithMessage(query => $"The user with id=\"{query.OwnerId}\" doesn't exist.");
+        RuleFor(command => command.OwnerId)
+            .UserMustExist(dbContext);
 
-        RuleFor(query => query.ChannelId)
+        RuleFor(command => command.ChannelId)
             .NotEmpty();
 
-        RuleFor(query => query.ChannelId)
-            .Must((command, channelId) =>
-                command.ChannelType switch
-                {
-                    ChannelType.Chat => dbContext.Chats.Any(chat => chat.Id.ToString() == channelId),
-                    ChannelType.Group => dbContext.Groups.Any(group => group.Id.ToString() == channelId),
-                    _ => false,
-                })
-            .WithMessage(query => $"The channel with id=\"{query.ChannelId}\" doesn't exist.");
+        RuleFor(command => new ChannelMustExistCustomValidatorProperty
+        {
+            ChannelId = command.ChannelId,
+            ChannelType = command.ChannelType
+        }).ChannelMustExist(dbContext);
 
         RuleFor(command => command.Content)
             .NotEmpty()

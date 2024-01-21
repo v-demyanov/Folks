@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 
+using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Infrastructure.Persistence;
 
 namespace Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
@@ -12,7 +13,6 @@ public class GetOwnChannelsQueryValidator : AbstractValidator<GetOwnChannelsQuer
             .NotEmpty();
 
         RuleFor(query => query.OwnerId)
-            .Must(ownerId => dbContext.Users.Any(user => user.SourceId == ownerId))
-            .WithMessage(query => $"The user with id=\"{query.OwnerId}\" doesn't exist.");
+            .UserMustExist(dbContext);
     }
 }

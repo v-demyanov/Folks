@@ -1,18 +1,19 @@
-﻿using MediatR;
+﻿using AutoMapper;
 
-using AutoMapper;
+using MediatR;
+
 using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Domain.Entities;
 using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
 
-public class CreateMessageHandler : IRequestHandler<CreateMessageCommand, MessageDto>
+public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand, MessageDto>
 {
     private readonly ChannelsServiceDbContext _dbContext;
     private readonly IMapper _mapper;
 
-    public CreateMessageHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
+    public CreateMessageCommandHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

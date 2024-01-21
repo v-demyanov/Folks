@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+
+using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Domain.Common.Constants;
 using Folks.ChannelsService.Infrastructure.Persistence;
 
@@ -14,11 +16,12 @@ public class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>
             .MaximumLength(GroupSettings.TitleMaximumLength);
 
         RuleFor(command => command.UserIds)
-            .Must(userIds => userIds.Except(dbContext.Users.ToList().Select(user => user.SourceId)).Count() == 0)
+            .Must(userIds => userIds.Except(dbContext.Users
+                .AsEnumerable()
+                .Select(user => user.SourceId)).Count() == 0)
             .WithMessage("Some users don't exist.");
 
         RuleFor(command => command.OwnerId)
-            .Must(ownerId => dbContext.Users.Any(user => user.SourceId == ownerId))
-            .WithMessage(query => $"The user with id=\"{query.OwnerId}\" doesn't exist.");
+            .UserMustExist(dbContext);
     }
 }
