@@ -10,8 +10,8 @@ import {
   SendMessageFormValidationSchema,
 } from '../../../features/messages';
 import {
-  MessageInput,
-  MessagesList,
+  MessageInputComponent,
+  MessagesListComponent,
 } from '../../../features/messages/components';
 import {
   ISendMessageFormValue,
@@ -139,9 +139,9 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
           backgroudColor={theme.colors.secondaryContainer}
         />
       ) : (
-        <MessagesList sections={messagesSections} />
+        <MessagesListComponent sections={messagesSections} />
       )}
-      <MessageInput
+      <MessageInputComponent
         onSendPress={sendMessageForm.handleSubmit}
         form={sendMessageForm}
         sendDisabled={isSendMessageDisabled()}

@@ -2,10 +2,10 @@ import { View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
 
-import buildStyles from './messages-list-empty.styles';
+import buildStyles from './messages-list-empty.component.styles';
 import { Theme } from '../../../../../themes/types/theme';
 
-const MessagesListEmpty = (): JSX.Element => {
+const MessagesListEmptyComponent = (): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
@@ -18,4 +18,4 @@ const MessagesListEmpty = (): JSX.Element => {
   );
 };
 
-export default MessagesListEmpty;
+export default MessagesListEmptyComponent;

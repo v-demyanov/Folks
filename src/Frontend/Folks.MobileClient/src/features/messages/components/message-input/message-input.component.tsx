@@ -4,10 +4,10 @@ import { useMemo } from 'react';
 
 import { IconsConstants } from '../../../../common';
 import { Theme } from '../../../../themes/types/theme';
-import buildStyles from './message-input.styles';
+import buildStyles from './message-input.component.styles';
 import { IMessageInputProps } from '../../models';
 
-const MessageInput = ({
+const MessageInputComponent = ({
   form,
   onSendPress,
   sendDisabled,
@@ -35,4 +35,4 @@ const MessageInput = ({
   );
 };
 
-export default MessageInput;
+export default MessageInputComponent;

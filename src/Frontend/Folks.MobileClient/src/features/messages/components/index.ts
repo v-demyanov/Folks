@@ -1,3 +1,3 @@
-export { default as MessagesList } from './messages-list/messages-list';
-export { default as MessageInput } from './message-input/message-input';
-export { default as MessageContainer } from './message-container/message-container';
+export { default as MessagesListComponent } from './messages-list/messages-list.component';
+export { default as MessageInputComponent } from './message-input/message-input.component';
+export { default as MessageContainerComponent } from './message-container/message-container.component';

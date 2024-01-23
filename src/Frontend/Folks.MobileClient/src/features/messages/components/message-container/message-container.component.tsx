@@ -3,11 +3,11 @@ import Svg, { Path } from 'react-native-svg';
 import { useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
 
-import buildStyles from './message-container.styles';
+import buildStyles from './message-container.component.styles';
 import { Theme } from '../../../../themes/types/theme';
 import { IMessageContainerProps } from '../../models';
 
-const MessageContainer = ({
+const MessageContainerComponent = ({
   isLeftAlign,
   children,
 }: IMessageContainerProps): JSX.Element => {
@@ -45,4 +45,4 @@ const MessageContainer = ({
   );
 };
 
-export default MessageContainer;
+export default MessageContainerComponent;

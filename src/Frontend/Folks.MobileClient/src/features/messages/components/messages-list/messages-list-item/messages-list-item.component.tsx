@@ -5,10 +5,10 @@ import { BlurView } from 'expo-blur';
 
 import { IMessagesListItemComponentProps } from '../../../models';
 import { Theme } from '../../../../../themes/types/theme';
-import MessageContainer from '../../message-container/message-container';
+import MessageContainerComponent from '../../message-container/message-container.component';
 import { formatInHHMM } from '../../../../../common/helpers';
 import { MessageType } from '../../../enums';
-import buildStyles from './messages-list-item-component.styles';
+import buildStyles from './messages-list-item.component.styles';
 
 const MessagesListItemComponent = ({
   item,
@@ -35,7 +35,7 @@ const MessagesListItemComponent = ({
           <Avatar.Icon size={40} icon="account" style={[styles.avatar]} />
         ) : null}
 
-        <MessageContainer isLeftAlign={item.isLeftAlign}>
+        <MessageContainerComponent isLeftAlign={item.isLeftAlign}>
           {item.isLeftAlign ? (
             <Text variant="titleSmall" style={[styles.userNameText]}>
               {item.owner.userName}
@@ -44,7 +44,7 @@ const MessagesListItemComponent = ({
           <Text style={[styles.contentText]} variant="bodyLarge">
             {item.content}
           </Text>
-        </MessageContainer>
+        </MessageContainerComponent>
       </View>
       <Text style={[styles.messageSentAtText]} variant="bodySmall">
         {formatInHHMM(item.sentAt)}

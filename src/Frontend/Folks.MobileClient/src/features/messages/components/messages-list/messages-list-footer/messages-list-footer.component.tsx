@@ -5,9 +5,9 @@ import { useMemo } from 'react';
 import { Theme } from '../../../../../themes/types/theme';
 import { getUserFrendlyDateString } from '../../../../../common/helpers';
 import { IMessagesListFooterProps } from '../../../models';
-import buildStyles from './messages-list-footer.styles';
+import buildStyles from './messages-list-footer.component.styles';
 
-const MessagesListFooter = ({
+const MessagesListFooterComponent = ({
   content,
   blurViewstyle,
 }: IMessagesListFooterProps): JSX.Element => {
@@ -23,4 +23,4 @@ const MessagesListFooter = ({
   );
 };
 
-export default MessagesListFooter;
+export default MessagesListFooterComponent;

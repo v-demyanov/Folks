@@ -8,14 +8,14 @@ import { useTheme } from 'react-native-paper';
 import { useCallback, useMemo, useState } from 'react';
 
 import { Theme } from '../../../../themes/types/theme';
-import MessagesListItemComponent from './messages-list-item-component/messages-list-item-component';
+import MessagesListItemComponent from './messages-list-item/messages-list-item.component';
 import { ISectionListItem } from '../../../../common/models';
-import MessagesListFooter from './messages-list-footer/messages-list-footer';
-import buildStyles from './messages-list.styles';
-import MessagesListEmpty from './messages-list-empty/messages-list-empty';
+import MessagesListFooterComponent from './messages-list-footer/messages-list-footer.component';
+import buildStyles from './messages-list.component.styles';
+import MessagesListEmptyComponent from './messages-list-empty/messages-list-empty.component';
 import { IMessagesListProps, MessagesListItem } from '../../models';
 
-const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
+const MessagesListComponent = ({ sections }: IMessagesListProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
@@ -36,11 +36,11 @@ const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
       MessagesListItem,
       ISectionListItem<Date, MessagesListItem>
     >;
-  }): JSX.Element => <MessagesListFooter content={footer} />;
+  }): JSX.Element => <MessagesListFooterComponent content={footer} />;
 
   const renderStickyFooter = () =>
     currentSectionFooter ? (
-      <MessagesListFooter
+      <MessagesListFooterComponent
         content={currentSectionFooter}
         blurViewstyle={[styles.stickyFooter]}
       />
@@ -82,7 +82,7 @@ const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
   }, []);
 
   if (!sections.length) {
-    return <MessagesListEmpty />;
+    return <MessagesListEmptyComponent />;
   }
 
   return (
@@ -103,4 +103,4 @@ const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
   );
 };
 
-export default MessagesList;
+export default MessagesListComponent;
