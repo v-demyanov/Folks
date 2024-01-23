@@ -2,8 +2,8 @@ import { api } from '../../../api/api';
 import { channelsHubConnection } from '../../signalr/connections';
 import {
   IChannel,
-  ILeaveChannelCommandErrorResult,
-  ILeaveChannelCommandSuccessResult,
+  ILeaveChannelRequestErrorResult,
+  ILeaveChannelRequestSuccessResult,
   ILeaveChannelRequest,
 } from '../models';
 import { ChannelsHubEventsConstants } from '../../../api/constants';
@@ -66,7 +66,7 @@ const channelsApi = api.injectEndpoints({
     }),
     leaveChannels: builder.mutation<
       Array<
-        ILeaveChannelCommandErrorResult | ILeaveChannelCommandSuccessResult
+        ILeaveChannelRequestErrorResult | ILeaveChannelRequestSuccessResult
       >,
       ILeaveChannelRequest[]
     >({

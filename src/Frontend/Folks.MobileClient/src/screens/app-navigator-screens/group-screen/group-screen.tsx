@@ -15,9 +15,9 @@ import {
 } from '../../../features/messages/components';
 import {
   ISendMessageFormValue,
-  ICreateMessageCommand,
-  IGetMessagesQuery,
-  IMessagesListItem,
+  ICreateMessageRequest,
+  IGetMessagesRequest,
+  MessagesListItem,
 } from '../../../features/messages/models';
 import {
   groupMessagesByDate,
@@ -46,7 +46,7 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
     useGetMessagesQuery({
       channelId: channel.id,
       channelType: channel.type,
-    } as IGetMessagesQuery);
+    } as IGetMessagesRequest);
 
   const [messagesSections, setMessagesSections] = useState<
     ISectionListItem<Date, IMessagesListItem>[]
@@ -105,7 +105,7 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
             channelType: channel.type,
             content: contentFragment,
             sentAt: new Date(),
-          } as ICreateMessageCommand;
+          } as ICreateMessageRequest;
 
           await sendMessage(createMessageCommand).unwrap();
           sendMessageForm.resetForm();

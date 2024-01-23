@@ -1,6 +1,6 @@
 import { ISectionListItem } from '../../../common/models';
-import IMessagesListItem from './messages-list-item';
+import MessagesListItem from './messages-list-item';
 
 export default interface IMessagesListProps {
-  sections: ISectionListItem<Date, IMessagesListItem>[];
+  sections: ISectionListItem<Date, MessagesListItem>[];
 }

@@ -1,12 +1,9 @@
-import { IUser } from '../../users/models';
-import { MessageType } from '../enums';
+import IMessage from './message';
 
-export default interface IMessagesListItem {
-  id: string;
-  content: string;
-  sentAt: Date;
-  channelId: string;
-  owner: IUser;
-  type: MessageType;
+type MessagesListItem = {
   isLeftAlign: boolean;
-}
+  sentAt: Date;
+  content: string;
+} & Omit<IMessage, 'sentAt' | 'content'>;
+
+export default MessagesListItem;

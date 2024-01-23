@@ -2,12 +2,17 @@ import { HttpStatusCode } from 'axios';
 
 import { api } from '../../../api/api';
 import { channelsHubConnection } from '../../signalr/connections';
-import { ICreateMessageCommand, IGetMessagesQuery, IMessage } from '../models';
+import {
+  ICreateMessageRequest,
+  IGetMessagesRequest,
+  IMessage,
+  IReadMessageContentsRequest,
+} from '../models';
 import { ChannelsHubEventsConstants } from '../../../api/constants';
 
 const messagesApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getMessages: builder.query<IMessage[], IGetMessagesQuery>({
+    getMessages: builder.query<IMessage[], IGetMessagesRequest>({
       query: (arg) => ({
         url: `/channelsservice/channels/${arg.channelId}/messages?channelType=${arg.channelType}`,
         method: 'GET',
@@ -34,7 +39,7 @@ const messagesApi = api.injectEndpoints({
         await cacheEntryRemoved;
       },
     }),
-    sendMessage: builder.mutation<null, ICreateMessageCommand>({
+    sendMessage: builder.mutation<null, ICreateMessageRequest>({
       queryFn: async (arg) => {
         try {
           const result = await channelsHubConnection.invoke(

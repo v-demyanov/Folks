@@ -1,10 +1,11 @@
-export { default as ICreateMessageCommand } from './create-message-command';
-export { default as IGetMessagesQuery } from './get-messages-query';
+export { default as ICreateMessageRequest } from './create-message-request';
+export { default as IGetMessagesRequest } from './get-messages-request';
 export { default as IMessageContainerProps } from './message-container.props';
 export { default as IMessageInputProps } from './message-input.props';
 export { default as IMessage } from './message';
 export { default as IMessagesListFooterProps } from './messages-list-footer.props';
-export { default as IMessagesListItemProps } from './messages-list-item.props';
-export { default as IMessagesListItem } from './messages-list-item';
+export { default as IMessagesListItemComponentProps } from './messages-list-item-component.props';
+export { default as MessagesListItem } from './messages-list-item';
 export { default as IMessagesListProps } from './messages-list.props';
 export { default as ISendMessageFormValue } from './send-message-form-value';
+export { default as IReadMessageContentsRequest } from './read-message-contents-request';

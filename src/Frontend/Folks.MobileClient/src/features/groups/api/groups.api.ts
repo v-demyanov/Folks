@@ -1,10 +1,10 @@
 import { api } from '../../../api/api';
 import { IChannel } from '../../channels/models';
-import { ICreateGroupCommand } from '../models';
+import { ICreateGroupRequest } from '../models';
 
 const groupsApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    createGroup: builder.mutation<IChannel, ICreateGroupCommand>({
+    createGroup: builder.mutation<IChannel, ICreateGroupRequest>({
       query: (arg) => ({
         url: '/channelsservice/channels/groups',
         method: 'POST',

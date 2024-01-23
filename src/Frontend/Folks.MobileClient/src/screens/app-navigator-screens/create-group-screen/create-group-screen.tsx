@@ -14,7 +14,7 @@ import {
 } from '../../../features/groups';
 import {
   ICreateGroupFormValue,
-  ICreateGroupCommand,
+  ICreateGroupRequest,
 } from '../../../features/groups/models';
 import { useGetAllUsersQuery } from '../../../features/users';
 import {
@@ -106,7 +106,7 @@ const CreateGroupScreen = (): JSX.Element => {
 
   function prepareCreateGroupCommand(
     formValue: ICreateGroupFormValue
-  ): ICreateGroupCommand | null {
+  ): ICreateGroupRequest | null {
     if (!currentUser) {
       return null;
     }
@@ -119,7 +119,7 @@ const CreateGroupScreen = (): JSX.Element => {
     return {
       title: formValue.title,
       userIds,
-    } as ICreateGroupCommand;
+    } as ICreateGroupRequest;
   }
 
   function getGetAllUsersErrorMessage(): string {
