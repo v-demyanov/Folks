@@ -49,7 +49,7 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
     } as IGetMessagesRequest);
 
   const [messagesSections, setMessagesSections] = useState<
-    ISectionListItem<Date, IMessagesListItem>[]
+    ISectionListItem<Date, MessagesListItem>[]
   >([]);
   const [sendMessageErrorVisible, setSendMessageErrorVisible] = useState(false);
 
@@ -64,14 +64,14 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
 
   function prepareMessagesSections(): ISectionListItem<
     Date,
-    IMessagesListItem
+    MessagesListItem
   >[] {
     if (!currentUser) {
       return [];
     }
 
     const messagesGroups = groupMessagesByDate(messages);
-    const sections: ISectionListItem<Date, IMessagesListItem>[] = [];
+    const sections: ISectionListItem<Date, MessagesListItem>[] = [];
 
     for (const messagesGroup of messagesGroups) {
       const messagesListItems = messagesGroup[1]

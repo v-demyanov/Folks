@@ -5,15 +5,15 @@ import {
   ViewToken,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Theme } from '../../../../themes/types/theme';
-import MessagesListItem from './messages-list-item/messages-list-item';
+import MessagesListItemComponent from './messages-list-item-component/messages-list-item-component';
 import { ISectionListItem } from '../../../../common/models';
 import MessagesListFooter from './messages-list-footer/messages-list-footer';
 import buildStyles from './messages-list.styles';
 import MessagesListEmpty from './messages-list-empty/messages-list-empty';
-import { IMessagesListProps, IMessagesListItem } from '../../models';
+import { IMessagesListProps, MessagesListItem } from '../../models';
 
 const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
   const theme = useTheme<Theme>();
@@ -25,16 +25,16 @@ const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
 
-  const renderItem = ({ item }: { item: IMessagesListItem }) => (
-    <MessagesListItem item={item} />
+  const renderItem = ({ item }: { item: MessagesListItem }) => (
+    <MessagesListItemComponent item={item} />
   );
 
   const renderSectionFooter = ({
     section: { footer: footer },
   }: {
     section: SectionListData<
-      IMessagesListItem,
-      ISectionListItem<Date, IMessagesListItem>
+      MessagesListItem,
+      ISectionListItem<Date, MessagesListItem>
     >;
   }): JSX.Element => <MessagesListFooter content={footer} />;
 
@@ -46,22 +46,25 @@ const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
       />
     ) : null;
 
-  const handleViewableItemsChanged = ({
-    viewableItems,
-    changed,
-  }: {
-    viewableItems: Array<ViewToken>;
-    changed: Array<ViewToken>;
-  }): void => {
-    if (!viewableItems || !viewableItems.length) {
-      return;
-    }
+  const handleViewableItemsChanged = useCallback(
+    ({
+      viewableItems,
+      changed,
+    }: {
+      viewableItems: Array<ViewToken>;
+      changed: Array<ViewToken>;
+    }): void => {
+      if (!viewableItems || !viewableItems.length) {
+        return;
+      }
 
-    const lastItem = viewableItems.pop();
-    if (lastItem && lastItem.section) {
-      setCurrentSectionFooter(lastItem.section.footer);
-    }
-  };
+      const lastItem = viewableItems.pop();
+      if (lastItem && lastItem.section) {
+        setCurrentSectionFooter(lastItem.section.footer);
+      }
+    },
+    []
+  );
 
   const handleScroll = (): void => {
     if (timerId) {
@@ -70,13 +73,13 @@ const MessagesList = ({ sections }: IMessagesListProps): JSX.Element => {
     setIsScrolling(true);
   };
 
-  const handleMomentumScrollEnd = (): void => {
+  const handleMomentumScrollEnd = useCallback((): void => {
     if (timerId) {
       clearTimeout(timerId);
     }
     const newTimerId = setTimeout(() => setIsScrolling(false), 500);
     setTimerId(newTimerId);
-  };
+  }, []);
 
   if (!sections.length) {
     return <MessagesListEmpty />;

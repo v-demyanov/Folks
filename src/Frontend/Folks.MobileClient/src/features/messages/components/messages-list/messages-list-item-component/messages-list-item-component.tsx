@@ -3,14 +3,16 @@ import { Avatar, Text, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
 import { BlurView } from 'expo-blur';
 
-import { IMessagesListItemProps } from '../../../models';
+import { IMessagesListItemComponentProps } from '../../../models';
 import { Theme } from '../../../../../themes/types/theme';
-import buildStyles from './messages-list-item.styles';
 import MessageContainer from '../../message-container/message-container';
 import { formatInHHMM } from '../../../../../common/helpers';
 import { MessageType } from '../../../enums';
+import buildStyles from './messages-list-item-component.styles';
 
-const MessagesListItem = ({ item }: IMessagesListItemProps): JSX.Element => {
+const MessagesListItemComponent = ({
+  item,
+}: IMessagesListItemComponentProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
@@ -51,4 +53,4 @@ const MessagesListItem = ({ item }: IMessagesListItemProps): JSX.Element => {
   );
 };
 
-export default MessagesListItem;
+export default MessagesListItemComponent;
