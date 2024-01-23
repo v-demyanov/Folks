@@ -8,4 +8,5 @@ export default interface IMessage extends IBaseModel {
   channelId: string;
   owner: IUser;
   type: MessageType;
+  readBy: IUser[];
 }
