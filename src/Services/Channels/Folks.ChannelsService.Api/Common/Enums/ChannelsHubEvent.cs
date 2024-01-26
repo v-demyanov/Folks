@@ -6,4 +6,5 @@ public enum ChannelsHubEvent
     ChannelUpdated,
     ChannelRemoved,
     MessageSent,
+    MessagesUpdated,
 }

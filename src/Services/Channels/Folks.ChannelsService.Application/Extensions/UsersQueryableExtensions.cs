@@ -26,7 +26,17 @@ public static class UsersQueryableExtensions
             .Where(user => user.GroupIds.Any(id => id == groupId));
 
     // TODO: Replace it on IQueryable after mongo-efcore-provider will be updated
+    public static IEnumerable<User> GetByGroupId(this IQueryable<User> users, string groupId) =>
+        users.AsEnumerable()
+            .Where(user => user.GroupIds.Any(id => id.ToString() == groupId));
+
+    // TODO: Replace it on IQueryable after mongo-efcore-provider will be updated
     public static IEnumerable<User> GetByChatId(this IQueryable<User> users, ObjectId chatId) =>
         users.AsEnumerable()
             .Where(user => user.ChatIds.Any(id => id == chatId));
+
+    // TODO: Replace it on IQueryable after mongo-efcore-provider will be updated
+    public static IEnumerable<User> GetByChatId(this IQueryable<User> users, string chatId) =>
+        users.AsEnumerable()
+            .Where(user => user.ChatIds.Any(id => id.ToString() == chatId));
 }

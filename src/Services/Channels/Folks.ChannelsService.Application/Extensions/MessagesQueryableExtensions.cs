@@ -1,5 +1,6 @@
-﻿using Folks.ChannelsService.Domain.Entities;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
+
+using Folks.ChannelsService.Domain.Entities;
 
 namespace Folks.ChannelsService.Application.Extensions;
 
@@ -10,4 +11,9 @@ public static class MessagesQueryableExtensions
 
     public static IQueryable<Message> GetByChatId(this IQueryable<Message> messages, ObjectId chatId) =>
         messages.Where(message => message.ChatId.HasValue && message.ChatId.Value == chatId);
+
+    // TODO: Replace it on IQueryable after mongo-efcore-provider will be updated
+    public static IEnumerable<Message> GetByIds(this IQueryable<Message> messages, IEnumerable<string> ids) =>
+        messages.AsEnumerable()
+            .Where(message => ids.Any(id => id == message.Id.ToString()));
 }
