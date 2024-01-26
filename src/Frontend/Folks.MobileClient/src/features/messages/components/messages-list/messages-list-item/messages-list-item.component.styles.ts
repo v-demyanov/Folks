@@ -4,21 +4,23 @@ import { Theme } from '../../../../../themes/types/theme';
 
 const buildStyles = (theme: Theme) =>
   StyleSheet.create({
-    wrapperLeft: {
+    wrapper: {
       width: '100%',
-      alignItems: 'flex-start',
       marginBottom: 5,
       paddingLeft: 10,
     },
-    wrapperRight: {
+    wrapperLeft: {
       width: '100%',
-      alignItems: 'flex-end',
       marginBottom: 5,
-      paddingRight: 10,
-    },
-    wrapperLevel2: {
+      paddingLeft: 10,
       flexDirection: 'row',
       alignItems: 'flex-end',
+    },
+    wrapperRight: {
+      width: '100%',
+      marginBottom: 5,
+      paddingRight: 10,
+      flexDirection: 'row-reverse',
     },
     userNameText: {
       color: theme.colors.messageContainerTitle,
@@ -29,9 +31,22 @@ const buildStyles = (theme: Theme) =>
     avatar: {
       marginRight: 5,
     },
+    messageInfoView: {
+      flexDirection: 'row',
+    },
+    messageInfoViewLeft: {
+      alignSelf: 'flex-start',
+    },
+    messageInfoViewRight: {
+      alignSelf: 'flex-end',
+    },
     messageSentAtText: {
-      marginLeft: 50,
-      color: theme.colors.onSecondaryContainer,
+      color: theme.colors.messageContainerContent,
+    },
+    messageCheckIcon: {
+      color: theme.colors.messageContainerContent,
+      paddingLeft: 5,
+      fontSize: 15,
     },
     specificMessageView: {
       backgroundColor: theme.colors.dateContainer,
