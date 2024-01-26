@@ -138,12 +138,11 @@ public class ChannelsController : ControllerBase
             Recipients = recipients,
         });
 
-        var getChannelQuery = new GetChannelQuery
+        var channelDto = await _mediator.Send(new GetChannelQuery
         {
             Id = result.ChannelId,
             Type = result.ChannelType,
-        };
-        var channelDto = await _mediator.Send(getChannelQuery);
+        });
 
         await _mediator.Publish(new ChannelUpdatedNotification
         {
@@ -169,12 +168,11 @@ public class ChannelsController : ControllerBase
             Recipients = recipients,
         });
 
-        var getChannelQuery = new GetChannelQuery
+        var channelDto = await _mediator.Send(new GetChannelQuery
         {
             Id = result.ChannelId,
             Type = result.ChannelType,
-        };
-        var channelDto = await _mediator.Send(getChannelQuery);
+        });
 
         await _mediator.Publish(new ChannelUpdatedNotification
         {
