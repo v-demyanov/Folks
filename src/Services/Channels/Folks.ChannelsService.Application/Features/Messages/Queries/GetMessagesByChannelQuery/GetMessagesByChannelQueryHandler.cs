@@ -12,23 +12,23 @@ using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Queries.GetMessagesQuery;
 
-public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, IEnumerable<MessageDto>>
+public class GetMessagesByChannelQueryHandler : IRequestHandler<GetMessagesByChannelQuery, IEnumerable<MessageDto>>
 {
     private readonly ChannelsServiceDbContext _dbContext;
     private readonly IMapper _mapper;
 
-    public GetMessagesQueryHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
+    public GetMessagesByChannelQueryHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public Task<IEnumerable<MessageDto>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
+    public Task<IEnumerable<MessageDto>> Handle(GetMessagesByChannelQuery request, CancellationToken cancellationToken)
     {
         var messages = request.ChannelType switch
         {
             ChannelType.Group =>
-                 _dbContext.Messages
+                _dbContext.Messages
                     .GetByGroupId(ObjectId.Parse(request.ChannelId))
                     .AsEnumerable(),
             ChannelType.Chat =>

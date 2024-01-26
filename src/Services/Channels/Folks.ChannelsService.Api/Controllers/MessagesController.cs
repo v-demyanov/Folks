@@ -32,7 +32,7 @@ public class MessagesController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<MessageDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<MessageDto>>> Get(string channelId, ChannelType channelType)
     {
-        var messages = await _mediator.Send(new GetMessagesQuery 
+        var messages = await _mediator.Send(new GetMessagesByChannelQuery 
         { 
             ChannelId = channelId, 
             ChannelType = channelType,

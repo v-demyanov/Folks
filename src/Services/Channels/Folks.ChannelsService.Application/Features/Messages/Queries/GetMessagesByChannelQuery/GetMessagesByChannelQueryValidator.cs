@@ -6,9 +6,9 @@ using Folks.ChannelsService.Infrastructure.Persistence;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Queries.GetMessagesQuery;
 
-public class GetMessagesQueryValidator : AbstractValidator<GetMessagesQuery>
+public class GetMessagesByChannelQueryValidator : AbstractValidator<GetMessagesByChannelQuery>
 {
-    public GetMessagesQueryValidator(ChannelsServiceDbContext dbContext)
+    public GetMessagesByChannelQueryValidator(ChannelsServiceDbContext dbContext)
     {
         RuleFor(query => query.ChannelId)
             .NotEmpty();
