@@ -61,7 +61,7 @@ const messagesApi = api.injectEndpoints({
     }),
     readMessageContents: builder.mutation<null, IReadMessageContentsRequest>({
       query: (arg) => ({
-        url: `/channelsservice/channels/${arg.channelId}/messages?channelType=${arg.channelType}`,
+        url: `/channelsservice/channels/${arg.channelId}/messages/readContents?channelType=${arg.channelType}`,
         method: 'PUT',
         body: arg.messageIds,
       }),
@@ -70,4 +70,8 @@ const messagesApi = api.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetMessagesQuery, useSendMessageMutation } = messagesApi;
+export const {
+  useGetMessagesQuery,
+  useSendMessageMutation,
+  useReadMessageContentsMutation,
+} = messagesApi;

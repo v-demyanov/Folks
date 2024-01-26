@@ -1,21 +1,22 @@
-import {
-  SafeAreaView,
-  SectionList,
-  SectionListData,
-  ViewToken,
-} from 'react-native';
+import { SafeAreaView, SectionList, SectionListData } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useCallback, useMemo, useState } from 'react';
 
 import { Theme } from '../../../../themes/types/theme';
 import MessagesListItemComponent from './messages-list-item/messages-list-item.component';
-import { ISectionListItem } from '../../../../common/models';
+import {
+  ISectionListItem,
+  IViewableItemsChangedEventInfo,
+} from '../../../../common/models';
 import MessagesListFooterComponent from './messages-list-footer/messages-list-footer.component';
 import buildStyles from './messages-list.component.styles';
 import MessagesListEmptyComponent from './messages-list-empty/messages-list-empty.component';
 import { IMessagesListProps, MessagesListItem } from '../../models';
 
-const MessagesListComponent = ({ sections }: IMessagesListProps): JSX.Element => {
+const MessagesListComponent = ({
+  sections,
+  onViewableItemsChanged,
+}: IMessagesListProps): JSX.Element => {
   const theme = useTheme<Theme>();
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
@@ -47,20 +48,18 @@ const MessagesListComponent = ({ sections }: IMessagesListProps): JSX.Element =>
     ) : null;
 
   const handleViewableItemsChanged = useCallback(
-    ({
-      viewableItems,
-      changed,
-    }: {
-      viewableItems: Array<ViewToken>;
-      changed: Array<ViewToken>;
-    }): void => {
-      if (!viewableItems || !viewableItems.length) {
+    (info: IViewableItemsChangedEventInfo): void => {
+      if (!info.viewableItems || !info.viewableItems.length) {
         return;
       }
 
-      const lastItem = viewableItems.pop();
+      const lastItem = info.viewableItems.pop();
       if (lastItem && lastItem.section) {
         setCurrentSectionFooter(lastItem.section.footer);
+      }
+
+      if (onViewableItemsChanged) {
+        onViewableItemsChanged(info);
       }
     },
     []

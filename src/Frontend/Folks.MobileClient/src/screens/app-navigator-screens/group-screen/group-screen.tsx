@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FormikProps, useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Snackbar, useTheme } from 'react-native-paper';
 
 import { RootStackParamList } from '../../../navigation/app-navigator';
@@ -8,6 +8,7 @@ import {
   useGetMessagesQuery,
   useSendMessageMutation,
   SendMessageFormValidationSchema,
+  useReadMessageContentsMutation,
 } from '../../../features/messages';
 import {
   MessageInputComponent,
@@ -25,8 +26,11 @@ import {
   mapMessagesListItem,
 } from '../../../features/messages/helpers';
 import { useAuth } from '../../../features/auth/hooks';
-import { ISectionListItem } from '../../../common/models';
-import { useArrayEffect } from '../../../common/hooks';
+import {
+  ISectionListItem,
+  IViewableItemsChangedEventInfo,
+} from '../../../common/models';
+import { useArrayEffect, useSet } from '../../../common/hooks';
 import { InformationContainer } from '../../../common/components';
 import { Theme } from '../../../themes/types/theme';
 import { GroupHeader } from '../../../features/groups/components';
@@ -47,11 +51,13 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
       channelId: channel.id,
       channelType: channel.type,
     } as IGetMessagesRequest);
+  const [readMessageContents] = useReadMessageContentsMutation();
 
   const [messagesSections, setMessagesSections] = useState<
     ISectionListItem<Date, MessagesListItem>[]
   >([]);
   const [sendMessageErrorVisible, setSendMessageErrorVisible] = useState(false);
+  const alreadySeenMessages = useSet<string>([]);
 
   useArrayEffect(() => {
     const messagesSections = prepareMessagesSections();
@@ -130,6 +136,51 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
     );
   }
 
+  const handleMessagesListViewableItemsChanged = useCallback(
+    async (info: IViewableItemsChangedEventInfo): Promise<void> => {
+      const visibleItems = info.changed
+        .filter((x) => x.isViewable)
+        .map((x) => x.item);
+      const messageIdsToRead: string[] = [];
+
+      for (const visibleItem of visibleItems) {
+        const isMessagesListItem = visibleItem.readBy !== undefined;
+        if (!isMessagesListItem) {
+          continue;
+        }
+
+        const messagesListItem = visibleItem as MessagesListItem;
+        const isCurrentUserMessage =
+          currentUser?.sub !== messagesListItem.owner.id;
+        const isMessageReadByCurrentUser =
+          messagesListItem.readBy.some((x) => x.id === currentUser?.sub) ||
+          alreadySeenMessages.has(messagesListItem.id);
+
+        if (isCurrentUserMessage || isMessageReadByCurrentUser) {
+          continue;
+        }
+
+        messageIdsToRead.push(messagesListItem.id);
+        alreadySeenMessages.add(messagesListItem.id);
+      }
+
+      if (!messageIdsToRead.length) {
+        return;
+      }
+
+      try {
+        await readMessageContents({
+          messageIds: messageIdsToRead,
+          channelId: channel.id,
+          channelType: channel.type,
+        }).unwrap();
+      } catch {
+        messageIdsToRead.forEach((id) => alreadySeenMessages.delete(id));
+      }
+    },
+    []
+  );
+
   return (
     <>
       <GroupHeader group={channel} />
@@ -139,7 +190,10 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
           backgroudColor={theme.colors.secondaryContainer}
         />
       ) : (
-        <MessagesListComponent sections={messagesSections} />
+        <MessagesListComponent
+          sections={messagesSections}
+          onViewableItemsChanged={handleMessagesListViewableItemsChanged}
+        />
       )}
       <MessageInputComponent
         onSendPress={sendMessageForm.handleSubmit}
