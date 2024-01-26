@@ -34,6 +34,22 @@ const messagesApi = api.injectEndpoints({
               });
             }
           );
+
+          channelsHubConnection.on(
+            ChannelsHubEventsConstants.MESSAGES_UPDATED,
+            (messages: IMessage[]) => {
+              updateCachedData((draft) => {
+                for (const message of messages) {
+                  const index = draft.findIndex(
+                    (draftMessage) => draftMessage.id === message.id
+                  );
+                  if (index > -1) {
+                    draft.splice(index, 1, message);
+                  }
+                }
+              });
+            }
+          );
         } catch {}
 
         await cacheEntryRemoved;

@@ -7,3 +7,5 @@ export const CHANNEL_REMOVED: string = 'ChannelRemoved';
 export const MESSAGE_SENT: string = 'MessageSent';
 
 export const SEND_MESSAGE: string = 'SendMessage';
+
+export const MESSAGES_UPDATED: string = 'MessagesUpdated';
