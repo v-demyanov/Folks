@@ -150,13 +150,11 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
         }
 
         const messagesListItem = visibleItem as MessagesListItem;
-        const isCurrentUserMessage =
-          currentUser?.sub !== messagesListItem.owner.id;
         const isMessageReadByCurrentUser =
           messagesListItem.readBy.some((x) => x.id === currentUser?.sub) ||
           alreadySeenMessages.has(messagesListItem.id);
 
-        if (isCurrentUserMessage || isMessageReadByCurrentUser) {
+        if (isMessageReadByCurrentUser) {
           continue;
         }
 
