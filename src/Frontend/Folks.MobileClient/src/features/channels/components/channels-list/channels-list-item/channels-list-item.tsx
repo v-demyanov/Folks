@@ -1,6 +1,7 @@
 import { Avatar, Badge, List, Text } from 'react-native-paper';
 import { View } from 'react-native';
 import { useState } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { IconsConstants } from '../../../../../common';
 import buildStyles from './channels-list-item.styles';
@@ -74,6 +75,14 @@ const ChannelsListItem = ({
     }
   }
 
+  function getMessageReadIndicatorName(): string {
+    if (channel.lastMessage && channel.lastMessage.readBy.length > 1) {
+      return 'done-all';
+    }
+
+    return 'check';
+  }
+
   return (
     <List.Item
       style={[styles.listItem]}
@@ -93,15 +102,24 @@ const ChannelsListItem = ({
         </>
       )}
       right={() => (
-        <View style={[styles.view]}>
-          <Text variant="bodySmall">
-            {getUserFrendlyDateString(
-              channel.lastMessage
-                ? new Date(channel.lastMessage.sentAt)
-                : new Date(channel.createdAt),
-              { formatInHHMM: true }
-            )}
-          </Text>
+        <View style={[styles.rightView]}>
+          <View style={[styles.dateMessageReadIndicatorView]}>
+            {channel.lastMessage?.owner.id === currentUser?.sub ? (
+              <Icon
+                name={getMessageReadIndicatorName()}
+                style={[styles.messageReadIndicatorIcon]}
+              />
+            ) : null}
+            <Text variant="bodySmall">
+              {getUserFrendlyDateString(
+                channel.lastMessage
+                  ? new Date(channel.lastMessage.sentAt)
+                  : new Date(channel.createdAt),
+                { formatInHHMM: true }
+              )}
+            </Text>
+          </View>
+
           <Badge style={[styles.badge]} size={22}>
             3
           </Badge>

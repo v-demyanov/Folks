@@ -5,10 +5,17 @@ const buildStyles = () =>
     listItem: {
       paddingLeft: 10,
     },
-    view: {
+    rightView: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
+    },
+    dateMessageReadIndicatorView: {
+      flexDirection: 'row',
+    },
+    messageReadIndicatorIcon: {
+      fontSize: 15,
+      paddingRight: 5,
     },
     title: {
       fontWeight: 'bold',
