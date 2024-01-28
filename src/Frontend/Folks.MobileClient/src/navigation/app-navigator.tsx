@@ -31,12 +31,28 @@ const AppNavigator = (): JSX.Element => {
     >
       {isAuthenticated() ? (
         <>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="CreateGroup" component={CreateGroupScreen} />
-          <Stack.Screen name="Group" component={GroupScreen} />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ animation: 'slide_from_right' }}
+          />
+          <Stack.Screen
+            name="CreateGroup"
+            component={CreateGroupScreen}
+            options={{ animation: 'slide_from_right' }}
+          />
+          <Stack.Screen
+            name="Group"
+            component={GroupScreen}
+            options={{ animation: 'slide_from_right' }}
+          />
         </>
       ) : (
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomeScreen}
+          options={{ animation: 'slide_from_right' }}
+        />
       )}
     </Stack.Navigator>
   );
