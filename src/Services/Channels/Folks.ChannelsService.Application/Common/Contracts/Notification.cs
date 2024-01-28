@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Folks.ChannelsService.Application.Common.Abstractions;
+namespace Folks.ChannelsService.Application.Common.Contracts;
 
 public abstract class Notification : INotification
 {
