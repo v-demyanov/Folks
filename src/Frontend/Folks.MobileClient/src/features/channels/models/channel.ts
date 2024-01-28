@@ -7,4 +7,5 @@ export default interface IChannel extends IBaseModel {
   type: ChannelType;
   createdAt: string;
   lastMessage: IMessage | null;
+  unreadMessagesCount: number;
 }

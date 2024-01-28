@@ -120,9 +120,11 @@ const ChannelsListItem = ({
             </Text>
           </View>
 
-          <Badge style={[styles.badge]} size={22}>
-            3
-          </Badge>
+          {channel.unreadMessagesCount > 0 ? (
+            <Badge style={[styles.badge]} size={22}>
+              {channel.unreadMessagesCount}
+            </Badge>
+          ) : null}
         </View>
       )}
     />
