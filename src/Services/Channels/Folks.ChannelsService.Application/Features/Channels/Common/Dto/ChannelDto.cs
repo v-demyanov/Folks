@@ -14,4 +14,6 @@ public record class ChannelDto
     public DateTimeOffset CreatedAt { get; init; }
 
     public MessageDto? LastMessage { get; init; }
+
+    public int UnreadMessagesCount { get; init; }
 }
