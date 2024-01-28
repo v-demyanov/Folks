@@ -1,26 +1,20 @@
 ﻿using AutoMapper;
 
-using System.Security.Claims;
-
 using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
+using Folks.ChannelsService.Application.Common.Contracts;
 
 namespace Folks.ChannelsService.Api.Mappings.Resolvers;
 
 public class CreateGroupRequestOwnerIdValueResolver : IValueResolver<CreateGroupRequest, CreateGroupCommand, string>
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentUserService _currentUserService;
 
-    public CreateGroupRequestOwnerIdValueResolver(IHttpContextAccessor httpContextAccessor)
+    public CreateGroupRequestOwnerIdValueResolver(ICurrentUserService currentUserService)
     {
-        _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+        _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
     }
 
-    public string Resolve(CreateGroupRequest source, CreateGroupCommand destination, string destMember, ResolutionContext context)
-    {
-        var currentUserId = _httpContextAccessor.HttpContext?.User
-            .FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        return currentUserId ?? string.Empty;
-    }
+    public string Resolve(CreateGroupRequest source, CreateGroupCommand destination, string destMember, ResolutionContext context) =>
+        _currentUserService.GetUserId() ?? string.Empty;
 }

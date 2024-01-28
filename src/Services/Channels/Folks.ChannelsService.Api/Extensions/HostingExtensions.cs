@@ -11,6 +11,8 @@ using Folks.ChannelsService.Api.Consumers;
 using Folks.ChannelsService.Api.Hubs;
 using Folks.ChannelsService.Api.Middlewares;
 using Folks.ChannelsService.Api.Common.Constants;
+using Folks.ChannelsService.Application.Common.Contracts;
+using Folks.ChannelsService.Api.Services;
 
 namespace Folks.ChannelsService.Api.Extensions;
 
@@ -33,6 +35,7 @@ public static class HostingExtensions
 
         builder.Services
             .AddHttpContextAccessor()
+            .AddScoped<ICurrentUserService, CurrentUserService>()
             .AddInfrastructureServices(builder.Configuration)
             .AddApplicationServices();
 
