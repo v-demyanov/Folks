@@ -109,17 +109,20 @@ public class ChannelsController : ControllerBase
         }
     }
 
-    private async Task HandleChannelRemovedAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients) =>
+    private async Task HandleChannelRemovedAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients)
+    {
+        var channelDto = await _mediator.Send(new GetChannelQuery
+        {
+            Id = result.ChannelId,
+            Type = result.ChannelType,
+        });
+
         await _mediator.Publish(new ChannelRemovedNotification
         {
-            ChannelDto = new ChannelDto
-            { 
-                Id = result.ChannelId, 
-                Type = result.ChannelType, 
-                Title = result.ChannelTitle ?? string.Empty,
-            },
+            ChannelDto = channelDto,
             Recipients = recipients,
         });
+    }
 
     private async Task HandleNewGroupOwnerSetAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients, string currentUserId)
     {

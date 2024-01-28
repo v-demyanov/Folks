@@ -62,12 +62,11 @@ public class ChannelsHub : Hub
             Recipients = userIds,
         });
 
-        var getChannelQuery = new GetChannelQuery 
-        { 
+        var channelDto = await _mediator.Send(new GetChannelQuery
+        {
             Id = request.ChannelId,
             Type = request.ChannelType,
-        };
-        var channelDto = await _mediator.Send(getChannelQuery);
+        });
 
         _ = _mediator.Publish(new ChannelUpdatedNotification
         {
