@@ -4,7 +4,7 @@ import { Theme } from '../../../../../themes/types/theme';
 
 const buildStyles = (theme: Theme) =>
   StyleSheet.create({
-    blurView: {
+    view: {
       backgroundColor: theme.colors.dateContainer,
       paddingHorizontal: 5,
       paddingVertical: 2,

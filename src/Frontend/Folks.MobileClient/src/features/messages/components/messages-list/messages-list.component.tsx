@@ -43,7 +43,7 @@ const MessagesListComponent = ({
     currentSectionFooter ? (
       <MessagesListFooterComponent
         content={currentSectionFooter}
-        blurViewstyle={[styles.stickyFooter]}
+        wrapperStyle={[styles.stickyFooter]}
       />
     ) : null;
 
@@ -96,7 +96,7 @@ const MessagesListComponent = ({
         onViewableItemsChanged={handleViewableItemsChanged}
         onScroll={handleScroll}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        inverted={!!sections.length}
+        inverted={true}
       />
     </SafeAreaView>
   );
