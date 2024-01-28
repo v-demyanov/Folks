@@ -3,16 +3,17 @@
 using Microsoft.AspNetCore.Http;
 
 using System.Security.Claims;
+
 using Folks.ChannelsService.Domain.Entities;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
-public class ChannelTitleValueResolver : IValueResolver<Chat, ChannelDto, string>
+public class ChatTitleValueResolver : IValueResolver<Chat, ChannelDto, string>
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ChannelTitleValueResolver(IHttpContextAccessor httpContextAccessor)
+    public ChatTitleValueResolver(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
     }

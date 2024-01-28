@@ -23,12 +23,14 @@ public class MappingProfile : Profile
 
         CreateMap<Chat, ChannelDto>()
             .ForMember(destination => destination.Type, options => options.MapFrom(source => ChannelType.Chat))
-            .ForMember(destination => destination.Title, options => options.MapFrom<ChannelTitleValueResolver>())
-            .ForMember(destination => destination.LastMessage, options => options.MapFrom<ChannelChatLastMessageValueResolver>());
+            .ForMember(destination => destination.Title, options => options.MapFrom<ChatTitleValueResolver>())
+            .ForMember(destination => destination.LastMessage, options => options.MapFrom<ChatLastMessageValueResolver>())
+            .ForMember(destination => destination.UnreadMessagesCount, options => options.MapFrom<ChatUnreadMessagesCountValueResolver>());
 
         CreateMap<Group, ChannelDto>()
             .ForMember(destination => destination.Type, options => options.MapFrom(source => ChannelType.Group))
-            .ForMember(destination => destination.LastMessage, options => options.MapFrom<ChannelGroupLastMessageValueResolver>());
+            .ForMember(destination => destination.LastMessage, options => options.MapFrom<GroupLastMessageValueResolver>())
+            .ForMember(destination => destination.UnreadMessagesCount, options => options.MapFrom<GroupUnreadMessagesCountValueResolver>());
 
         CreateMap<CreateGroupCommand, Group>()
             .ForMember(destination => destination.Id, options => options.MapFrom(source => ObjectId.GenerateNewId()))
@@ -38,6 +40,7 @@ public class MappingProfile : Profile
         CreateMap<AddUserCommand, User>()
             .ForMember(destination => destination.Id, options => options.MapFrom(source => ObjectId.GenerateNewId()))
             .ForMember(destination => destination.SourceId, options => options.MapFrom(source => source.UserId));
+
         CreateMap<User, UserDto>()
             .ForMember(destination => destination.Id, options => options.MapFrom(source => source.SourceId));
 

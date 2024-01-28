@@ -8,21 +8,21 @@ using Folks.ChannelsService.Infrastructure.Persistence;
 
 namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
-public class ChannelChatLastMessageValueResolver : IValueResolver<Chat, ChannelDto, MessageDto?>
+public class GroupLastMessageValueResolver : IValueResolver<Group, ChannelDto, MessageDto?>
 {
     private readonly IMapper _mapper;
     private readonly ChannelsServiceDbContext _dbContext;
 
-    public ChannelChatLastMessageValueResolver(IMapper mapper, ChannelsServiceDbContext dbContext)
+    public GroupLastMessageValueResolver(IMapper mapper, ChannelsServiceDbContext dbContext)
     {
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public MessageDto? Resolve(Chat source, ChannelDto destination, MessageDto? destMember, ResolutionContext context)
+    public MessageDto? Resolve(Group source, ChannelDto destination, MessageDto? destMember, ResolutionContext context)
     {
         var lastMessage = _dbContext.Messages
-            .GetByChatId(source.Id)
+            .GetByGroupId(source.Id)
             .AsEnumerable()
             .LastOrDefault();
 
