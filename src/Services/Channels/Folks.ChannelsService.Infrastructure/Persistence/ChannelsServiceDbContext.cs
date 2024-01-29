@@ -1,43 +1,44 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
-using MongoDB.EntityFrameworkCore.Extensions;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson;
-
-using Folks.ChannelsService.Domain.Entities;
 using Folks.ChannelsService.Domain.Common.Abstractions;
+using Folks.ChannelsService.Domain.Entities;
+
+using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace Folks.ChannelsService.Infrastructure.Persistence;
 
 public class ChannelsServiceDbContext : DbContext
 {
-    public ChannelsServiceDbContext(DbContextOptions<ChannelsServiceDbContext> options) : base(options)
+    public ChannelsServiceDbContext(DbContextOptions<ChannelsServiceDbContext> options)
+        : base(options)
     {
     }
 
     public ChannelsServiceDbContext()
     {
-
     }
 
-    public virtual DbSet<Chat> Chats => Set<Chat>();
+    public virtual DbSet<Chat> Chats => this.Set<Chat>();
 
-    public virtual DbSet<Group> Groups => Set<Group>();
+    public virtual DbSet<Group> Groups => this.Set<Group>();
 
-    public virtual DbSet<Message> Messages => Set<Message>();
+    public virtual DbSet<Message> Messages => this.Set<Message>();
 
-    public virtual DbSet<User> Users => Set<User>();
+    public virtual DbSet<User> Users => this.Set<User>();
 
     public override int SaveChanges()
     {
-        HandleSavingAuditableEntity();
+        this.HandleSavingAuditableEntity();
 
         return base.SaveChanges();
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        HandleSavingAuditableEntity();
+        this.HandleSavingAuditableEntity();
 
         return base.SaveChangesAsync(cancellationToken);
     }
@@ -56,7 +57,7 @@ public class ChannelsServiceDbContext : DbContext
 
     private void HandleSavingAuditableEntity()
     {
-        foreach (var entry in ChangeTracker.Entries<IAuditableEntity>())
+        foreach (var entry in this.ChangeTracker.Entries<IAuditableEntity>())
         {
             var entity = entry.Entity;
             if (entry.State == EntityState.Added)

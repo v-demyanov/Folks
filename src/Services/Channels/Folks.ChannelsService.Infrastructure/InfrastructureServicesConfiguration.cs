@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using Folks.ChannelsService.Infrastructure.Persistence;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using MongoDB.Driver;
-
-using Folks.ChannelsService.Infrastructure.Persistence;
 
 namespace Folks.ChannelsService.Infrastructure;
 
