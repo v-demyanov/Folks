@@ -1,4 +1,6 @@
-﻿using Ocelot.Cache.CacheManager;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 

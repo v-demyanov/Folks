@@ -1,3 +1,5 @@
+// Copyright (c) v-demyanov. All rights reserved.
+
 using Folks.ApiGateway.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
