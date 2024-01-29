@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
+import 'expo-dev-client';
 
 import './src/common/extensions/array.extensions';
 import { AuthProvider } from './src/features/auth/context/auth-provider';
