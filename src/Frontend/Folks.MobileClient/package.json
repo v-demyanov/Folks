@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build-dev-android": "eas build --profile development --platform android"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
