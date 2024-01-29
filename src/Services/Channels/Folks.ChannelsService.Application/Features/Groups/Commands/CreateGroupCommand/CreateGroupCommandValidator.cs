@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using FluentValidation;
 
 using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Domain.Common.Constants;
@@ -10,18 +12,18 @@ public class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>
 {
     public CreateGroupCommandValidator(ChannelsServiceDbContext dbContext)
     {
-        RuleFor(command => command.Title)
+        this.RuleFor(command => command.Title)
             .NotEmpty()
             .MinimumLength(GroupSettings.TitleMinimumLength)
             .MaximumLength(GroupSettings.TitleMaximumLength);
 
-        RuleFor(command => command.UserIds)
+        this.RuleFor(command => command.UserIds)
             .Must(userIds => userIds.Except(dbContext.Users
                 .AsEnumerable()
                 .Select(user => user.SourceId)).Count() == 0)
             .WithMessage("Some users don't exist.");
 
-        RuleFor(command => command.OwnerId)
+        this.RuleFor(command => command.OwnerId)
             .UserMustExist(dbContext);
     }
 }

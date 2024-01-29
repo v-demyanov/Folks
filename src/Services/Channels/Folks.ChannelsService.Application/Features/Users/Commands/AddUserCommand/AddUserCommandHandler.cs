@@ -1,29 +1,31 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using AutoMapper;
+
+using Folks.ChannelsService.Domain.Entities;
+using Folks.ChannelsService.Infrastructure.Persistence;
 
 using MediatR;
-
-using Folks.ChannelsService.Infrastructure.Persistence;
-using Folks.ChannelsService.Domain.Entities;
 
 namespace Folks.ChannelsService.Application.Features.Users.Commands.AddUserCommand;
 
 public class AddUserCommandHandler : IRequestHandler<AddUserCommand>
 {
-    private readonly ChannelsServiceDbContext _dbContext;
-    private readonly IMapper _mapper;
+    private readonly ChannelsServiceDbContext dbContext;
+    private readonly IMapper mapper;
 
     public AddUserCommandHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     public Task Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
-        var user = _mapper.Map<User>(request);
+        var user = this.mapper.Map<User>(request);
 
-        _dbContext.Add(user);
-        _dbContext.SaveChanges();
+        this.dbContext.Add(user);
+        this.dbContext.SaveChanges();
 
         return Task.CompletedTask;
     }

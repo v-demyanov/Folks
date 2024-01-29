@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using FluentValidation;
 
 using Folks.ChannelsService.Application.Common.Models;
 using Folks.ChannelsService.Application.Extensions;
@@ -12,22 +14,22 @@ public class CreateMessageCommandValidator : AbstractValidator<CreateMessageComm
 {
     public CreateMessageCommandValidator(ChannelsServiceDbContext dbContext)
     {
-        RuleFor(command => command.OwnerId)
+        this.RuleFor(command => command.OwnerId)
             .NotEmpty();
 
-        RuleFor(command => command.OwnerId)
+        this.RuleFor(command => command.OwnerId)
             .UserMustExist(dbContext);
 
-        RuleFor(command => command.ChannelId)
+        this.RuleFor(command => command.ChannelId)
             .NotEmpty();
 
-        RuleFor(command => new ChannelMustExistCustomValidatorProperty
+        this.RuleFor(command => new ChannelMustExistCustomValidatorProperty
         {
             ChannelId = command.ChannelId,
-            ChannelType = command.ChannelType
+            ChannelType = command.ChannelType,
         }).ChannelMustExist(dbContext);
 
-        RuleFor(command => command.Content)
+        this.RuleFor(command => command.Content)
             .NotEmpty()
             .MaximumLength(MessageSettings.ContentMaximumLength)
             .When(command => command.Type == MessageType.Text);

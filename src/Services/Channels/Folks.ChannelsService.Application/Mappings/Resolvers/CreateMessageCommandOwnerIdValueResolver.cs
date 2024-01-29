@@ -1,26 +1,28 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
-using MongoDB.Bson;
+using AutoMapper;
 
+using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
 using Folks.ChannelsService.Domain.Entities;
 using Folks.ChannelsService.Infrastructure.Persistence;
-using Folks.ChannelsService.Application.Extensions;
+
+using MongoDB.Bson;
 
 namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
 public class CreateMessageCommandOwnerIdValueResolver : IValueResolver<CreateMessageCommand, Message, ObjectId>
 {
-    private readonly ChannelsServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext dbContext;
 
     public CreateMessageCommandOwnerIdValueResolver(ChannelsServiceDbContext dbContext)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     public ObjectId Resolve(CreateMessageCommand source, Message destination, ObjectId destMember, ResolutionContext context)
     {
-        var owner = _dbContext.Users.GetBySourceId(source.OwnerId);
+        var owner = this.dbContext.Users.GetBySourceId(source.OwnerId);
         return owner.Id;
     }
 }

@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using FluentValidation;
 
 using Folks.ChannelsService.Application.Common.Models;
 using Folks.ChannelsService.Application.Extensions;
@@ -10,13 +12,13 @@ public class GetMessagesByChannelQueryValidator : AbstractValidator<GetMessagesB
 {
     public GetMessagesByChannelQueryValidator(ChannelsServiceDbContext dbContext)
     {
-        RuleFor(query => query.ChannelId)
+        this.RuleFor(query => query.ChannelId)
             .NotEmpty();
 
-        RuleFor(query => new ChannelMustExistCustomValidatorProperty
+        this.RuleFor(query => new ChannelMustExistCustomValidatorProperty
         {
             ChannelId = query.ChannelId,
-            ChannelType = query.ChannelType
+            ChannelType = query.ChannelType,
         }).ChannelMustExist(dbContext);
     }
 }

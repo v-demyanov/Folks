@@ -1,31 +1,33 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using AutoMapper;
+
+using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
+using Folks.ChannelsService.Domain.Entities;
+using Folks.ChannelsService.Infrastructure.Persistence;
 
 using MediatR;
-
-using Folks.ChannelsService.Infrastructure.Persistence;
-using Folks.ChannelsService.Domain.Entities;
-using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
 
 namespace Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
 
 public class CreateMessageCommandHandler : IRequestHandler<CreateMessageCommand, MessageDto>
 {
-    private readonly ChannelsServiceDbContext _dbContext;
-    private readonly IMapper _mapper;
+    private readonly ChannelsServiceDbContext dbContext;
+    private readonly IMapper mapper;
 
     public CreateMessageCommandHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     public Task<MessageDto> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
     {
-        var message = _mapper.Map<Message>(request);
+        var message = this.mapper.Map<Message>(request);
 
-        _dbContext.Messages.Add(message);
-        _dbContext.SaveChanges();
+        this.dbContext.Messages.Add(message);
+        this.dbContext.SaveChanges();
 
-        return Task.FromResult(_mapper.Map<MessageDto>(message));
+        return Task.FromResult(this.mapper.Map<MessageDto>(message));
     }
 }

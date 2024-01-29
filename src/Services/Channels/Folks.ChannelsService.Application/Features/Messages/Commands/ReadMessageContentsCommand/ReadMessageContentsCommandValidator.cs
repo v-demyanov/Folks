@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using FluentValidation;
 
 using Folks.ChannelsService.Application.Common.Models;
 using Folks.ChannelsService.Application.Extensions;
@@ -10,22 +12,22 @@ public class ReadMessageContentsCommandValidator : AbstractValidator<ReadMessage
 {
     public ReadMessageContentsCommandValidator(ChannelsServiceDbContext dbContext)
     {
-        RuleFor(command => command.UserId)
+        this.RuleFor(command => command.UserId)
             .NotEmpty();
 
-        RuleFor(command => command.UserId)
+        this.RuleFor(command => command.UserId)
             .UserMustExist(dbContext);
 
-        RuleFor(command => command.ChannelId)
+        this.RuleFor(command => command.ChannelId)
             .NotEmpty();
 
-        RuleFor(command => new ChannelMustExistCustomValidatorProperty 
-        { 
-            ChannelId = command.ChannelId, 
-            ChannelType = command.ChannelType 
+        this.RuleFor(command => new ChannelMustExistCustomValidatorProperty
+        {
+            ChannelId = command.ChannelId,
+            ChannelType = command.ChannelType,
         }).ChannelMustExist(dbContext);
 
-        RuleFor(command => command.MessageIds)
+        this.RuleFor(command => command.MessageIds)
             .Must(messageIds => messageIds.Except(dbContext.Messages
                 .AsEnumerable()
                 .Select(message => message.Id.ToString())).Count() == 0)

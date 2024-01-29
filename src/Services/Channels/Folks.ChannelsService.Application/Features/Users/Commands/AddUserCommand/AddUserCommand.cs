@@ -1,12 +1,14 @@
-﻿using MediatR;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using MediatR;
 
 namespace Folks.ChannelsService.Application.Features.Users.Commands.AddUserCommand;
 
 public class AddUserCommand : IRequest
 {
-    public required string UserId { get; init; }
+    required public string UserId { get; init; }
 
-    public required string UserName { get; init; }
+    required public string UserName { get; init; }
 
-    public required string Email { get; init; }
+    required public string Email { get; init; }
 }

@@ -1,33 +1,34 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
-using MongoDB.Bson;
+using AutoMapper;
+
+using Folks.ChannelsService.Application.Extensions;
+using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
+using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
+using Folks.ChannelsService.Infrastructure.Persistence;
 
 using MediatR;
-
-using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
-using Folks.ChannelsService.Infrastructure.Persistence;
-using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
-using Folks.ChannelsService.Application.Extensions;
+using MongoDB.Bson;
 
 namespace Folks.ChannelsService.Application.Features.Channels.Queries.GetChannelQuery;
 
 public class GetChannelQueryHandler : IRequestHandler<GetChannelQuery, ChannelDto>
 {
-    private readonly ChannelsServiceDbContext _dbContext;
-    private readonly IMapper _mapper;
+    private readonly ChannelsServiceDbContext dbContext;
+    private readonly IMapper mapper;
 
     public GetChannelQueryHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     public Task<ChannelDto> Handle(GetChannelQuery request, CancellationToken cancellationToken)
     {
         var channelDto = request.Type switch
         {
-            ChannelType.Chat => HandleChat(request),
-            ChannelType.Group => HandleGroup(request),
+            ChannelType.Chat => this.HandleChat(request),
+            ChannelType.Group => this.HandleGroup(request),
             _ => throw new ArgumentOutOfRangeException(nameof(request.Type)),
         };
 
@@ -36,15 +37,15 @@ public class GetChannelQueryHandler : IRequestHandler<GetChannelQuery, ChannelDt
 
     private ChannelDto HandleChat(GetChannelQuery request)
     {
-        var chat = _dbContext.Chats.GetById(ObjectId.Parse(request.Id));
-        chat.Users = _dbContext.Users.GetByChatId(chat.Id).ToList();
+        var chat = this.dbContext.Chats.GetById(ObjectId.Parse(request.Id));
+        chat.Users = this.dbContext.Users.GetByChatId(chat.Id).ToList();
 
-        return _mapper.Map<ChannelDto>(chat);
+        return this.mapper.Map<ChannelDto>(chat);
     }
 
     private ChannelDto HandleGroup(GetChannelQuery request)
     {
-        var group = _dbContext.Groups.GetById(ObjectId.Parse(request.Id));
-        return _mapper.Map<ChannelDto>(group);
+        var group = this.dbContext.Groups.GetById(ObjectId.Parse(request.Id));
+        return this.mapper.Map<ChannelDto>(group);
     }
 }

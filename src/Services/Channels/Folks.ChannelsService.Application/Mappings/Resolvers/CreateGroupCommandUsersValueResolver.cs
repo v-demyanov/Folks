@@ -1,26 +1,28 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
-using MongoDB.Bson;
+using AutoMapper;
 
+using Folks.ChannelsService.Application.Extensions;
+using Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
 using Folks.ChannelsService.Domain.Entities;
 using Folks.ChannelsService.Infrastructure.Persistence;
-using Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
-using Folks.ChannelsService.Application.Extensions;
+
+using MongoDB.Bson;
 
 namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
 public class CreateGroupCommandUsersValueResolver : IValueResolver<CreateGroupCommand, Group, ICollection<ObjectId>>
 {
-    private readonly ChannelsServiceDbContext _dbContext;
+    private readonly ChannelsServiceDbContext dbContext;
 
     public CreateGroupCommandUsersValueResolver(ChannelsServiceDbContext dbContext)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     public ICollection<ObjectId> Resolve(CreateGroupCommand source, Group destination, ICollection<ObjectId> destMember, ResolutionContext context)
     {
-        var users = _dbContext.Users.GetBySourceIds(source.UserIds);
+        var users = this.dbContext.Users.GetBySourceIds(source.UserIds);
 
         return users.AsEnumerable().Select(user => user.Id).ToList();
     }

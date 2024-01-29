@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using AutoMapper;
 
 using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
@@ -10,25 +12,25 @@ namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
 public class GroupLastMessageValueResolver : IValueResolver<Group, ChannelDto, MessageDto?>
 {
-    private readonly IMapper _mapper;
-    private readonly ChannelsServiceDbContext _dbContext;
+    private readonly IMapper mapper;
+    private readonly ChannelsServiceDbContext dbContext;
 
     public GroupLastMessageValueResolver(IMapper mapper, ChannelsServiceDbContext dbContext)
     {
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     public MessageDto? Resolve(Group source, ChannelDto destination, MessageDto? destMember, ResolutionContext context)
     {
-        var lastMessage = _dbContext.Messages
+        var lastMessage = this.dbContext.Messages
             .GetByGroupId(source.Id)
             .AsEnumerable()
             .LastOrDefault();
 
         if (lastMessage is not null)
         {
-            return _mapper.Map<MessageDto>(lastMessage);
+            return this.mapper.Map<MessageDto>(lastMessage);
         }
 
         return null;

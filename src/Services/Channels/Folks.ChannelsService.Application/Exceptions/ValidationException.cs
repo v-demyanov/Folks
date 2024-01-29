@@ -1,20 +1,22 @@
-﻿using FluentValidation.Results;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using FluentValidation.Results;
 
 namespace Folks.ChannelsService.Application.Exceptions;
 
 public class ValidationException : Exception
 {
-    private const string _message = "Validation failed.";
+    private const string MessageText = "Validation failed.";
 
-    public ValidationException() 
-        : base(_message)
+    public ValidationException()
+        : base(MessageText)
     {
     }
 
     public ValidationException(IEnumerable<ValidationFailure> failures)
-        : base(_message)
+        : base(MessageText)
     {
-        Errors = failures
+        this.Errors = failures
             .GroupBy(failure => failure.PropertyName, failure => failure.ErrorMessage)
             .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
     }

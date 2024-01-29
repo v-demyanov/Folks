@@ -1,38 +1,40 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
-using MediatR;
+using AutoMapper;
 
-using Folks.ChannelsService.Infrastructure.Persistence;
 using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
+using Folks.ChannelsService.Infrastructure.Persistence;
+
+using MediatR;
 
 namespace Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
 
 public class GetOwnChannelsQueryHandler : IRequestHandler<GetOwnChannelsQuery, IEnumerable<ChannelDto>>
 {
-    private readonly ChannelsServiceDbContext _dbContext;
-    private readonly IMapper _mapper;
+    private readonly ChannelsServiceDbContext dbContext;
+    private readonly IMapper mapper;
 
     public GetOwnChannelsQueryHandler(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     public Task<IEnumerable<ChannelDto>> Handle(GetOwnChannelsQuery request, CancellationToken cancellationToken)
     {
-        var currentUser = _dbContext.Users.GetBySourceId(request.OwnerId);
+        var currentUser = this.dbContext.Users.GetBySourceId(request.OwnerId);
 
-        var chats = _dbContext.Chats.GetByIds(currentUser.ChatIds);
-        var groups = _dbContext.Groups.GetByIds(currentUser.GroupIds);
+        var chats = this.dbContext.Chats.GetByIds(currentUser.ChatIds);
+        var groups = this.dbContext.Groups.GetByIds(currentUser.GroupIds);
 
         foreach (var chat in chats)
         {
-            chat.Users = _dbContext.Users.GetByChatId(chat.Id).ToList();
+            chat.Users = this.dbContext.Users.GetByChatId(chat.Id).ToList();
         }
 
-        var mappedChats = _mapper.Map<List<ChannelDto>>(chats);
-        var mappedGroups = _mapper.Map<List<ChannelDto>>(groups);
+        var mappedChats = this.mapper.Map<List<ChannelDto>>(chats);
+        var mappedGroups = this.mapper.Map<List<ChannelDto>>(groups);
         var channels = mappedChats.Union(mappedGroups);
 
         return Task.FromResult(channels);

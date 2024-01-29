@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using FluentValidation;
 
 using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Infrastructure.Persistence;
@@ -9,10 +11,10 @@ public class GetOwnChannelsQueryValidator : AbstractValidator<GetOwnChannelsQuer
 {
     public GetOwnChannelsQueryValidator(ChannelsServiceDbContext dbContext)
     {
-        RuleFor(query => query.OwnerId)
+        this.RuleFor(query => query.OwnerId)
             .NotEmpty();
 
-        RuleFor(query => query.OwnerId)
+        this.RuleFor(query => query.OwnerId)
             .UserMustExist(dbContext);
     }
 }

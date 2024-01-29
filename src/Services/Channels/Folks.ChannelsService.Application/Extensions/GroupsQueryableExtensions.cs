@@ -1,6 +1,8 @@
-﻿using MongoDB.Bson;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
 using Folks.ChannelsService.Domain.Entities;
+
+using MongoDB.Bson;
 
 namespace Folks.ChannelsService.Application.Extensions;
 

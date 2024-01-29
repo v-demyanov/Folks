@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using AutoMapper;
 
 using Folks.ChannelsService.Application.Extensions;
 using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
@@ -10,18 +12,18 @@ namespace Folks.ChannelsService.Application.Mappings.Resolvers;
 
 public class MessageOwnerIdValueResolver : IValueResolver<Message, MessageDto, UserDto>
 {
-    private readonly ChannelsServiceDbContext _dbContext;
-    private readonly IMapper _mapper;
+    private readonly ChannelsServiceDbContext dbContext;
+    private readonly IMapper mapper;
 
     public MessageOwnerIdValueResolver(ChannelsServiceDbContext dbContext, IMapper mapper)
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     public UserDto Resolve(Message source, MessageDto destination, UserDto destMember, ResolutionContext context)
     {
-        var owner = _dbContext.Users.GetById(source.OwnerId);
-        return _mapper.Map<UserDto>(owner);
+        var owner = this.dbContext.Users.GetById(source.OwnerId);
+        return this.mapper.Map<UserDto>(owner);
     }
 }

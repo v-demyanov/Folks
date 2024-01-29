@@ -1,13 +1,16 @@
-﻿using MediatR;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
 using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
+
+using MediatR;
 
 namespace Folks.ChannelsService.Application.Features.Channels.Commands.LeaveChannelCommand;
 
 public class LeaveChannelCommand : IRequest<LeaveChannelCommandResult>
 {
-    public required string ChannelId { get; init; }
+    required public string ChannelId { get; init; }
 
     public ChannelType ChannelType { get; init; }
 
-    public required string UserId { get; init; }
+    required public string UserId { get; init; }
 }
