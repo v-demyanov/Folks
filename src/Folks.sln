@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		..\.gitignore = ..\.gitignore
 		..\README.md = ..\README.md
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{3835F960-AAFC-43A6-91A5-C4E0B127CEF6}"
@@ -50,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.ChannelsService.Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6B848B44-29BF-4CE1-9CA1-62E65A43339D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.ChannelsService.Application.UnitTests", "Services\Channels\Tests\Folks.ChannelsService.Application.UnitTests\Folks.ChannelsService.Application.UnitTests\Folks.ChannelsService.Application.UnitTests.csproj", "{2C6D211F-72A1-44C6-B173-311884BA4799}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.ChannelsService.Application.UnitTests", "Services\Channels\Tests\Folks.ChannelsService.Application.UnitTests\Folks.ChannelsService.Application.UnitTests\Folks.ChannelsService.Application.UnitTests.csproj", "{2C6D211F-72A1-44C6-B173-311884BA4799}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
