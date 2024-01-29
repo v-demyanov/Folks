@@ -1,18 +1,19 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
 using System.Reflection;
 
-using MassTransit;
-
-using Folks.ChannelsService.Infrastructure;
-using Folks.ChannelsService.Application;
+using Folks.ChannelsService.Api.Common.Constants;
 using Folks.ChannelsService.Api.Consumers;
 using Folks.ChannelsService.Api.Hubs;
 using Folks.ChannelsService.Api.Middlewares;
-using Folks.ChannelsService.Api.Common.Constants;
-using Folks.ChannelsService.Application.Common.Contracts;
 using Folks.ChannelsService.Api.Services;
+using Folks.ChannelsService.Application;
+using Folks.ChannelsService.Application.Common.Contracts;
+using Folks.ChannelsService.Infrastructure;
+
+using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 namespace Folks.ChannelsService.Api.Extensions;
 
@@ -29,7 +30,7 @@ public static class HostingExtensions
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "Folks.ChannelsService.Api",
-                Version = "v1"
+                Version = "v1",
             });
         });
 
@@ -56,7 +57,8 @@ public static class HostingExtensions
         });
 
         builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        builder.Services.AddMediatR(config => {
+        builder.Services.AddMediatR(config =>
+        {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
 

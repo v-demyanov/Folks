@@ -1,22 +1,24 @@
-﻿using Folks.ChannelsService.Api.Common.Models;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Exceptions;
 
 namespace Folks.ChannelsService.Api.Middlewares;
 
 public class ExceptionHandlingMiddleware
 {
-    private readonly RequestDelegate _next;
+    private readonly RequestDelegate next;
 
     public ExceptionHandlingMiddleware(RequestDelegate next)
     {
-        _next = next ?? throw new ArgumentNullException(nameof(next));
+        this.next = next ?? throw new ArgumentNullException(nameof(next));
     }
 
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await this.next(context);
         }
         catch (Exception exception)
         {
@@ -31,10 +33,10 @@ public class ExceptionHandlingMiddleware
             switch (exception)
             {
                 case ValidationException validationException:
-                    await HandleValidationExceptionAsync(context, validationException);
+                    await this.HandleValidationExceptionAsync(context, validationException);
                     break;
                 default:
-                    await HandleByDefaultAsync(context, exception);
+                    await this.HandleByDefaultAsync(context, exception);
                     break;
             }
         }

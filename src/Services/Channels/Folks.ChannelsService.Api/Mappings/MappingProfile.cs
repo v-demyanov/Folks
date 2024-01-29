@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using AutoMapper;
 
 using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Api.Mappings.Resolvers;
@@ -14,11 +16,11 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<UserRegisteredEvent, AddUserCommand>();
-        CreateMap<SendMessageRequest, CreateMessageCommand>();
-        CreateMap<LeaveChannelRequest, LeaveChannelCommand>()
+        this.CreateMap<UserRegisteredEvent, AddUserCommand>();
+        this.CreateMap<SendMessageRequest, CreateMessageCommand>();
+        this.CreateMap<LeaveChannelRequest, LeaveChannelCommand>()
             .ForMember(destination => destination.UserId, options => options.MapFrom<LeaveChannelCommandUserIdValueResolver>());
-        CreateMap<CreateGroupRequest, CreateGroupCommand>()
+        this.CreateMap<CreateGroupRequest, CreateGroupCommand>()
             .ForMember(destination => destination.OwnerId, options => options.MapFrom<CreateGroupRequestOwnerIdValueResolver>());
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Folks.ChannelsService.Api.Common.Constants;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+namespace Folks.ChannelsService.Api.Common.Constants;
 
 public static class ApiRoutePatterns
 {

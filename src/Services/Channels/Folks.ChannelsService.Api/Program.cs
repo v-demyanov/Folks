@@ -1,6 +1,8 @@
-using Serilog;
+// Copyright (c) v-demyanov. All rights reserved.
 
 using Folks.ChannelsService.Api.Extensions;
+
+using Serilog;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()

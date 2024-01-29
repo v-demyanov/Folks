@@ -1,8 +1,10 @@
-﻿namespace Folks.ChannelsService.Api.Common.Models;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+namespace Folks.ChannelsService.Api.Common.Models;
 
 public record class CreateGroupRequest
 {
-    public required string Title { get; init; }
+    required public string Title { get; init; }
 
-    public required IEnumerable<string> UserIds { get; init; }
+    required public IEnumerable<string> UserIds { get; init; }
 }

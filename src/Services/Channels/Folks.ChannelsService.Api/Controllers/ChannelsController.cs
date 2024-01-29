@@ -1,23 +1,24 @@
-﻿using AutoMapper;
-
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-using MediatR;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
 using System.Security.Claims;
 
-using Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
-using Folks.ChannelsService.Application.Features.Channels.Commands.LeaveChannelCommand;
-using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
-using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelRemovedNotification;
+using AutoMapper;
+
 using Folks.ChannelsService.Api.Common.Constants;
 using Folks.ChannelsService.Api.Common.Models;
+using Folks.ChannelsService.Application.Features.Channels.Commands.LeaveChannelCommand;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
-using Folks.ChannelsService.Application.Features.Messages.Notifications.MessageCreatedNotification;
-using Folks.ChannelsService.Domain.Common.Enums;
+using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelRemovedNotification;
 using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelUpdatedNotitfication;
 using Folks.ChannelsService.Application.Features.Channels.Queries.GetChannelQuery;
+using Folks.ChannelsService.Application.Features.Channels.Queries.GetOwnChannelsQuery;
+using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
+using Folks.ChannelsService.Application.Features.Messages.Notifications.MessageCreatedNotification;
+using Folks.ChannelsService.Domain.Common.Enums;
+
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Folks.ChannelsService.Api.Controllers;
 
@@ -26,13 +27,13 @@ namespace Folks.ChannelsService.Api.Controllers;
 [Route($"{ApiRoutePatterns.ChannelsController}")]
 public class ChannelsController : ControllerBase
 {
-    private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
+    private readonly IMediator mediator;
+    private readonly IMapper mapper;
 
     public ChannelsController(IMediator mediator, IMapper mapper)
     {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     [HttpGet]
@@ -41,13 +42,13 @@ public class ChannelsController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<ChannelDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ChannelDto>>> GetOwn()
     {
-        var ownerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var channels = await _mediator.Send(new GetOwnChannelsQuery 
-        { 
+        var ownerId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var channels = await this.mediator.Send(new GetOwnChannelsQuery
+        {
             OwnerId = ownerId ?? string.Empty,
         });
 
-        return Ok(channels);
+        return this.Ok(channels);
     }
 
     [HttpPost("leave")]
@@ -55,19 +56,19 @@ public class ChannelsController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<LeaveChannelCommandResult>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<LeaveChannelCommandResult>>> Leave([FromBody] IEnumerable<LeaveChannelRequest> batch)
     {
-        var leaveChannelCommands = _mapper.Map<IEnumerable<LeaveChannelCommand>>(batch);
+        var leaveChannelCommands = this.mapper.Map<IEnumerable<LeaveChannelCommand>>(batch);
         var results = new List<LeaveChannelCommandResult>();
-        var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
         foreach (var leaveChannelCommand in leaveChannelCommands)
         {
             LeaveChannelCommandResult? result;
             try
             {
-                result = await _mediator.Send(leaveChannelCommand);
+                result = await this.mediator.Send(leaveChannelCommand);
                 if (result is LeaveChannelCommandSuccessResult)
                 {
-                    _ = HandleLeaveChannelCommandResultEventsAsync((LeaveChannelCommandSuccessResult)result, currentUserId);
+                    _ = this.HandleLeaveChannelCommandResultEventsAsync((LeaveChannelCommandSuccessResult)result, currentUserId);
                 }
             }
             catch (Exception exception)
@@ -86,7 +87,7 @@ public class ChannelsController : ControllerBase
             }
         }
 
-        return Ok(results);
+        return this.Ok(results);
     }
 
     private async Task HandleLeaveChannelCommandResultEventsAsync(LeaveChannelCommandSuccessResult result, string currentUserId)
@@ -96,13 +97,13 @@ public class ChannelsController : ControllerBase
             switch (internalEvent.Key)
             {
                 case LeaveChannelCommandInternalEvent.ChannelRemoved:
-                    await HandleChannelRemovedAsync(result, internalEvent.Value);
+                    await this.HandleChannelRemovedAsync(result, internalEvent.Value);
                     continue;
                 case LeaveChannelCommandInternalEvent.NewGroupOwnerSet:
-                    await HandleNewGroupOwnerSetAsync(result, internalEvent.Value, currentUserId);
+                    await this.HandleNewGroupOwnerSetAsync(result, internalEvent.Value, currentUserId);
                     continue;
                 case LeaveChannelCommandInternalEvent.UserLeftChannel:
-                    await HandleUserLeftChannelAsync(result, internalEvent.Value, currentUserId);
+                    await this.HandleUserLeftChannelAsync(result, internalEvent.Value, currentUserId);
                     continue;
                 default: continue;
             }
@@ -111,13 +112,13 @@ public class ChannelsController : ControllerBase
 
     private async Task HandleChannelRemovedAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients)
     {
-        var channelDto = await _mediator.Send(new GetChannelQuery
+        var channelDto = await this.mediator.Send(new GetChannelQuery
         {
             Id = result.ChannelId,
             Type = result.ChannelType,
         });
 
-        await _mediator.Publish(new ChannelRemovedNotification
+        await this.mediator.Publish(new ChannelRemovedNotification
         {
             ChannelDto = channelDto,
             Recipients = recipients,
@@ -126,7 +127,7 @@ public class ChannelsController : ControllerBase
 
     private async Task HandleNewGroupOwnerSetAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients, string currentUserId)
     {
-        var messageDto = await _mediator.Send(new CreateMessageCommand
+        var messageDto = await this.mediator.Send(new CreateMessageCommand
         {
             OwnerId = currentUserId,
             ChannelId = result.ChannelId,
@@ -135,19 +136,19 @@ public class ChannelsController : ControllerBase
             Type = MessageType.NewGroupOwnerSetEvent,
         });
 
-        await _mediator.Publish(new MessageCreatedNotification
+        await this.mediator.Publish(new MessageCreatedNotification
         {
             MessageDto = messageDto,
             Recipients = recipients,
         });
 
-        var channelDto = await _mediator.Send(new GetChannelQuery
+        var channelDto = await this.mediator.Send(new GetChannelQuery
         {
             Id = result.ChannelId,
             Type = result.ChannelType,
         });
 
-        await _mediator.Publish(new ChannelUpdatedNotification
+        await this.mediator.Publish(new ChannelUpdatedNotification
         {
             ChannelDto = channelDto,
             Recipients = recipients,
@@ -156,7 +157,7 @@ public class ChannelsController : ControllerBase
 
     private async Task HandleUserLeftChannelAsync(LeaveChannelCommandSuccessResult result, IEnumerable<string> recipients, string currentUserId)
     {
-        var messageDto = await _mediator.Send(new CreateMessageCommand
+        var messageDto = await this.mediator.Send(new CreateMessageCommand
         {
             OwnerId = currentUserId,
             ChannelId = result.ChannelId,
@@ -165,19 +166,19 @@ public class ChannelsController : ControllerBase
             Type = MessageType.UserLeftEvent,
         });
 
-        await _mediator.Publish(new MessageCreatedNotification
+        await this.mediator.Publish(new MessageCreatedNotification
         {
             MessageDto = messageDto,
             Recipients = recipients,
         });
 
-        var channelDto = await _mediator.Send(new GetChannelQuery
+        var channelDto = await this.mediator.Send(new GetChannelQuery
         {
             Id = result.ChannelId,
             Type = result.ChannelType,
         });
 
-        await _mediator.Publish(new ChannelUpdatedNotification
+        await this.mediator.Publish(new ChannelUpdatedNotification
         {
             ChannelDto = channelDto,
             Recipients = recipients,

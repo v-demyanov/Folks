@@ -1,15 +1,16 @@
-﻿using AutoMapper;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
-using MediatR;
-
-using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelCreatedNotification;
 using Folks.ChannelsService.Api.Common.Constants;
 using Folks.ChannelsService.Api.Common.Models;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
+using Folks.ChannelsService.Application.Features.Channels.Notifications.ChannelCreatedNotification;
 using Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
+
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Folks.ChannelsService.Api.Controllers;
 
@@ -18,13 +19,13 @@ namespace Folks.ChannelsService.Api.Controllers;
 [Route($"{ApiRoutePatterns.GroupsController}")]
 public class GroupsController : ControllerBase
 {
-    private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
+    private readonly IMediator mediator;
+    private readonly IMapper mapper;
 
     public GroupsController(IMediator mediator, IMapper mapper)
     {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     [HttpPost]
@@ -33,15 +34,15 @@ public class GroupsController : ControllerBase
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<ChannelDto>> Create([FromBody] CreateGroupRequest createGroupRequest)
     {
-        var createGroupCommand = _mapper.Map<CreateGroupCommand>(createGroupRequest);
-        var channelDto = await _mediator.Send(createGroupCommand);
+        var createGroupCommand = this.mapper.Map<CreateGroupCommand>(createGroupRequest);
+        var channelDto = await this.mediator.Send(createGroupCommand);
 
-        _ = _mediator.Publish(new ChannelCreatedNotification 
-        { 
-            ChannelDto = channelDto, 
+        _ = this.mediator.Publish(new ChannelCreatedNotification
+        {
+            ChannelDto = channelDto,
             Recipients = createGroupRequest.UserIds,
         });
 
-        return Ok(channelDto);
+        return this.Ok(channelDto);
     }
 }
