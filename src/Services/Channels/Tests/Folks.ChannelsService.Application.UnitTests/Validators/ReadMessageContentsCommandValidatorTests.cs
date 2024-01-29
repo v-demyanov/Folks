@@ -1,15 +1,16 @@
-﻿using FluentValidation.Results;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
-using Moq;
-using Moq.EntityFrameworkCore;
+using FluentValidation.Results;
 
-using MongoDB.Bson;
-
-using Folks.ChannelsService.Infrastructure.Persistence;
-using Folks.ChannelsService.Domain.Entities;
+using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 using Folks.ChannelsService.Application.Features.Messages.Commands.ReadMessageContentsCommand;
 using Folks.ChannelsService.Domain.Common.Enums;
-using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
+using Folks.ChannelsService.Domain.Entities;
+using Folks.ChannelsService.Infrastructure.Persistence;
+
+using MongoDB.Bson;
+using Moq;
+using Moq.EntityFrameworkCore;
 
 namespace Folks.ChannelsService.Application.UnitTests.Validators;
 
@@ -49,7 +50,7 @@ public class ReadMessageContentsCommandValidatorTests
                 },
                 new ValidationFailure[]
                 {
-                    new ValidationFailure("", "The channel with id=\"Invalid channel id\" doesn't exist."),
+                    new ValidationFailure(string.Empty, "The channel with id=\"Invalid channel id\" doesn't exist."),
                 },
             },
             new object[]
@@ -86,7 +87,7 @@ public class ReadMessageContentsCommandValidatorTests
                     new ValidationFailure("UserId", "'User Id' must not be empty."),
                     new ValidationFailure("UserId", "The user with id=\"\" doesn't exist."),
                     new ValidationFailure("ChannelId", "'Channel Id' must not be empty."),
-                    new ValidationFailure("", "The channel with id=\"\" doesn't exist."),
+                    new ValidationFailure(string.Empty, "The channel with id=\"\" doesn't exist."),
                 },
             },
         };
@@ -105,7 +106,7 @@ public class ReadMessageContentsCommandValidatorTests
                     ChannelId = "65ad52c99cc26f24c9c84de0",
                     ChannelType = ChannelType.Group,
                     UserId = "0bc02651-7684-407f-9dae-99881b42912d",
-                }
+                },
             },
             new object[]
             {
@@ -118,11 +119,12 @@ public class ReadMessageContentsCommandValidatorTests
                     ChannelId = "65ad52c99cc26f24c9c84de0",
                     ChannelType = ChannelType.Group,
                     UserId = "4e5a6964-e7c8-4c60-8939-a4f982c674ad",
-                }
-            }
+                },
+            },
         };
 
-    [Theory, MemberData(nameof(InvalidReadMessageContentsCommandMemberData))]
+    [Theory]
+    [MemberData(nameof(InvalidReadMessageContentsCommandMemberData))]
     public void Validate_InvalidReadMessageContentsCommand_ShouldReturnExpectedErrors(ReadMessageContentsCommand command, ValidationFailure[] expectedErrors)
     {
         // Arrange
@@ -145,7 +147,8 @@ public class ReadMessageContentsCommandValidatorTests
         }
     }
 
-    [Theory, MemberData(nameof(ValidReadMessageContentsCommandMemberData))]
+    [Theory]
+    [MemberData(nameof(ValidReadMessageContentsCommandMemberData))]
     public void Validate_ValidReadMessageContentsCommand_ShouldReturnNoErrors(ReadMessageContentsCommand command)
     {
         // Arrange
@@ -171,16 +174,15 @@ public class ReadMessageContentsCommandValidatorTests
     {
         var dbContextMock = new Mock<ChannelsServiceDbContext>();
 
-        dbContextMock.SetupGet(x => x.Users).ReturnsDbSet(UsersMock);
-        dbContextMock.SetupGet(x => x.Messages).ReturnsDbSet(MessagesMock);
-        dbContextMock.SetupGet(x => x.Chats).ReturnsDbSet(ChatsMock);
-        dbContextMock.SetupGet(x => x.Groups).ReturnsDbSet(GroupsMock);
+        dbContextMock.SetupGet(x => x.Users).ReturnsDbSet(GetUsersMock());
+        dbContextMock.SetupGet(x => x.Messages).ReturnsDbSet(GetMessagesMock());
+        dbContextMock.SetupGet(x => x.Chats).ReturnsDbSet(GetChatsMock());
+        dbContextMock.SetupGet(x => x.Groups).ReturnsDbSet(GetGroupsMock());
 
         return dbContextMock.Object;
     }
 
-    private static IEnumerable<User> UsersMock =>
-        new List<User>
+    private static IEnumerable<User> GetUsersMock() => new List<User>
         {
             new User
             {
@@ -205,11 +207,10 @@ public class ReadMessageContentsCommandValidatorTests
                 {
                     ObjectId.Parse("65ad52c99cc26f24c9c84de0"),
                 },
-            }
+            },
         };
 
-    private static IEnumerable<Message> MessagesMock =>
-        new List<Message>
+    private static IEnumerable<Message> GetMessagesMock() => new List<Message>
         {
             new Message
             {
@@ -243,10 +244,9 @@ public class ReadMessageContentsCommandValidatorTests
             },
         };
 
-    private static IEnumerable<Chat> ChatsMock => new List<Chat>();
+    private static IEnumerable<Chat> GetChatsMock() => new List<Chat>();
 
-    private static IEnumerable<Group> GroupsMock =>
-        new List<Group>
+    private static IEnumerable<Group> GetGroupsMock() => new List<Group>
         {
             new Group
             {
@@ -259,6 +259,6 @@ public class ReadMessageContentsCommandValidatorTests
                 CreatedAt = DateTimeOffset.Now,
                 Title = "Group 1",
                 OwnerId = ObjectId.Parse("65ad52e4eb97a3806c6bdf92"),
-            }
+            },
         };
 }
