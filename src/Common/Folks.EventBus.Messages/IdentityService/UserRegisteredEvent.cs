@@ -1,10 +1,12 @@
-﻿namespace Folks.EventBus.Messages.IdentityService;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+namespace Folks.EventBus.Messages.IdentityService;
 
 public record UserRegisteredEvent
 {
-    public required string UserId { get; init; }
+    required public string UserId { get; init; }
 
-    public required string UserName { get; init; }
+    required public string UserName { get; init; }
 
-    public required string Email { get; init; }
+    required public string Email { get; init; }
 }
