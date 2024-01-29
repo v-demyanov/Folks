@@ -1,10 +1,10 @@
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
-import { useMemo } from 'react';
 
-import { useGetOwnChannelsQuery } from '../../api/channels.api';
 import buildStyles from './channels-loading-indicator.styles';
 import { Theme } from '../../../../themes/types/theme';
+import { useGetOwnChannelsQuery } from '../../api/channels.api';
 
 const ChannelsLoadingIndicator = (): JSX.Element | null => {
   const { isLoading } = useGetOwnChannelsQuery(null);

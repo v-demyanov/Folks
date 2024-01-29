@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
-import IAuthContextValue from '../models/auth-context-value';
 import AuthContext from '../context/auth-context';
+import IAuthContextValue from '../models/auth-context-value';
 
 const useAuth = (): IAuthContextValue => {
   return useContext(AuthContext);

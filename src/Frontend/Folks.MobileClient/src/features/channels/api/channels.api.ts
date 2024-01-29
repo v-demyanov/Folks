@@ -1,4 +1,5 @@
 import { api } from '../../../api/api';
+import { ChannelsHubEventsConstants } from '../../../api/constants';
 import { channelsHubConnection } from '../../signalr/connections';
 import {
   IChannel,
@@ -6,7 +7,6 @@ import {
   ILeaveChannelRequestSuccessResult,
   ILeaveChannelRequest,
 } from '../models';
-import { ChannelsHubEventsConstants } from '../../../api/constants';
 
 const channelsApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,7 +14,7 @@ const channelsApi = api.injectEndpoints({
       query: () => ({ url: '/channelsservice/channels', method: 'GET' }),
       onCacheEntryAdded: async (
         arg,
-        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
       ) => {
         try {
           await cacheDataLoaded;
@@ -25,7 +25,7 @@ const channelsApi = api.injectEndpoints({
               updateCachedData((draft) => {
                 draft.push(channel);
               });
-            }
+            },
           );
 
           channelsHubConnection.on(
@@ -35,13 +35,13 @@ const channelsApi = api.injectEndpoints({
                 const index = draft.findIndex(
                   (draftChannel) =>
                     draftChannel.id === channel.id &&
-                    draftChannel.type === channel.type
+                    draftChannel.type === channel.type,
                 );
                 if (index > -1) {
                   draft.splice(index, 1);
                 }
               });
-            }
+            },
           );
 
           channelsHubConnection.on(
@@ -51,13 +51,13 @@ const channelsApi = api.injectEndpoints({
                 const index = draft.findIndex(
                   (draftChannel) =>
                     draftChannel.id === channel.id &&
-                    draftChannel.type === channel.type
+                    draftChannel.type === channel.type,
                 );
                 if (index > -1) {
                   draft.splice(index, 1, channel);
                 }
               });
-            }
+            },
           );
         } catch {}
 
@@ -65,9 +65,7 @@ const channelsApi = api.injectEndpoints({
       },
     }),
     leaveChannels: builder.mutation<
-      Array<
-        ILeaveChannelRequestErrorResult | ILeaveChannelRequestSuccessResult
-      >,
+      (ILeaveChannelRequestErrorResult | ILeaveChannelRequestSuccessResult)[],
       ILeaveChannelRequest[]
     >({
       query: (arg) => ({

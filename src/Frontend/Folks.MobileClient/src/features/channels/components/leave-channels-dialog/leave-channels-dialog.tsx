@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { View } from 'react-native';
 import {
   Avatar,
   Button,
@@ -6,12 +8,10 @@ import {
   Text,
   useTheme,
 } from 'react-native-paper';
-import { useMemo } from 'react';
-import { View } from 'react-native';
 
-import { ILeaveChannelsDialogProps } from '../../models';
-import { Theme } from '../../../../themes/types/theme';
 import buildStyles from './leave-channels-dialog.styles';
+import { Theme } from '../../../../themes/types/theme';
+import { ILeaveChannelsDialogProps } from '../../models';
 
 const LeaveChannelsDialog = ({
   visible,
@@ -32,7 +32,7 @@ const LeaveChannelsDialog = ({
         }
         return count;
       }, 0),
-    [channels]
+    [channels],
   );
 
   return (

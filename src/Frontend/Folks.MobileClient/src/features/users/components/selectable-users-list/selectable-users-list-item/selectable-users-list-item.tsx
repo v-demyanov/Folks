@@ -1,8 +1,8 @@
-import { Avatar, List } from 'react-native-paper';
 import { useState } from 'react';
+import { Avatar, List } from 'react-native-paper';
 
-import { IconsConstants } from '../../../../../common';
 import buildStyles from './selectable-users-list-item.styles';
+import { IconsConstants } from '../../../../../common';
 import { ListCheckBox } from '../../../../../common/components';
 import { ISelectableUsersListItemProps } from '../../../models';
 
@@ -24,7 +24,7 @@ const SelectableUsersListItem = ({
           <Avatar.Icon
             size={IconsConstants.LIST_ITEM_IMAGE_SIZE}
             icon="account"
-          ></Avatar.Icon>
+          />
           {item.isSelected ? <ListCheckBox isOnFocus={isOnFocus} /> : null}
         </>
       )}

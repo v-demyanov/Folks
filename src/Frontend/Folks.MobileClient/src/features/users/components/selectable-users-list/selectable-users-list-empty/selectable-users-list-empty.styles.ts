@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { Theme } from '../../../../../themes/types/theme';
 
 const buildStyles = (theme: Theme) =>
@@ -8,7 +9,7 @@ const buildStyles = (theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: theme.colors.background
+      backgroundColor: theme.colors.background,
     },
   });
 

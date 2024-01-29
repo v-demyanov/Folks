@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { Appbar, useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
+import { Appbar, useTheme } from 'react-native-paper';
 
+import buildStyles from './create-group-header.styles';
 import { StackNavigation } from '../../../../../navigation/app-navigator';
 import { Theme } from '../../../../../themes/types/theme';
-import buildStyles from './create-group-header.styles';
 
 const CreateGroupHeader = (): JSX.Element => {
   const theme = useTheme<Theme>();

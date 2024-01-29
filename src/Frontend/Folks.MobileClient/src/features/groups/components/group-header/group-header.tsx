@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
-import { Appbar, Text, Avatar, useTheme } from 'react-native-paper';
-import { View } from 'react-native';
 import { useMemo } from 'react';
+import { View } from 'react-native';
+import { Appbar, Text, Avatar, useTheme } from 'react-native-paper';
 
-import { StackNavigation } from '../../../../navigation/app-navigator';
-import { IChannel } from '../../../channels/models';
-import { IconsConstants } from '../../../../common';
 import buildStyles from './group-header.styles';
+import { IconsConstants } from '../../../../common';
+import { StackNavigation } from '../../../../navigation/app-navigator';
 import { Theme } from '../../../../themes/types/theme';
+import { IChannel } from '../../../channels/models';
 
 const GroupHeader = ({ group }: { group: IChannel }): JSX.Element => {
   const theme = useTheme<Theme>();

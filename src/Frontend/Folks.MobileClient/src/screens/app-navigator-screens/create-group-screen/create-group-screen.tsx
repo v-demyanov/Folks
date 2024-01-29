@@ -1,17 +1,21 @@
-import { useEffect, useState } from 'react';
-import { FormikProps, useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
+import { FormikProps, useFormik } from 'formik';
+import { useEffect, useState } from 'react';
 import { Snackbar } from 'react-native-paper';
 
+import { InformationContainer } from '../../../common/components';
+import { useArrayEffect } from '../../../common/hooks';
+import { SelectableItem } from '../../../common/models';
+import { useAuth } from '../../../features/auth/hooks';
+import {
+  CreateGroupFormValidationSchema,
+  useCreateGroupMutation,
+} from '../../../features/groups';
 import {
   CreateGroupButton,
   CreateGroupForm,
   CreateGroupHeader,
 } from '../../../features/groups/components';
-import {
-  CreateGroupFormValidationSchema,
-  useCreateGroupMutation,
-} from '../../../features/groups';
 import {
   ICreateGroupFormValue,
   ICreateGroupRequest,
@@ -21,12 +25,8 @@ import {
   SelectableUsersList,
   SelectedUsersChips,
 } from '../../../features/users/components';
-import { useAuth } from '../../../features/auth/hooks';
-import { useArrayEffect } from '../../../common/hooks';
-import { InformationContainer } from '../../../common/components';
-import { StackNavigation } from '../../../navigation/app-navigator';
-import { SelectableItem } from '../../../common/models';
 import { IUser } from '../../../features/users/models';
+import { StackNavigation } from '../../../navigation/app-navigator';
 
 const CreateGroupScreen = (): JSX.Element => {
   const { currentUser } = useAuth();
@@ -36,7 +36,7 @@ const CreateGroupScreen = (): JSX.Element => {
     null,
     {
       refetchOnMountOrArgChange: true,
-    }
+    },
   );
   const [
     createGroup,
@@ -105,7 +105,7 @@ const CreateGroupScreen = (): JSX.Element => {
   };
 
   function prepareCreateGroupCommand(
-    formValue: ICreateGroupFormValue
+    formValue: ICreateGroupFormValue,
   ): ICreateGroupRequest | null {
     if (!currentUser) {
       return null;

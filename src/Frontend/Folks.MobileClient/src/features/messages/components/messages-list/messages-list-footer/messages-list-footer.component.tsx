@@ -1,11 +1,11 @@
-import { useTheme, Text } from 'react-native-paper';
 import { useMemo } from 'react';
 import { View } from 'react-native';
+import { useTheme, Text } from 'react-native-paper';
 
-import { Theme } from '../../../../../themes/types/theme';
-import { getUserFrendlyDateString } from '../../../../../common/helpers';
-import { IMessagesListFooterProps } from '../../../models';
 import buildStyles from './messages-list-footer.component.styles';
+import { getUserFrendlyDateString } from '../../../../../common/helpers';
+import { Theme } from '../../../../../themes/types/theme';
+import { IMessagesListFooterProps } from '../../../models';
 
 const MessagesListFooterComponent = ({
   content,

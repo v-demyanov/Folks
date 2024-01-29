@@ -1,13 +1,13 @@
+import { useMemo } from 'react';
 import { FlatList, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { useMemo } from 'react';
 
-import buildStyles from './selectable-users-list.styles';
+import SelectableUsersListEmpty from './selectable-users-list-empty/selectable-users-list-empty';
 import SelectableUsersListItem from './selectable-users-list-item/selectable-users-list-item';
+import buildStyles from './selectable-users-list.styles';
+import { SelectableItem } from '../../../../common/models';
 import { Theme } from '../../../../themes/types/theme';
 import { ISelectableUsersListProps, IUser } from '../../models';
-import SelectableUsersListEmpty from './selectable-users-list-empty/selectable-users-list-empty';
-import { SelectableItem } from '../../../../common/models';
 
 const SelectableUsersList = ({
   items: users,

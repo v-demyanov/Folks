@@ -1,7 +1,11 @@
-import { useMemo, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useMemo, useRef, useState } from 'react';
 import { Vibration } from 'react-native';
 
+import { InteractionConstants } from '../../../common';
+import { InformationContainer } from '../../../common/components';
+import { useArrayEffect } from '../../../common/hooks';
+import { SelectableItem } from '../../../common/models';
 import {
   useGetOwnChannelsQuery,
   useLeaveChannelsMutation,
@@ -12,16 +16,12 @@ import {
   ChannelsToolbar,
   LeaveChannelsDialog,
 } from '../../../features/channels/components';
-import HomeAppbar from '../../../features/home/home-appbar/home-appbar';
 import {
   IChannel,
   ILeaveChannelRequest,
 } from '../../../features/channels/models';
-import { SelectableItem } from '../../../common/models';
-import { useArrayEffect } from '../../../common/hooks';
-import { InformationContainer } from '../../../common/components';
+import HomeAppbar from '../../../features/home/home-appbar/home-appbar';
 import { StackNavigation } from '../../../navigation/app-navigator';
-import { InteractionConstants } from '../../../common';
 
 const HomeScreen = (): JSX.Element => {
   const navigation = useNavigation<StackNavigation>();
@@ -45,11 +45,11 @@ const HomeScreen = (): JSX.Element => {
         }
         return count;
       }, 0),
-    [selectableChannels]
+    [selectableChannels],
   );
   const isSelectableMode = useMemo(
     (): boolean => selectedChannelsCount > 0,
-    [selectedChannelsCount]
+    [selectedChannelsCount],
   );
 
   useArrayEffect(() => {
@@ -101,7 +101,7 @@ const HomeScreen = (): JSX.Element => {
       setSelectableChannels([...selectableChannels]);
 
       Vibration.vibrate(
-        InteractionConstants.LONGPRESS_CALLBACK_VIBRATION_PATTERN
+        InteractionConstants.LONGPRESS_CALLBACK_VIBRATION_PATTERN,
       );
     }, InteractionConstants.LONGPRESS_CALLBACK_MS);
   }
@@ -134,7 +134,7 @@ const HomeScreen = (): JSX.Element => {
           ({
             channelId: channel.id,
             channelType: channel.type,
-          } as ILeaveChannelRequest)
+          }) as ILeaveChannelRequest,
       );
 
     await leaveChannels(requests).unwrap();

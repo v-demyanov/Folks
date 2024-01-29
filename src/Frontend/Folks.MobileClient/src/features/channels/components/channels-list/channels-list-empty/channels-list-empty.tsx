@@ -1,6 +1,6 @@
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
-import { useMemo } from 'react';
 
 import buildStyles from './channels-list-empty.styles';
 import { Theme } from '../../../../../themes/types/theme';

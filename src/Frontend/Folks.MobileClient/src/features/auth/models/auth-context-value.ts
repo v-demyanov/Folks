@@ -1,7 +1,7 @@
 import { AuthRequest, TokenResponse } from 'expo-auth-session';
 
-import ICurrentUser from './current-user';
 import SignInResult from './auth-result-type';
+import ICurrentUser from './current-user';
 
 interface IAuthContextValue {
   signInAsync: () => Promise<SignInResult>;

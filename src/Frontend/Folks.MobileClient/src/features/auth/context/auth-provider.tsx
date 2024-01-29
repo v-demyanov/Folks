@@ -1,17 +1,17 @@
-import { useEffect, useMemo, useState } from 'react';
-import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
+import { useEffect, useMemo, useState } from 'react';
 
+import AuthContext from './auth-context';
+import { SecureStoreKeysConstants } from '../../../common';
+import { useSecureStore } from '../../../common/hooks';
+import authConfig from '../configs/auth-config';
 import {
   IAuthProviderProps,
   ICurrentUser,
   SignInResult,
   IAuthContextValue,
 } from '../models';
-import AuthContext from './auth-context';
-import { useSecureStore } from '../../../common/hooks';
-import { SecureStoreKeysConstants } from '../../../common';
-import authConfig from '../configs/auth-config';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -23,12 +23,12 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   >(SecureStoreKeysConstants.TOKEN_RESPONSE_KEY);
 
   const discoveryDocument = AuthSession.useAutoDiscovery(
-    authConfig.identityServerUrl
+    authConfig.identityServerUrl,
   );
 
   const [authRequest, authResult, promptAsync] = AuthSession.useAuthRequest(
     authConfig.authRequestConfig,
-    discoveryDocument
+    discoveryDocument,
   );
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     AuthSession.fetchUserInfoAsync(tokenResponse, discoveryDocument).then(
       (currentUser) => {
         setCurrentUser(currentUser as ICurrentUser);
-      }
+      },
     );
   }, [tokenResponse]);
 
@@ -57,7 +57,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   };
 
   const handleSuccessAuthAsync = async (
-    authSessionResult: AuthSession.AuthSessionResult
+    authSessionResult: AuthSession.AuthSessionResult,
   ): Promise<void> => {
     if (discoveryDocument && authSessionResult.type === SignInResult.Success) {
       const accessTokenRequestConfig = {
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
       const tokenResponse = await AuthSession.exchangeCodeAsync(
         accessTokenRequestConfig,
-        discoveryDocument
+        discoveryDocument,
       );
       setTokenResponse(tokenResponse);
     }
@@ -101,7 +101,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       isAuthenticated,
       tokenResponse,
     }),
-    [currentUser, authRequest, tokenResponse]
+    [currentUser, authRequest, tokenResponse],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

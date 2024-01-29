@@ -1,6 +1,7 @@
 import { HttpStatusCode } from 'axios';
 
 import { api } from '../../../api/api';
+import { ChannelsHubEventsConstants } from '../../../api/constants';
 import { channelsHubConnection } from '../../signalr/connections';
 import {
   ICreateMessageRequest,
@@ -8,7 +9,6 @@ import {
   IMessage,
   IReadMessageContentsRequest,
 } from '../models';
-import { ChannelsHubEventsConstants } from '../../../api/constants';
 
 const messagesApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,7 +19,7 @@ const messagesApi = api.injectEndpoints({
       }),
       onCacheEntryAdded: async (
         arg,
-        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
       ) => {
         try {
           await cacheDataLoaded;
@@ -32,7 +32,7 @@ const messagesApi = api.injectEndpoints({
                   draft.push(message);
                 }
               });
-            }
+            },
           );
 
           channelsHubConnection.on(
@@ -41,14 +41,14 @@ const messagesApi = api.injectEndpoints({
               updateCachedData((draft) => {
                 for (const message of messages) {
                   const index = draft.findIndex(
-                    (draftMessage) => draftMessage.id === message.id
+                    (draftMessage) => draftMessage.id === message.id,
                   );
                   if (index > -1) {
                     draft.splice(index, 1, message);
                   }
                 }
               });
-            }
+            },
           );
         } catch {}
 
@@ -60,7 +60,7 @@ const messagesApi = api.injectEndpoints({
         try {
           const result = await channelsHubConnection.invoke(
             ChannelsHubEventsConstants.SEND_MESSAGE,
-            arg
+            arg,
           );
           return {
             data: result,

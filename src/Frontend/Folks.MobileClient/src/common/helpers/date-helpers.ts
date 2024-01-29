@@ -1,9 +1,9 @@
-import IUserFrendlyDateOptions from '../models/user-frendly-date-options';
 import { formatInNN } from './number-helpers';
+import IUserFrendlyDateOptions from '../models/user-frendly-date-options';
 
 export function getUserFrendlyDateString(
   date: Date,
-  options?: IUserFrendlyDateOptions
+  options?: IUserFrendlyDateOptions,
 ): string {
   const now = new Date();
   const monthDay = date.getDate();

@@ -1,10 +1,10 @@
-import { Appbar, IconButton, Text, useTheme } from 'react-native-paper';
-import { View } from 'react-native';
-
-import IChannelsToolbarProps from '../../models/channels-toolbar.props';
-import { Theme } from '../../../../themes/types/theme';
 import { useMemo } from 'react';
+import { View } from 'react-native';
+import { Appbar, IconButton, Text, useTheme } from 'react-native-paper';
+
 import buildStyles from './channels-toolbar.styles';
+import { Theme } from '../../../../themes/types/theme';
+import IChannelsToolbarProps from '../../models/channels-toolbar.props';
 
 const ChannelsToolbar = ({
   selectedChannelsCount,

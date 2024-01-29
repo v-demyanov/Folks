@@ -1,15 +1,15 @@
+import { BlurView } from 'expo-blur';
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import { Avatar, Text, useTheme } from 'react-native-paper';
-import { useMemo } from 'react';
-import { BlurView } from 'expo-blur';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { IMessagesListItemComponentProps } from '../../../models';
-import { Theme } from '../../../../../themes/types/theme';
-import MessageContainerComponent from '../../message-container/message-container.component';
-import { formatInHHMM } from '../../../../../common/helpers';
-import { MessageType } from '../../../enums';
 import buildStyles from './messages-list-item.component.styles';
+import { formatInHHMM } from '../../../../../common/helpers';
+import { Theme } from '../../../../../themes/types/theme';
+import { MessageType } from '../../../enums';
+import { IMessagesListItemComponentProps } from '../../../models';
+import MessageContainerComponent from '../../message-container/message-container.component';
 
 const MessagesListItemComponent = ({
   item,

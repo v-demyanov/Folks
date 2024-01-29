@@ -1,12 +1,12 @@
+import { useMemo, useState } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Button, ActivityIndicator } from 'react-native-paper';
-import { useMemo, useState } from 'react';
 
+import buildStyles from './welcome-screen-styles';
 import { Logo } from '../../../common/components';
 import useAuth from '../../../features/auth/hooks/use-auth';
-import buildStyles from './welcome-screen-styles';
-import { Theme } from '../../../themes/types/theme';
 import { channelsHubConnection } from '../../../features/signalr/connections';
+import { Theme } from '../../../themes/types/theme';
 
 const WelcomeScreen = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,7 +26,7 @@ const WelcomeScreen = (): JSX.Element => {
   if (isLoading) {
     return (
       <ActivityIndicator
-        animating={true}
+        animating
         size="large"
         style={[styles.activityIndicator]}
       />

@@ -1,10 +1,10 @@
+import { useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Chip, Text, useTheme } from 'react-native-paper';
-import { useMemo } from 'react';
 
-import { ISelectedUsersChipsProps } from '../../models';
-import { Theme } from '../../../../themes/types/theme';
 import buildStyles from './selected-users-chips.styles';
+import { Theme } from '../../../../themes/types/theme';
+import { ISelectedUsersChipsProps } from '../../models';
 
 const SelectedUsersChips = ({
   items,
@@ -32,7 +32,7 @@ const SelectedUsersChips = ({
 
   return (
     <View>
-      <ScrollView horizontal={true} style={[styles.scrollView]}>
+      <ScrollView horizontal style={[styles.scrollView]}>
         {items.filter((item) => item.isSelected).length ? (
           renderChips()
         ) : (

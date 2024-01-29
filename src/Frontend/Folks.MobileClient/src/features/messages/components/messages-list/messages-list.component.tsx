@@ -1,16 +1,16 @@
+import { useCallback, useMemo, useState } from 'react';
 import { SafeAreaView, SectionList, SectionListData } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { useCallback, useMemo, useState } from 'react';
 
-import { Theme } from '../../../../themes/types/theme';
+import MessagesListEmptyComponent from './messages-list-empty/messages-list-empty.component';
+import MessagesListFooterComponent from './messages-list-footer/messages-list-footer.component';
 import MessagesListItemComponent from './messages-list-item/messages-list-item.component';
+import buildStyles from './messages-list.component.styles';
 import {
   ISectionListItem,
   IViewableItemsChangedEventInfo,
 } from '../../../../common/models';
-import MessagesListFooterComponent from './messages-list-footer/messages-list-footer.component';
-import buildStyles from './messages-list.component.styles';
-import MessagesListEmptyComponent from './messages-list-empty/messages-list-empty.component';
+import { Theme } from '../../../../themes/types/theme';
 import { IMessagesListProps, MessagesListItem } from '../../models';
 
 const MessagesListComponent = ({
@@ -21,7 +21,7 @@ const MessagesListComponent = ({
   const styles = useMemo(() => buildStyles(theme), [theme]);
 
   const [currentSectionFooter, setCurrentSectionFooter] = useState<Date | null>(
-    null
+    null,
   );
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
@@ -31,7 +31,7 @@ const MessagesListComponent = ({
   );
 
   const renderSectionFooter = ({
-    section: { footer: footer },
+    section: { footer },
   }: {
     section: SectionListData<
       MessagesListItem,
@@ -62,7 +62,7 @@ const MessagesListComponent = ({
         onViewableItemsChanged(info);
       }
     },
-    []
+    [],
   );
 
   const handleScroll = (): void => {
@@ -96,7 +96,7 @@ const MessagesListComponent = ({
         onViewableItemsChanged={handleViewableItemsChanged}
         onScroll={handleScroll}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        inverted={true}
+        inverted
       />
     </SafeAreaView>
   );

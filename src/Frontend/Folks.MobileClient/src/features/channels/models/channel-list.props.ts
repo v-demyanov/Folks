@@ -1,5 +1,5 @@
-import { SelectableItem } from '../../../common/models';
 import IChannel from './channel';
+import { SelectableItem } from '../../../common/models';
 
 export default interface IChannelListProps {
   channels: SelectableItem<IChannel>[];

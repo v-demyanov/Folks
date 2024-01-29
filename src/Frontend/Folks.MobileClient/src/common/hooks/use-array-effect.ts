@@ -1,9 +1,9 @@
-import { DependencyList, EffectCallback, useEffect, useRef } from 'react';
 import { isEqual } from 'lodash';
+import { DependencyList, EffectCallback, useEffect, useRef } from 'react';
 
 export default function useArrayEffect(
   effect: EffectCallback,
-  dependencies: DependencyList
+  dependencies: DependencyList,
 ): void {
   const ref = useRef<DependencyList>(dependencies);
 

@@ -1,9 +1,9 @@
-import { IMessage, MessagesListItem } from '../models';
 import { formatMessageContentByType } from './message.helpers';
+import { IMessage, MessagesListItem } from '../models';
 
 export function mapMessagesListItem(
   message: IMessage,
-  currentUserId: string
+  currentUserId: string,
 ): MessagesListItem {
   return {
     ...message,

@@ -1,11 +1,11 @@
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import { Text, Avatar, useTheme } from 'react-native-paper';
-import { useMemo } from 'react';
 
-import { IconsConstants } from '../../../../common';
-import { useAuth } from '../../../auth/hooks';
-import { Theme } from '../../../../themes/types/theme';
 import buildStyles from './user-account.styles';
+import { IconsConstants } from '../../../../common';
+import { Theme } from '../../../../themes/types/theme';
+import { useAuth } from '../../../auth/hooks';
 
 const UserAccount = (): JSX.Element => {
   const theme = useTheme<Theme>();

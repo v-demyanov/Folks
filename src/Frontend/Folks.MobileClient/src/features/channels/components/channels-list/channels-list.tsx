@@ -1,13 +1,13 @@
+import { useMemo } from 'react';
 import { FlatList, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { useMemo } from 'react';
 
-import ChannelsListItem from './channels-list-item/channels-list-item';
-import { IChannel, IChannelListProps } from '../../models';
-import buildStyles from './channels-list.styles';
-import { Theme } from '../../../../themes/types/theme';
 import ChannelsListEmpty from './channels-list-empty/channels-list-empty';
+import ChannelsListItem from './channels-list-item/channels-list-item';
+import buildStyles from './channels-list.styles';
 import { SelectableItem } from '../../../../common/models';
+import { Theme } from '../../../../themes/types/theme';
+import { IChannel, IChannelListProps } from '../../models';
 
 const ChannelsList = ({
   channels,

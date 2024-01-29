@@ -1,7 +1,7 @@
-import { View } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
-import { useTheme } from 'react-native-paper';
 import { useMemo } from 'react';
+import { View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import Svg, { Path } from 'react-native-svg';
 
 import buildStyles from './message-container.component.styles';
 import { Theme } from '../../../../themes/types/theme';

@@ -1,16 +1,16 @@
-import { Avatar, Badge, List, Text } from 'react-native-paper';
-import { View } from 'react-native';
 import { useState } from 'react';
+import { View } from 'react-native';
+import { Avatar, Badge, List, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { IconsConstants } from '../../../../../common';
 import buildStyles from './channels-list-item.styles';
-import { getUserFrendlyDateString } from '../../../../../common/helpers';
-import { IChannelsListItemProps } from '../../../models';
+import { IconsConstants } from '../../../../../common';
 import { ListCheckBox } from '../../../../../common/components';
-import { MessageType } from '../../../../messages/enums';
+import { getUserFrendlyDateString } from '../../../../../common/helpers';
 import { useAuth } from '../../../../auth/hooks';
+import { MessageType } from '../../../../messages/enums';
 import { formatMessageContentByType } from '../../../../messages/helpers';
+import { IChannelsListItemProps } from '../../../models';
 
 const ChannelsListItem = ({
   channel,
@@ -115,7 +115,7 @@ const ChannelsListItem = ({
                 channel.lastMessage
                   ? new Date(channel.lastMessage.sentAt)
                   : new Date(channel.createdAt),
-                { formatInHHMM: true }
+                { formatInHHMM: true },
               )}
             </Text>
           </View>

@@ -1,5 +1,5 @@
-import { LeaveChannelRequestInternalEvent } from '../enums';
 import ILeaveChannelRequestResult from './leave-channel-request-result';
+import { LeaveChannelRequestInternalEvent } from '../enums';
 
 export default interface ILeaveChannelRequestSuccessResult
   extends ILeaveChannelRequestResult {

@@ -10,7 +10,7 @@ export const api = createApi({
     baseUrl: process.env.EXPO_PUBLIC_API_GTW_URL,
     prepareHeaders: async (headers) => {
       const rawTokenResponse = await SecureStore.getItemAsync(
-        SecureStoreKeysConstants.TOKEN_RESPONSE_KEY
+        SecureStoreKeysConstants.TOKEN_RESPONSE_KEY,
       );
 
       if (rawTokenResponse) {

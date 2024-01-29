@@ -36,7 +36,7 @@ export default function useSet<T>(initialValue: T[]): Set<T> {
         get size(): number {
           return set.current.size;
         },
-      } as Set<T>),
-    []
+      }) as Set<T>,
+    [],
   );
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 const useSecureStore = <T extends unknown>(
   key: string,
-  initialState: T | undefined = undefined
+  initialState: T | undefined = undefined,
 ): [T | undefined, (value: T) => void, () => void] => {
   const [state, setState] = useState<T | undefined>(initialState);
 

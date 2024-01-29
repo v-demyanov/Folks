@@ -9,7 +9,7 @@ const ListCheckBox = ({ isOnFocus }: { isOnFocus: boolean }): JSX.Element => {
   return (
     <Icon
       name="check"
-      color={'white'}
+      color="white"
       size={18}
       style={{
         position: 'absolute',

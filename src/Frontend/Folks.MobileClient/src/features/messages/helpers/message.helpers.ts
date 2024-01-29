@@ -5,7 +5,7 @@ import { IMessage } from '../models';
 export function splitContentOnFragments(content: string): string[] {
   const matcher = new RegExp(
     `.{1,${MessagesConstants.CONTENT_MAXIMUM_LENGTH}}`,
-    'g'
+    'g',
   );
 
   return (
@@ -17,7 +17,7 @@ export function splitContentOnFragments(content: string): string[] {
 }
 
 export function groupMessagesByDate(
-  messages: IMessage[]
+  messages: IMessage[],
 ): Map<string, IMessage[]> {
   return messages.groupBy<string, IMessage>((message) => {
     const date = new Date(message.sentAt);

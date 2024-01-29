@@ -1,10 +1,10 @@
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import { Avatar, HelperText, TextInput, useTheme } from 'react-native-paper';
-import { useMemo } from 'react';
 
-import { ICreateGroupFormProps } from '../../../models';
-import { Theme } from '../../../../../themes/types/theme';
 import buildStyles from './create-group-form.styles';
+import { Theme } from '../../../../../themes/types/theme';
+import { ICreateGroupFormProps } from '../../../models';
 
 const CreateGroupForm = ({ form }: ICreateGroupFormProps): JSX.Element => {
   const theme = useTheme<Theme>();

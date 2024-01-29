@@ -1,13 +1,13 @@
-import { Appbar, useTheme } from 'react-native-paper';
 import { memo, useMemo } from 'react';
 import { View } from 'react-native';
+import { Appbar, useTheme } from 'react-native-paper';
 
-import { useAuth } from '../../auth/hooks';
-import { useAppDispatch } from '../../../common/hooks';
-import { api } from '../../../api/api';
 import buildStyles from './home-appbar.styles';
-import { ChannelsLoadingIndicator } from '../../channels/components';
+import { api } from '../../../api/api';
+import { useAppDispatch } from '../../../common/hooks';
 import { Theme } from '../../../themes/types/theme';
+import { useAuth } from '../../auth/hooks';
+import { ChannelsLoadingIndicator } from '../../channels/components';
 import { channelsHubConnection } from '../../signalr/connections';
 import { UserAccount } from '../../users/components';
 
@@ -30,7 +30,7 @@ const HomeAppbar = (): JSX.Element => {
           <View style={[styles.titleView]}>
             <UserAccount />
             <ChannelsLoadingIndicator />
-            <View></View>
+            <View />
           </View>
         }
       />

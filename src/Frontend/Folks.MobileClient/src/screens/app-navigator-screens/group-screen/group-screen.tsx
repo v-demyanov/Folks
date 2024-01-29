@@ -3,7 +3,14 @@ import { FormikProps, useFormik } from 'formik';
 import { useCallback, useEffect, useState } from 'react';
 import { Snackbar, useTheme } from 'react-native-paper';
 
-import { RootStackParamList } from '../../../navigation/app-navigator';
+import { InformationContainer } from '../../../common/components';
+import { useArrayEffect, useSet } from '../../../common/hooks';
+import {
+  ISectionListItem,
+  IViewableItemsChangedEventInfo,
+} from '../../../common/models';
+import { useAuth } from '../../../features/auth/hooks';
+import { GroupHeader } from '../../../features/groups/components';
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
@@ -15,25 +22,18 @@ import {
   MessagesListComponent,
 } from '../../../features/messages/components';
 import {
+  groupMessagesByDate,
+  splitContentOnFragments,
+  mapMessagesListItem,
+} from '../../../features/messages/helpers';
+import {
   ISendMessageFormValue,
   ICreateMessageRequest,
   IGetMessagesRequest,
   MessagesListItem,
 } from '../../../features/messages/models';
-import {
-  groupMessagesByDate,
-  splitContentOnFragments,
-  mapMessagesListItem,
-} from '../../../features/messages/helpers';
-import { useAuth } from '../../../features/auth/hooks';
-import {
-  ISectionListItem,
-  IViewableItemsChangedEventInfo,
-} from '../../../common/models';
-import { useArrayEffect, useSet } from '../../../common/hooks';
-import { InformationContainer } from '../../../common/components';
+import { RootStackParamList } from '../../../navigation/app-navigator';
 import { Theme } from '../../../themes/types/theme';
-import { GroupHeader } from '../../../features/groups/components';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Group'>;
 
@@ -176,7 +176,7 @@ const GroupScreen = ({ route }: Props): JSX.Element => {
         messageIdsToRead.forEach((id) => alreadySeenMessages.delete(id));
       }
     },
-    []
+    [],
   );
 
   return (

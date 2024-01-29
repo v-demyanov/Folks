@@ -7,11 +7,11 @@ import {
 const createHubConnection = (
   url: string,
   httpConnectionOptions: IHttpConnectionOptions,
-  automaticReconnect = true
+  automaticReconnect = true,
 ): HubConnection => {
   let hubConnectionBuilder = new HubConnectionBuilder().withUrl(
     url,
-    httpConnectionOptions
+    httpConnectionOptions,
   );
 
   if (automaticReconnect) {
@@ -20,7 +20,7 @@ const createHubConnection = (
 
   if (httpConnectionOptions.logger) {
     hubConnectionBuilder = hubConnectionBuilder.configureLogging(
-      httpConnectionOptions.logger
+      httpConnectionOptions.logger,
     );
   }
 
