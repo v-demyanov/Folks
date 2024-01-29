@@ -1,7 +1,9 @@
-﻿using MongoDB.Bson;
+﻿// Copyright (c) v-demyanov. All rights reserved.
 
 using Folks.ChannelsService.Domain.Common.Abstractions;
 using Folks.ChannelsService.Domain.Common.Enums;
+
+using MongoDB.Bson;
 
 namespace Folks.ChannelsService.Domain.Entities;
 
@@ -19,5 +21,5 @@ public class Message : BaseEntity
 
     public MessageType Type { get; set; }
 
-    public required ICollection<ObjectId> ReadByIds { get; set; } = new List<ObjectId>();
+    required public ICollection<ObjectId> ReadByIds { get; set; } = new List<ObjectId>();
 }

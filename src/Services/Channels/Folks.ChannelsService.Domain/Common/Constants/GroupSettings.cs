@@ -1,4 +1,6 @@
-﻿namespace Folks.ChannelsService.Domain.Common.Constants;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+namespace Folks.ChannelsService.Domain.Common.Constants;
 
 public static class GroupSettings
 {

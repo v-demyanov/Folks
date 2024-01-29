@@ -1,10 +1,12 @@
-﻿using MongoDB.Bson;
+﻿// Copyright (c) v-demyanov. All rights reserved.
+
+using MongoDB.Bson;
 
 namespace Folks.ChannelsService.Domain.Entities;
 
 public class Group : Channel
 {
-    public required string Title { get; set; }
+    required public string Title { get; set; }
 
     public ObjectId OwnerId { get; set; }
 }
