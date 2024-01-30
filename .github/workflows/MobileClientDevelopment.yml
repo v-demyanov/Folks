@@ -20,6 +20,6 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
       - name: Install dependencies
-        run: npm ci ./src/Frontend/Folks.MobileClient/
+        run: npm ci --prefix ./src/Frontend/Folks.MobileClient/
       - name: Build on EAS
-        run: eas build ./src/Frontend/Folks.MobileClient/ --profile development --platform android --non-interactive --no-wait
+        run: eas build --prefix ./src/Frontend/Folks.MobileClient/ --profile development --platform android --non-interactive --no-wait
