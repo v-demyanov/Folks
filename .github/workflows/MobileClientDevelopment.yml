@@ -14,12 +14,18 @@ jobs:
         with:
           node-version: 18.x
           cache: npm
+          cache-dependency-path: ./src/Frontend/Folks.MobileClient/package-lock.json
+
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+
       - name: Install dependencies
-        run: npm ci --prefix ./src/Frontend/Folks.MobileClient/
+        run: npm ci
+        working-directory: ./src/Frontend/Folks.MobileClient/
+
       - name: Build on EAS
-        run: eas build --prefix ./src/Frontend/Folks.MobileClient/ --profile development --platform android --non-interactive --no-wait
+        run: eas build --profile development --platform android --non-interactive --no-wait
+        working-directory: ./src/Frontend/Folks.MobileClient/
