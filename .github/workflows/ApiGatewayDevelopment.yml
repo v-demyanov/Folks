@@ -16,8 +16,8 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore .\src\ApiGateways\Folks.ApiGateway\
+      run: dotnet restore ./src/ApiGateways/Folks.ApiGateway/
     - name: Build
-      run: dotnet build .\src\ApiGateways\Folks.ApiGateway\ --no-restore
+      run: dotnet build ./src/ApiGateways/Folks.ApiGateway/ --no-restore
