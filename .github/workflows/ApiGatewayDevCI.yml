@@ -1,4 +1,4 @@
-name: Api Gateway Development
+name: Api Gateway CI (Dev)
 
 on:
   push:
