@@ -1,4 +1,4 @@
-name: Channels Service Development
+name: Channels Service CI (Dev)
 
 on:
   push:
