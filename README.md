@@ -1,4 +1,6 @@
 # Folks
+![Channels Service CI]
+(https://github.com/v-demyanov/Folks/actions/workflows/ChannelsServiceDevelopment.yml/badge.svg?branch=main)
 
 ### Migrations
 ### Add migrations - Identity Service
