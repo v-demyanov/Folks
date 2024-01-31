@@ -1,4 +1,4 @@
-name: Identity Service Dev
+name: Identity Service CI (Dev)
 
 on:
   push:
