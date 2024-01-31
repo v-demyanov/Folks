@@ -1,4 +1,4 @@
-name: Mobile Client Development
+name: Mobile Client CI (Dev)
 
 on:
   workflow_dispatch:
