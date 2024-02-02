@@ -15,7 +15,7 @@ using Moq.EntityFrameworkCore;
 
 namespace Folks.ChannelsService.Application.UnitTests.Validators;
 
-public class ReadMessageContentsCommandValidatorTests : ValidatorTestsBase<ReadMessageContentsCommand, ReadMessageContentsCommandValidator>
+public class ReadMessageContentsCommandValidatorTests : BaseValidatorTests<ReadMessageContentsCommand, ReadMessageContentsCommandValidator>
 {
     public static IEnumerable<object[]> InvalidMemberData => new List<object[]>
     {

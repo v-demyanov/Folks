@@ -13,7 +13,7 @@ using Moq.EntityFrameworkCore;
 
 namespace Folks.ChannelsService.Application.UnitTests.Validators;
 
-public class GetGroupQueryValidatorTests : ValidatorTestsBase<GetGroupQuery, GetGroupQueryValidator>
+public class GetGroupQueryValidatorTests : BaseValidatorTests<GetGroupQuery, GetGroupQueryValidator>
 {
     public static IEnumerable<object[]> InvalidMemberData => new List<object[]>
     {

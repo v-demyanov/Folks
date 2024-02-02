@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Folks.Tests.Common.Contracts;
 
-public abstract class ValidatorTestsBase<TValidated, TValidator>
+public abstract class BaseValidatorTests<TValidated, TValidator>
 {
     public static void AssertInvalid(ValidationResult actualResult, ValidationFailure[] expectedErrors)
     {
