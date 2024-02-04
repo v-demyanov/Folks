@@ -55,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.ChannelsService.Appli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.Tests.Common", "Common\Folks.Tests.Common\Folks.Tests.Common.csproj", "{D2E27C0F-F907-48F9-8537-BD349B48331A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.ChannelsService.IntegrationTests", "Services\Channels\Tests\Folks.ChannelsService.IntegrationTests\Folks.ChannelsService.IntegrationTests.csproj", "{271592C1-3960-40D3-9A1A-36BA31DADC08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.ChannelsService.IntegrationTests", "Services\Channels\Tests\Folks.ChannelsService.IntegrationTests\Folks.ChannelsService.IntegrationTests.csproj", "{271592C1-3960-40D3-9A1A-36BA31DADC08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
