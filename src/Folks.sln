@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.ChannelsService.Appli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Folks.Tests.Common", "Common\Folks.Tests.Common\Folks.Tests.Common.csproj", "{D2E27C0F-F907-48F9-8537-BD349B48331A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folks.ChannelsService.IntegrationTests", "Services\Channels\Tests\Folks.ChannelsService.IntegrationTests\Folks.ChannelsService.IntegrationTests.csproj", "{271592C1-3960-40D3-9A1A-36BA31DADC08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{D2E27C0F-F907-48F9-8537-BD349B48331A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2E27C0F-F907-48F9-8537-BD349B48331A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2E27C0F-F907-48F9-8537-BD349B48331A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{271592C1-3960-40D3-9A1A-36BA31DADC08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{271592C1-3960-40D3-9A1A-36BA31DADC08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{271592C1-3960-40D3-9A1A-36BA31DADC08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{271592C1-3960-40D3-9A1A-36BA31DADC08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +151,7 @@ Global
 		{6B848B44-29BF-4CE1-9CA1-62E65A43339D} = {0BF85D02-C12F-4E4A-B2CE-FAA506C8B532}
 		{69615AB3-3A06-48E4-964B-DBE9679DF7C0} = {6B848B44-29BF-4CE1-9CA1-62E65A43339D}
 		{D2E27C0F-F907-48F9-8537-BD349B48331A} = {EDCFCF25-B6FA-48EC-B90E-B9B488BA64E2}
+		{271592C1-3960-40D3-9A1A-36BA31DADC08} = {6B848B44-29BF-4CE1-9CA1-62E65A43339D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3505674B-EFAB-48B2-BC36-7E190A9095D4}
