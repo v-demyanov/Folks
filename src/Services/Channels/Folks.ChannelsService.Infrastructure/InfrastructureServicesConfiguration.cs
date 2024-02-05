@@ -37,11 +37,12 @@ public static class InfrastructureServicesConfiguration
             throw new NullReferenceException(nameof(databaseName));
         }
 
-        var mongoClient = new MongoClient(connectionString);
-        var mongoDatabase = mongoClient.GetDatabase(databaseName);
-
         services.AddDbContext<ChannelsServiceDbContext>(options =>
-            options.UseMongoDB(mongoDatabase.Client, mongoDatabase.DatabaseNamespace.DatabaseName));
+        {
+            var mongoClient = new MongoClient(connectionString);
+            var mongoDatabase = mongoClient.GetDatabase(databaseName);
+            options.UseMongoDB(mongoDatabase.Client, mongoDatabase.DatabaseNamespace.DatabaseName);
+        });
 
         return services;
     }

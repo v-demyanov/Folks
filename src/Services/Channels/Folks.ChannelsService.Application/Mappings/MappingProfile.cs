@@ -5,6 +5,7 @@ using AutoMapper;
 using Folks.ChannelsService.Application.Features.Channels.Common.Dto;
 using Folks.ChannelsService.Application.Features.Channels.Common.Enums;
 using Folks.ChannelsService.Application.Features.Groups.Commands.CreateGroupCommand;
+using Folks.ChannelsService.Application.Features.Groups.Common.Dto;
 using Folks.ChannelsService.Application.Features.Messages.Commands.CreateMessageCommand;
 using Folks.ChannelsService.Application.Features.Messages.Common.Dto;
 using Folks.ChannelsService.Application.Features.Users.Commands.AddUserCommand;
@@ -38,6 +39,10 @@ public class MappingProfile : Profile
             .ForMember(destination => destination.Id, options => options.MapFrom(source => ObjectId.GenerateNewId()))
             .ForMember(destination => destination.UserIds, options => options.MapFrom<CreateGroupCommandUsersValueResolver>())
             .ForMember(destination => destination.OwnerId, options => options.MapFrom<CreateGroupCommandOwnerIdValueResolver>());
+
+        this.CreateMap<Group, GroupDto>()
+            .ForMember(destination => destination.OwnerId, options => options.MapFrom<GroupDtoOwnerIdValueResolver>())
+            .ForMember(destination => destination.Members, options => options.MapFrom<GroupDtoMembersValueResolver>());
 
         this.CreateMap<AddUserCommand, User>()
             .ForMember(destination => destination.Id, options => options.MapFrom(source => ObjectId.GenerateNewId()))
