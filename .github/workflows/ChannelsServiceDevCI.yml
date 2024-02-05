@@ -3,8 +3,12 @@ name: Channels Service CI (Dev)
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - './src/Services/Channels/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - './src/Services/Channels/**'
 
 jobs:
   build:
