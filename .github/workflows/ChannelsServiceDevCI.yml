@@ -24,4 +24,4 @@ jobs:
     - name: Run Application Unit Tests
       run: dotnet test ./src/Services/Channels/Tests/Folks.ChannelsService.Application.UnitTests/ --verbosity normal
     - name: Run Integration Tests
-      run: dotnet test ./src/Services/Channels/Tests/Folks.ChannelsService.IntegrationTests/ --verbosity normal
+      run: sudo dotnet test ./src/Services/Channels/Tests/Folks.ChannelsService.IntegrationTests/ --verbosity normal
