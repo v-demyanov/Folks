@@ -3,8 +3,12 @@ name: Identity Service CI (Dev)
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - './src/Services/Identity/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - './src/Services/Identity/**'
 
 jobs:
   build:
