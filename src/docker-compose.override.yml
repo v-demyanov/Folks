@@ -2,73 +2,66 @@
 
 services:
   identitydb:
-    container_name: identitydb
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin1234
-      - POSTGRES_DB=IdentityDb
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
   pgadmin:
-    container_name: pgadmin
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@aspnetrun.com
-      - PGADMIN_DEFAULT_PASSWORD=admin1234
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     restart: always
     ports:
-      - "5050:80"
+      - ${PGADMIN_EXTERNAL_PORT:-5050}:80
     volumes:
       - pgadmin_data:/root/.pgadmin
 
   channelsdb:
-    container_name: channelsdb
     restart: always
     ports:
-      - "27017:27017"
+      - ${CHANNELSDB_EXTERNAL_PORT:-27017}:27017
     volumes:
       - mongo_data:/data/db
 
   rabbitmq:
-    container_name: rabbitmq
     restart: always
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - ${RABBITMQ_QUEUE_EXTERNAL_PORT:-5672}:5672
+      - ${RABBITMQ_PLUGIN_EXTERNAL_PORT:-15672}:15672
 
-  folks.apigateway:
-    container_name: folks.apigateway
+  apigateway:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "AuthenticationOptions__Authority=http://folks.identityservice.api"
+      - ASPNETCORE_ENVIRONMENT=${APIGATEWAY_ENVIRONMENT}
+      - AuthenticationOptions__Authority=${AUTHORITY}
     depends_on:
-      - folks.identityservice.api
-      - folks.channelsservice.api
+      - identity
+      - channels
     ports:
-      - "8000:80"
+      - ${APIGATEWAY_EXTERNAL_PORT:-8000}:80
 
-  folks.channelsservice.api:
-    container_name: folks.channelsservice.api
+  channels:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "AuthenticationOptions__Authority=http://folks.identityservice.api"
-      - "MongoDbConfig__ConnectionString=mongodb://channelsdb:27017"
-      - "MongoDbConfig__DatabaseName=ChannelsDb"
-      - "EventBusConfig__HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - ASPNETCORE_ENVIRONMENT=${CHANNELS_ENVIRONMENT}
+      - AuthenticationOptions__Authority=${AUTHORITY}
+      - MongoDbConfig__ConnectionString=${CHANNELS_CONNECTION_STRING}
+      - MongoDbConfig__DatabaseName=${CHANNELS_DATABASE_NAME}
+      - EventBusConfig__HostAddress=${EVENT_BUS_HOSTADDRESS}
     depends_on:
       - channelsdb
       - rabbitmq
 
-  folks.identityservice.api:
-    container_name: folks.identityservice.api
+  identity:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__PostgreSqlConnectionString=Server=identitydb;Port=5432;Database=IdentityDb;User Id=admin;Password=admin1234;"
-      - "EventBusConfig__HostAddress=amqp://guest:guest@rabbitmq:5672"
-      - "IdentityServerConfig__IssuerUri=http://folks.identityservice.api"
+      - ASPNETCORE_ENVIRONMENT=${IDENTITY_ENVIRONMENT}
+      - ConnectionStrings__PostgreSqlConnectionString=${IDENTITY_CONNECTION_STRING}
+      - EventBusConfig__HostAddress=${EVENT_BUS_HOSTADDRESS}
+      - IdentityServerConfig__IssuerUri=${AUTHORITY}
     depends_on:
       - identitydb
       - rabbitmq
     ports:
-      - "8001:80"
+      - ${IDENTITY_EXTERNAL_PORT:-8001}:80
