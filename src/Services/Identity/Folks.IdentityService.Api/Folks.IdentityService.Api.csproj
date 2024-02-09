@@ -33,7 +33,6 @@
     <ProjectReference Include="..\..\..\Common\Folks.EventBus.Messages\Folks.EventBus.Messages.csproj" />
     <ProjectReference Include="..\Folks.IdentityService.Application\Folks.IdentityService.Application.csproj" />
     <ProjectReference Include="..\Folks.IdentityService.Database.Migrations\Folks.IdentityService.Database.Migrations.csproj" />
-    <ProjectReference Include="..\Folks.IdentityService.Infrastructure\Folks.IdentityService.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
