@@ -367,4 +367,4 @@ yarn-error.*
 **/wwwroot/lib
 
 # ignores all .env files
-.env*
+.env
