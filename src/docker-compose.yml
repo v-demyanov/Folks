@@ -1,5 +1,6 @@
 ﻿version: '3.4'
 
+name: folks
 services:
   identitydb:
     image: postgres
@@ -13,20 +14,20 @@ services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
 
-  folks.apigateway:
-    image: ${DOCKER_REGISTRY-}folksapigateway
+  apigateway:
+    image: ${APIGATEWAY_IMAGE_PATH}:${APIGATEWAY_TAG}
     build:
       context: .
       dockerfile: ApiGateways/Folks.ApiGateway/Dockerfile
 
-  folks.channelsservice.api:
-    image: ${DOCKER_REGISTRY-}folkschannelsserviceapi
+  channels:
+    image: ${CHANNELS_IMAGE_PATH}:${CHANNELS_TAG}
     build:
       context: .
       dockerfile: Services/Channels/Folks.ChannelsService.Api/Dockerfile
 
-  folks.identityservice.api:
-    image: ${DOCKER_REGISTRY-}folksidentityserviceapi
+  identity:
+    image: ${IDENTITY_IMAGE_PATH}:${IDENTITY_TAG}
     build:
       context: .
       dockerfile: Services/Identity/Folks.IdentityService.Api/Dockerfile
@@ -35,3 +36,7 @@ volumes:
   mongo_data:  
   postgres_data:
   pgadmin_data:
+
+networks:
+  default:
+    name: folks

@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Folks.IdentityService.Domain\Folks.IdentityService.Domain.csproj" />
     <ProjectReference Include="..\Folks.IdentityService.Infrastructure\Folks.IdentityService.Infrastructure.csproj" />
   </ItemGroup>
 

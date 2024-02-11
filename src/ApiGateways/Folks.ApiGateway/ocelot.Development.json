@@ -5,7 +5,7 @@
       "DownstreamScheme": "ws",
       "DownstreamHostAndPorts": [
         {
-          "Host": "folks.channelsservice.api",
+          "Host": "channels",
           "Port": 80
         }
       ],
@@ -17,7 +17,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "folks.channelsservice.api",
+          "Host": "channels",
           "Port": 80
         }
       ],
@@ -35,7 +35,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "folks.identityservice.api",
+          "Host": "identity",
           "Port": 80
         }
       ],

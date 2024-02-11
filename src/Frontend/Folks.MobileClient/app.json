@@ -1,7 +1,7 @@
 {
   "expo": {
     "scheme": "com.vdemyanov.folks",
-    "name": "Folks.MobileClient",
+    "name": "Folks",
     "slug": "folks",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -33,6 +33,6 @@
         "projectId": "116d05df-d68e-4287-a4a4-fa647b8a341d"
       }
     },
-    "owner": "v-demyanov"
+    "owner": "folks"
   }
 }
