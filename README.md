@@ -38,7 +38,8 @@ To deploy the mobile application you can use cloud ([EAS][eas-url]) or local sol
 - If you have chosen application deployment using ([EAS][eas-url]) follow steps below
   - Install EAS CLI using command `npm install -g eas-cli`
   - Contact the owner to add your expo account to the existing expo project
-  - Create `eas.json` using `eas.template.json` and set environment variables depends on your deployed backend services
+  - Create `eas.json` using [`eas.template.json`](./src/Frontend/Folks.MobileClient/eas.template.json)
+  - Create `.env` using [`.env.template`](./src/Frontend/Folks.MobileClient/.env.template) and set environment variables depends on your deployed backend services
   - Follow steps 4 or 5 from the [guide][eas-deployment-url]
   - Execute command `npm run start`
 

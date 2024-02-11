@@ -5,11 +5,7 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "env": {
-        "EXPO_PUBLIC_IDENTITY_SERVER_URL": "",
-        "EXPO_PUBLIC_API_GTW_URL": ""
-      }
+      "distribution": "internal"
     },
     "preview": {
       "distribution": "internal"
