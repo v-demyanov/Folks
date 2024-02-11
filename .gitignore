@@ -368,3 +368,5 @@ yarn-error.*
 
 # ignores all .env files
 .env
+
+eas.json
